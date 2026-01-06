@@ -1,93 +1,433 @@
-# Happyco
+# HappyCo - Flutter E-commerce Application
 
+Một dự án e-commerce hiện đại được xây dựng với Flutter, áp dụng Clean Architecture và các best practices 2025.
 
+## 📋 Mục lục
 
-## Getting started
+- [Tổng quan](#tổng-quan)
+- [Kiến trúc](#kiến-trúc)
+- [Tính năng](#tính-năng)
+- [Công nghệ](#công-nghệ)
+- [Bắt đầu](#bắt-đầu)
+- [Cấu trúc dự án](#cấu-trúc-dự-án)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## 🎯 Tổng quan
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+HappyCo là một ứng dụng e-commerce đầy đủ tính năng, được thiết kế với focus vào:
+- **Performance**: Tối ưu cho tốc độ và memory usage
+- **Scalability**: Dễ dàng mở rộng khi phát triển
+- **Maintainability**: Code sạch, dễ bảo trì
+- **User Experience**: UI/UX hiện đại, mượt mà
 
-## Add your files
+### Đặc điểm nổi bật
+- ✅ Clean Architecture với Feature-first approach
+- ✅ State management với BLoC pattern
+- ✅ Type-safe navigation với Auto Route
+- ✅ Dependency Injection với GetIt + Injectable
+- ✅ Comprehensive testing strategy
+- ✅ Performance monitoring và error tracking
 
-* [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## 🏗️ Kiến trúc
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/hifiveplus/custome-hiboss/happyco.git
-git branch -M main
-git push -uf origin main
+┌─────────────────────────────────────────────────────────┐
+│                   PRESENTATION LAYER                     │
+│              (UI, BLoC, Navigation)                      │
+└─────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────┐
+│                     DOMAIN LAYER                         │
+│           (Business Logic, Use Cases, Entities)          │
+└─────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────┐
+│                      DATA LAYER                          │
+│            (Repositories, Data Sources, Models)          │
+└─────────────────────────────────────────────────────────┘
 ```
 
-## Integrate with your tools
+### Architecture Principles
+1. **Single Responsibility**: Mỗi class có một trách nhiệm duy nhất
+2. **Dependency Inversion**: Phụ thuộc vào abstraction, không phải implementation
+3. **Separation of Concerns**: Tách biệt UI, business logic, và data
+4. **Testability**: Mọi component đều có thể test độc lập
 
-* [Set up project integrations](https://gitlab.com/hifiveplus/custome-hiboss/happyco/-/settings/integrations)
+## 🚀 Tính năng
 
-## Collaborate with your team
+### Core Features
+- 🔐 **Authentication**: Login, register, social login (Google, Apple)
+- 📱 **Product Catalog**: Browse, search, filter products
+- 🛒 **Shopping Cart**: Add, update, remove items
+- 💳 **Payment**: Multiple payment methods (Stripe, VNPay)
+- 📦 **Order Management**: Order history, tracking
+- 👤 **User Profile**: Profile management, settings
 
-* [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+### Advanced Features
+- 🔔 **Push Notifications**: Order updates, promotions
+- 🌐 **Offline Support**: Browse products offline
+- 🎯 **Smart Search**: Search suggestions, history
+- 📊 **Analytics**: User behavior tracking
+- 🔄 **Real-time Updates**: Live order status
 
-## Test and Deploy
+## 🛠️ Công nghệ
 
-Use the built-in continuous integration in GitLab.
+### Core Technologies
+- **Flutter 3.22+**: Cross-platform framework
+- **Dart 3.4+**: Programming language
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### State Management
+- **BLoC 8.1.6**: State management pattern
+- **Freezed**: Immutable data classes
+- **Equatable**: Value equality
 
-***
+### Architecture & DI
+- **Clean Architecture**: Software architecture pattern
+- **GetIt + Injectable**: Dependency injection
+- **Auto Route**: Type-safe navigation
 
-# Editing this README
+### Data & Storage
+- **Dio**: HTTP client
+- **Drift**: Reactive database (SQLite)
+- **SharedPreferences**: Simple key-value storage
+- **Cached Network Image**: Image caching
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### UI & UX
+- **Flutter ScreenUtil**: Responsive design
+- **Flutter SVG**: SVG support
+- **Lottie**: Animations
 
-## Suggestions for a good README
+### Firebase
+- **Firebase Core**: App initialization
+- **Firebase Auth**: Authentication
+- **Firebase Messaging**: Push notifications
+- **Firebase Performance**: Performance monitoring
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### Development Tools
+- **Code Generation**: build_runner, freezed, json_serializable
+- **Testing**: flutter_test, mockito, bloc_test
+- **Linting**: flutter_lints, custom_lint, dart_code_metrics
 
-## Name
-Choose a self-explaining name for your project.
+## 🏁 Bắt đầu
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### Prerequisites
+- Flutter SDK >=3.22.0
+- Dart SDK >=3.4.0
+- Android Studio / VS Code
+- Git
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Installation
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+1. **Clone repository**
+```bash
+git clone https://github.com/your-org/happyco.git
+cd happyco
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+2. **Install dependencies**
+```bash
+flutter pub get
+```
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+3. **Generate code**
+```bash
+flutter packages pub run build_runner build
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+4. **Run app**
+```bash
+flutter run
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Environment Setup
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+1. **Copy environment file**
+```bash
+cp .env.example .env
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+2. **Configure environment variables**
+```env
+# API Configuration
+API_BASE_URL=https://api.happyco.com
+API_KEY=your_api_key_here
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+# Firebase Configuration
+FIREBASE_PROJECT_ID=your_project_id
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+# Other configurations
+SENTRY_DSN=your_sentry_dsn_here
+```
 
-## License
-For open source projects, say how it is licensed.
+3. **Firebase setup**
+```bash
+# Install Firebase CLI
+npm install -g firebase-tools
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+# Login to Firebase
+firebase login
+
+# Initialize Firebase in your project
+firebase init
+```
+
+## 📁 Cấu trúc dự án
+
+```
+happyco/
+├── lib/
+│   ├── app/                     # App-level configuration
+│   │   ├── config/             # Environment & app config
+│   │   ├── constants/          # App constants
+│   │   ├── errors/             # Global error handlers
+│   │   ├── routes/             # Router configuration
+│   │   ├── themes/             # App themes & styles
+│   │   ├── main.dart          # Entry point
+│   │   └── app.dart           # Root widget
+│   │
+│   ├── src/                    # Feature modules
+│   │   ├── authentication/     # Authentication feature
+│   │   ├── products/          # Products management
+│   │   ├── cart/              # Shopping cart
+│   │   ├── orders/            # Order management
+│   │   ├── payments/          # Payment processing
+│   │   ├── profile/           # User profile
+│   │   └── notifications/     # Push notifications
+│   │
+│   └── shared/                 # Shared utilities & resources
+│       ├── core/               # Core utilities
+│       ├── data/               # Shared data sources
+│       ├── domain/             # Shared domain logic
+│       ├── presentation/       # Shared UI components
+│       ├── extensions/         # Dart extensions
+│       └── utils/              # Utility functions
+│
+├── test/                       # Test files
+│   ├── unit/                   # Unit tests
+│   ├── widget/                 # Widget tests
+│   ├── integration/            # Integration tests
+│   └── helpers/                # Test utilities
+│
+├── docs/                       # Documentation
+│   ├── architecture.md         # Architecture documentation
+│   ├── folder-structure.md     # Project structure guide
+│   ├── upgrade-plan.md         # Upgrade/migration plan
+│   └── research-summary.md     # Research findings
+│
+├── tool/                       # Development tools
+├── assets/                     # Static assets
+├── analysis_options.yaml       # Linting rules
+├── pubspec.yaml                # Dependencies
+└── README.md                   # This file
+```
+
+### Feature Structure
+
+Each feature follows this structure:
+```
+feature/
+├── data/                       # Data layer
+│   ├── datasources/           # Remote/local data sources
+│   ├── models/                # Data transfer objects
+│   └── repositories/          # Repository implementations
+├── domain/                     # Business logic
+│   ├── entities/              # Business objects
+│   ├── repositories/          # Repository interfaces
+│   └── usecases/              # Use cases
+├── presentation/              # UI layer
+│   ├── pages/                 # Full-screen widgets
+│   ├── widgets/               # Reusable UI components
+│   └── bloc/                  # State management
+└── di/                        # Dependency injection
+```
+
+## 🧪 Testing
+
+### Run Tests
+
+```bash
+# Run all tests
+flutter test
+
+# Run unit tests only
+flutter test test/unit/
+
+# Run widget tests only
+flutter test test/widget/
+
+# Run integration tests
+flutter test integration_test/
+
+# Generate coverage report
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+```
+
+### Testing Strategy
+
+1. **Unit Tests (70%)**
+   - Use cases
+   - Repository implementations
+   - BLoCs
+   - Utilities
+
+2. **Widget Tests (20%)**
+   - Custom widgets
+   - Pages
+   - User interactions
+
+3. **Integration Tests (10%)**
+   - Complete user flows
+   - API integration
+   - Database operations
+
+### Test Coverage Goals
+- Overall: >80%
+- Domain layer: 100%
+- Data layer: 90%
+- Presentation layer: 75%
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
+# Android APK
+flutter build apk --release
+
+# Android App Bundle (recommended)
+flutter build appbundle --release
+
+# iOS
+flutter build ios --release
+
+# Web
+flutter build web --release
+```
+
+### Environment Configuration
+
+Development:
+```bash
+flutter run --dart-define=ENV=dev
+```
+
+Production:
+```bash
+flutter build apk --release --dart-define=ENV=prod --obfuscate --split-debug-info=build/debug-info/
+```
+
+### CI/CD Pipeline
+
+Project uses GitHub Actions for CI/CD:
+- Automated testing on pull requests
+- Build and deployment on merge to main
+- Code quality checks
+- Security scanning
+
+## 📝 Code Style
+
+### Linting Rules
+
+Project uses:
+- `flutter_lints`: Official Flutter linting rules
+- `custom_lint`: Additional custom rules
+- `dart_code_metrics`: Code quality metrics
+
+### Naming Conventions
+
+- **Files**: `lowercase_with_underscores.dart`
+- **Classes**: `PascalCase`
+- **Variables/Methods**: `camelCase`
+- **Constants**: `SCREAMING_SNAKE_CASE`
+- **Private members**: Prefix with `_`
+
+### Best Practices
+
+1. Use `const` constructors where possible
+2. Prefer `StatelessWidget` over `StatefulWidget`
+3. Keep widgets small and focused
+4. Use `async/await` for asynchronous operations
+5. Handle errors properly with try-catch blocks
+6. Write documentation for public APIs
+
+## 🤝 Contributing
+
+### Development Workflow
+
+1. Create feature branch from `develop`
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b feature/your-feature-name
+```
+
+2. Make your changes and commit
+```bash
+git add .
+git commit -m "feat: add new feature"
+```
+
+3. Run tests and linting
+```bash
+flutter analyze
+flutter test
+```
+
+4. Push and create pull request
+```bash
+git push origin feature/your-feature-name
+```
+
+### Commit Convention
+
+We use [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat:` New feature
+- `fix:` Bug fix
+- `docs:` Documentation changes
+- `style:` Code style changes (formatting, etc.)
+- `refactor:` Code refactoring
+- `test:` Adding or updating tests
+- `chore:` Maintenance tasks
+
+### Pull Request Process
+
+1. Update documentation
+2. Add tests for new features
+3. Ensure all tests pass
+4. Request code review
+5. Merge after approval
+
+## 📚 Documentation
+
+- [Architecture Guide](docs/architecture.md)
+- [Folder Structure](docs/folder-structure.md)
+- [Upgrade Plan](docs/upgrade-plan.md)
+- [Research Summary](docs/research-summary.md)
+- [API Documentation](docs/api-documentation.md)
+- [Deployment Guide](docs/deployment.md)
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/your-org/happyco/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/your-org/happyco/discussions)
+- **Email**: support@happyco.com
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Flutter team for the amazing framework
+- Contributors and community members
+- Open source packages used in this project
+
+---
+
+**Built with ❤️ using Flutter**
