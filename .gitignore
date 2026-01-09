@@ -1,33 +1,71 @@
 
+# ==============================================================================
+# Flutter Best Practices .gitignore
+# ==============================================================================
+
 # FVM Version Cache
 .fvm/
 .fvmrc
 .flutter_version
 
-# Misc
+# ============================================================================
+# GENERATED CODE - Must be ignored for clean codebase
+# ============================================================================
+*.g.dart
+*.freezed.dart
+*.gr.dart
+*.mocks.dart
+*.injectable.dart
+*.injectable.g.dart
+*.config.dart
+*.iconfig.dart
+
+# ============================================================================
+# MISC & TEMPORARY FILES
+# ============================================================================
 *.class
 *.log
 *.pyc
 *.swp
+*.swo
 .DS_Store
 .atom/
 .buildlog/
 .history
 .svn/
 migrate_working_dir/
+*.tmp
+*.temp
+nul
+*.bak
+*.backup
 
-# IntelliJ related
+# ============================================================================
+# IDE & EDITOR
+# ============================================================================
+# IntelliJ/Android Studio
 *.iml
 *.ipr
 *.iws
 .idea/
+*.idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code - Uncomment if you want to ignore
+# .vscode/
 
-# Flutter/Dart/Pub related
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================================================
+# FLUTTER / DART / PUB
+# ============================================================================
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
@@ -44,24 +82,131 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+# ============================================================================
+# ANDROID
+# ============================================================================
 # Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/.gradle/
+/android/captures/
+/android/gradlew
+/android/gradlew.bat
+/android/local.properties
+/android/**/GeneratedPluginRegistrant.java
+/android/app/src/debug/
+/android/app/src/profile/
+/android/.externalNativeBuild
+/android/.idea
 
-# Environment files - NEVER commit secrets
+# Keystore files
+*.jks
+*.keystore
+
+# ============================================================================
+# IOS
+# ============================================================================
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# CocoaPods
+/ios/Pods/
+/ios/.symlinks/
+/ios/Podfile.lock
+
+# ============================================================================
+# ENVIRONMENT FILES - NEVER COMMIT SECRETS
+# ============================================================================
 .env
 .env.development
 .env.staging
 .env.production
 .env.local
+.env.*.local
+*.env
+secrets/
+credentials/
+
 # Keep example for documentation
 !.env.example
 
-# Exclude docs folder from git tracking
+# ============================================================================
+# TEST COVERAGE & REPORTS
+# ============================================================================
+coverage/
+test/.test_coverage.dart
+test_report/
+*.lcov
+
+# ============================================================================
+# DOCUMENTATION (Optional - comment out if you want to track docs)
+# ============================================================================
 docs/
 
-# Temporary files
-*.tmp
-*.temp
-nul
+# ============================================================================
+# BUILD & DIST OUTPUTS
+# ============================================================================
+dist/
+apk/
+*.apk
+*.aab
+*.ipa
+*.app
+dSYM/
+
+# ============================================================================
+# FIREBASE / SERVICE FILES
+# ============================================================================
+google-services.json
+GoogleService-Info.plist
+firebase-app-id-file
+*.firebase.json
+firebase.json
+
+# ============================================================================
+# OTHER
+# ============================================================================
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+.cache/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
