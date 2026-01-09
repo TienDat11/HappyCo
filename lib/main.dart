@@ -14,17 +14,18 @@ import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 /// Wood furniture manufacturing - No i18n
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initLogger();
-  Bloc.observer = TalkerBlocObserver(
-    talker: talker,
-    settings: const TalkerBlocLoggerSettings(
-      printEvents: true,
-      printTransitions: true,
-      printChanges: false,
-    ),
-  );
 
   runZonedGuarded(() async {
+    initLogger();
+    Bloc.observer = TalkerBlocObserver(
+      talker: talker,
+      settings: const TalkerBlocLoggerSettings(
+        printEvents: true,
+        printTransitions: true,
+        printChanges: false,
+      ),
+    );
+
     try {
       await AppConfig.init();
       talker.info('AppConfig initialized: ${AppConfig.instance}');

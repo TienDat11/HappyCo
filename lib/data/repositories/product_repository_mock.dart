@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/domain/repositories/product_repository.dart';
 
@@ -6,7 +5,6 @@ import 'package:happyco/domain/repositories/product_repository.dart';
 ///
 /// Provides mock data for development.
 /// Replace with ProductRepositoryImpl connected to API for production.
-@LazySingleton(as: ProductRepository)
 class ProductRepositoryMock implements ProductRepository {
   @override
   Future<List<ProductEntity>> getFeaturedProducts() async {

@@ -1,11 +1,9 @@
-import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:happyco/domain/repositories/storage_repository.dart';
 
 /// Storage Repository Implementation
 ///
 /// Uses SharedPreferences for persistent storage of auth tokens and user data.
-@LazySingleton(as: StorageRepository)
 class StorageRepositoryImpl implements StorageRepository {
   final SharedPreferences _prefs;
 

@@ -44,15 +44,18 @@ class HomeProductGrid extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: UISizes.width.w16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          UIText(
-            title: title,
-            titleSize: UISizes.font.sp18,
-            fontWeight: FontWeight.bold,
-            titleColor: UIColors.gray900,
+          Flexible(
+            child: UIText(
+              title: title,
+              titleSize: UISizes.font.sp18,
+              fontWeight: FontWeight.bold,
+              titleColor: UIColors.gray900,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          if (actionText != null)
+          if (actionText != null) ...[
+            SizedBox(width: UISizes.width.w8),
             GestureDetector(
               onTap: onActionTap,
               child: UIText(
@@ -62,6 +65,7 @@ class HomeProductGrid extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
+          ],
         ],
       ),
     );
@@ -156,17 +160,19 @@ class HomeProductCard extends StatelessWidget {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       UIText(
                         title: product.name,
                         titleSize: UISizes.font.sp14,
                         fontWeight: FontWeight.w600,
                         titleColor: UIColors.gray900,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(height: UISizes.height.h4),
-                      Row(
+                      SizedBox(height: UISizes.height.h2),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           UIText(
                             title: product.formattedPrice,
@@ -199,7 +205,7 @@ class HomeProductCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(UISizes.square.r4),
                       ),
                       child: UIText(
-                        title: 'Thêm vào giỏ hàng',
+                        title: 'Thêm',
                         titleSize: UISizes.font.sp12,
                         titleColor: UIColors.white,
                         fontWeight: FontWeight.w500,
