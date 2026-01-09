@@ -32,12 +32,12 @@ class MainScreen extends StatelessWidget {
               activeIcon: Icon(Icons.home),
               label: 'Home',
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.category_outlined),
+              activeIcon: Icon(Icons.category),
+              label: 'Products',
+            ),
             // Placeholder for future tabs
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.category_outlined),
-            //   activeIcon: Icon(Icons.category),
-            //   label: 'Products',
-            // ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.person_outline),
             //   activeIcon: Icon(Icons.person),

@@ -1,11 +1,9 @@
 import 'package:happyco/core/config/app_config.dart';
-import 'package:injectable/injectable.dart' hide Environment;
 
 /// Remote API Configuration
 ///
 /// Provides base URL and environment settings loaded from AppConfig
 /// Registered as singleton via Injectable
-@lazySingleton
 class RemoteConfig {
   /// Base API URL from environment
   String get baseUrl => AppConfig.instance.apiBaseUrl;

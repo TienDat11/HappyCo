@@ -28,7 +28,7 @@ void initLogger() {
 }
 
 /// Captures uncaught Flutter and Platform errors.
-void _setupErrorHooks() {.
+void _setupErrorHooks() {
   FlutterError.onError = (details) {
     talker.handle(details.exception, details.stack, 'Uncaught Flutter Error');
   };

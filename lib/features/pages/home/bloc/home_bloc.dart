@@ -3,7 +3,6 @@ import 'package:happyco/core/bloc/bloc.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_recommended_products_usecase.dart';
-import 'package:injectable/injectable.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -12,7 +11,6 @@ part 'home_state.dart';
 ///
 /// Manages the state for the Home page.
 /// Fetches featured and recommended products using use cases.
-@injectable
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final GetFeaturedProductsUseCase getFeaturedProductsUseCase;
   final GetRecommendedProductsUseCase getRecommendedProductsUseCase;
