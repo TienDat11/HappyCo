@@ -21,6 +21,14 @@ class ProductEntity {
     this.isFeatured = false,
   });
 
+  /// Creates empty product placeholder
+  factory ProductEntity.empty() => const ProductEntity(
+        id: '',
+        name: '',
+        priceInVnd: 0,
+        imageUrl: '',
+      );
+
   /// Formatted price for display
   String get formattedPrice => _formatCurrency(priceInVnd);
 

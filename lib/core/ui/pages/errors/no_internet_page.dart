@@ -30,7 +30,7 @@ class NoInternetPage extends StatelessWidget {
             children: [
               Container(
                 width: UISizes.width.w250,
-                height: UISizes.width.w250,
+                height: UISizes.height.h250,
                 decoration: BoxDecoration(
                   color: UIColors.white,
                   borderRadius: BorderRadius.circular(UISizes.square.r16),

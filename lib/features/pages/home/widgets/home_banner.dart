@@ -1,58 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
-import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
+import 'package:happyco/core/theme/ui_images.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
 
 /// Home Banner Widget
+///
+/// Displays promotional banner image with dots indicator
+/// Banner is a pure image-based marketing component from Figma
 class HomeBanner extends StatelessWidget {
   final String imageUrl;
-  final String title;
   final VoidCallback? onTap;
+  final bool isLoading;
 
   const HomeBanner({
     super.key,
-    this.imageUrl =
-        'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800',
-    this.title = 'Bộ sưu tập gỗ mới',
+    this.imageUrl = UIImages.bannerImage,
     this.onTap,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: UISizes.height.h180,
-        decoration: BoxDecoration(
-          color: UIColors.primary,
-          borderRadius: BorderRadius.circular(UISizes.square.r8),
-          image: DecorationImage(
-            image: NetworkImage(imageUrl),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(UISizes.square.r8),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.transparent,
-                Colors.black.withValues(alpha: 0.3),
-              ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: UISizes.width.w16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (isLoading)
+            HappyShimmer.rounded(
+              width: double.infinity,
+              height: UISizes.height.h180,
+              borderRadius: UISizes.square.r16,
+            )
+          else
+            GestureDetector(
+              onTap: onTap,
+              child: Container(
+                height: UISizes.height.h180,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: UIColors.primary,
+                  borderRadius: BorderRadius.circular(UISizes.square.r16),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(UISizes.square.r16),
+                  child: Image.asset(
+                    imageUrl,
+                    width: double.infinity,
+                    height: UISizes.height.h180,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: double.infinity,
+                        height: UISizes.height.h180,
+                        color: UIColors.gray100,
+                        child: Icon(
+                          Icons.image_outlined,
+                          size: UISizes.width.w40,
+                          color: UIColors.gray400,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
             ),
-          ),
-          padding: EdgeInsets.all(UISizes.width.w16),
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: UIText(
-              title: title,
-              titleColor: UIColors.white,
-              titleSize: UISizes.font.sp20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+          if (!isLoading) ...[
+            SizedBox(height: UISizes.height.h8),
+            const BannerDotsIndicator(),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Banner Dots Indicator Widget
+///
+/// Displays pagination dots below banner image
+class BannerDotsIndicator extends StatelessWidget {
+  const BannerDotsIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SvgPicture.asset(
+        UISvgs.dotsIcon,
+        width: UISizes.width.w44,
+        height: UISizes.height.h6,
       ),
     );
   }

@@ -9,7 +9,6 @@ import 'package:happyco/features/pages/home/widgets/home_banner.dart';
 import 'package:happyco/features/pages/home/widgets/home_categories.dart';
 import 'package:happyco/features/pages/home/widgets/home_header.dart';
 import 'package:happyco/features/pages/home/widgets/home_product_grid.dart';
-import 'package:shimmer/shimmer.dart';
 
 /// Home Page - Vietnamese Furniture E-commerce
 ///
@@ -41,34 +40,29 @@ class _HomePageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UIColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Fixed header
-            const HomeHeader(),
+      body: Column(
+        children: [
+          const HomeHeader(),
+          Expanded(
+            child: BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is HomeLoading) {
+                  return _buildLoadingState();
+                }
 
-            // Scrollable content
-            Expanded(
-              child: BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  if (state is HomeLoading) {
-                    return _buildLoadingState();
-                  }
+                if (state is HomeError) {
+                  return _buildErrorState(context, state.error);
+                }
 
-                  if (state is HomeError) {
-                    return _buildErrorState(context, state.error);
-                  }
+                if (state is HomeLoaded) {
+                  return _buildLoadedState(context, state);
+                }
 
-                  if (state is HomeLoaded) {
-                    return _buildLoadedState(context, state);
-                  }
-
-                  return const SizedBox.shrink();
-                },
-              ),
+                return const SizedBox.shrink();
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -79,71 +73,37 @@ class _HomePageContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: UISizes.height.h16),
-          const HomeBanner(),
+          const HomeBanner(isLoading: true),
           SizedBox(height: UISizes.height.h24),
-          HomeCategories(),
+          HomeCategories(isLoading: true),
           SizedBox(height: UISizes.height.h24),
-          _buildShimmerGrid('Sản phẩm nổi bật'),
+          const HomeProductGrid(
+            title: 'Sản phẩm nổi bật',
+            isLoading: true,
+            products: [],
+          ),
           SizedBox(height: UISizes.height.h24),
-          _buildShimmerGrid('Gợi ý hôm nay'),
+          const HomeProductGrid(
+            title: 'Gợi ý hôm nay',
+            isLoading: true,
+            products: [],
+          ),
           SizedBox(height: UISizes.height.h32),
         ],
       ),
     );
   }
 
-  Widget _buildShimmerGrid(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: UISizes.width.w16),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: UISizes.font.sp18,
-              fontWeight: FontWeight.bold,
-              color: UIColors.gray900,
-            ),
-          ),
-        ),
-        SizedBox(height: UISizes.height.h16),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: UISizes.width.w16),
-          child: Row(
-            children: [
-              Expanded(child: _buildShimmerCard()),
-              SizedBox(width: UISizes.width.w16),
-              Expanded(child: _buildShimmerCard()),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 
-  Widget _buildShimmerCard() {
-    return Shimmer.fromColors(
-      baseColor: UIColors.gray200,
-      highlightColor: UIColors.gray100,
-      child: Container(
-        height: 200,
-        decoration: BoxDecoration(
-          color: UIColors.white,
-          borderRadius: BorderRadius.circular(UISizes.square.r8),
-        ),
-      ),
-    );
-  }
-
+  /// Displays error state with retry button
   Widget _buildErrorState(BuildContext context, String error) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.error_outline,
-            size: 48,
+            size: UISizes.width.w48,
             color: UIColors.gray400,
           ),
           SizedBox(height: UISizes.height.h16),

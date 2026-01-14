@@ -9,7 +9,7 @@ class ProductRepositoryMock implements ProductRepository {
   @override
   Future<List<ProductEntity>> getFeaturedProducts() async {
     // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     return const [
       ProductEntity(
@@ -57,7 +57,7 @@ class ProductRepositoryMock implements ProductRepository {
 
   @override
   Future<List<ProductEntity>> getRecommendedProducts() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     return const [
       ProductEntity(

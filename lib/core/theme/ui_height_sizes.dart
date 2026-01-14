@@ -2,6 +2,7 @@ part of 'ui_sizes.dart';
 
 class UIHeightSizes {
   double get h1 => 1.h;
+
   double get h2 => 2.h;
   double get h3 => 3.h;
   double get h4 => 4.h;
@@ -113,7 +114,9 @@ class UIHeightSizes {
   double get h184 => 184.h;
   double get h190 => 190.h;
   double get h196 => 196.h;
+  double get h200 => 200.h;
   double get h204 => 204.h;
+
   double get h214 => 214.h;
   double get h236 => 236.h;
   double get h220 => 220.h;
