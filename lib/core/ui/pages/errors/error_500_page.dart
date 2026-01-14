@@ -30,7 +30,7 @@ class Error500Page extends StatelessWidget {
             children: [
               Container(
                 width: UISizes.width.w250,
-                height: UISizes.width.w250,
+                height: UISizes.height.h250,
                 decoration: BoxDecoration(
                   color: UIColors.white,
                   borderRadius: BorderRadius.circular(UISizes.square.r16),
@@ -49,7 +49,6 @@ class Error500Page extends StatelessWidget {
                 ),
               ),
               SizedBox(height: UISizes.height.h32),
-
               UIText(
                 title: 'Lỗi máy chủ',
                 titleSize: UISizes.font.sp24,
@@ -58,17 +57,15 @@ class Error500Page extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: UISizes.height.h8),
-
               if (message != null)
                 UIText(
-                title: message ??
-                    'Máy chủ đang gặp sự cố. Vui lòng thử lại sau hoặc liên hệ hỗ trợ.',
-                titleSize: UISizes.font.sp14,
-                titleColor: UIColors.gray500,
-                textAlign: TextAlign.center,
-              ),
+                  title: message ??
+                      'Máy chủ đang gặp sự cố. Vui lòng thử lại sau hoặc liên hệ hỗ trợ.',
+                  titleSize: UISizes.font.sp14,
+                  titleColor: UIColors.gray500,
+                  textAlign: TextAlign.center,
+                ),
               SizedBox(height: UISizes.height.h32),
-
               if (onRetry != null)
                 UIButton(
                   text: 'Thử lại',

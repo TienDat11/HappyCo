@@ -24,8 +24,12 @@ class UIColors {
   /// Text Colors (from Figma)
   static const Color text = Color(0xFF3F3F46); // Gray/700
   static const Color textSecondary = Color(0xFF71717A); // Gray/500
+  /// Text color for category labels
+  static const Color categoryLabel = Color(0xFF40484F);
   static const Color textHint = Color(0xFFD4D4D8); // Gray/300
-  static const Color textOnPrimary = Color(0xFFFAFAFA); // Gray/50 (almost white)
+
+  static const Color textOnPrimary =
+      Color(0xFFFAFAFA); // Gray/50 (almost white)
 
   // ============================================
   // GRAY SCALE (from Figma)
@@ -84,7 +88,8 @@ class UIColors {
 
   /// Shadows (with opacity for runtime use)
   static Color get cardShadow => Colors.black.withValues(alpha: 0.08);
-  static Color get navBarShadow => const Color(0xFFC0333C).withValues(alpha: 0.08);
+  static Color get navBarShadow =>
+      const Color(0xFFC0333C).withValues(alpha: 0.08);
   static Color get shadowSubtle => Colors.black.withValues(alpha: 0.05);
   static Color get shadowMedium => Colors.black.withValues(alpha: 0.12);
 
@@ -94,14 +99,19 @@ class UIColors {
 
   /// Oak Wood
   static final Color oakWood = HexColor.fromHex("#DEB887");
+
   /// Walnut Wood
   static final Color walnutWood = HexColor.fromHex("#8B4513");
+
   /// Pine Wood
   static final Color pineWood = HexColor.fromHex("#F4E4C1");
+
   /// Teak Wood
   static final Color teakWood = HexColor.fromHex("#D2691E");
+
   /// Mahogany Wood
   static final Color mahoganyWood = HexColor.fromHex("#CD853F");
+
   /// Cedar Wood
   static final Color cedarWood = HexColor.fromHex("#A0522D");
 

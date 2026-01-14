@@ -11,8 +11,9 @@ import 'package:happyco/setup_locator.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 
 /// Main entry point for Happyco app
+///
 /// Wood furniture manufacturing - No i18n
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runZonedGuarded(() async {
@@ -39,7 +40,8 @@ Future<void> main() async {
       );
       talker.info('Firebase initialized successfully');
     } catch (e, stackTrace) {
-      talker.warning('Firebase init failed - continuing in offline mode', e, stackTrace);
+      talker.warning(
+          'Firebase init failed - continuing in offline mode', e, stackTrace);
     }
 
     await setupLocator();
@@ -52,6 +54,7 @@ Future<void> main() async {
 }
 
 /// Happyco App Root
+///
 /// No BLoC providers at root - provided at route level as needed
 class HappycoApp extends StatelessWidget {
   const HappycoApp({super.key});

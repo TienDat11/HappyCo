@@ -1,47 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 
-/// Standardized Text Widget for Happyco Design System
-///
-/// Usage:
-/// ```dart
-/// UIText(title: 'Hello', titleColor: UIColors.primary)
-/// ```
 class UIText extends StatelessWidget {
-  /// The text content to display
+  /// label title
   final String title;
 
-  /// Maximum number of lines for text to span
   final int? maxLines;
 
-  /// How visual overflow should be handled
   final TextOverflow? overflow;
 
-  /// Text color (defaults to UIColors.black if not specified)
+  /// label color appearance
   final Color? titleColor;
 
-  /// Font size (defaults to sp14 if not specified)
   final double? titleSize;
 
-  /// Font weight (defaults to FontWeight.normal if not specified)
   final FontWeight? fontWeight;
 
-  /// Font style (normal or italic)
   final FontStyle? fontStyle;
 
-  /// Text alignment
   final TextAlign? textAlign;
 
-  /// Decoration (e.g., underline, lineThrough)
+  /// The decorations to paint near the text (e.g., an underline).
+  ///
+  /// Multiple decorations can be applied using [TextDecoration.combine].
   final TextDecoration? decoration;
 
-  /// Strut style for consistent text rendering
   final StrutStyle? strutStyle;
 
-  /// Custom font family (defaults to UIFonts.gilroy if not specified)
   final String? fontFamily;
 
-  /// Line height multiplier (defaults to 4/3 if not specified)
   final double? lineHeight;
 
   const UIText({
@@ -70,10 +57,10 @@ class UIText extends StatelessWidget {
       style: TextStyle(
         overflow: overflow,
         decoration: decoration,
-        decorationColor: titleColor ?? UIColors.gray900,
+        decorationColor: titleColor ?? UIColors.black,
         fontFamily: fontFamily ?? UIFonts.gilroy,
         fontSize: titleSize ?? UISizes.font.sp14,
-        color: titleColor ?? UIColors.gray900,
+        color: titleColor ?? UIColors.black,
         fontWeight: fontWeight ?? FontWeight.normal,
         fontStyle: fontStyle ?? FontStyle.normal,
         height: lineHeight ?? 4 / 3,

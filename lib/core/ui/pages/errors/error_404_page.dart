@@ -30,7 +30,7 @@ class Error404Page extends StatelessWidget {
             children: [
               Container(
                 width: UISizes.width.w250,
-                height: UISizes.width.w250,
+                height: UISizes.height.h250,
                 decoration: BoxDecoration(
                   color: UIColors.white,
                   borderRadius: BorderRadius.circular(UISizes.square.r16),
@@ -59,7 +59,8 @@ class Error404Page extends StatelessWidget {
               SizedBox(height: UISizes.height.h8),
               if (message != null)
                 UIText(
-                  title: message ?? 'Trang bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.',
+                  title: message ??
+                      'Trang bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.',
                   titleSize: UISizes.font.sp14,
                   titleColor: UIColors.gray500,
                   textAlign: TextAlign.center,
