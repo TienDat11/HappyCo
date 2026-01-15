@@ -17,6 +17,7 @@ class MainScreen extends StatelessWidget {
     return AutoTabsScaffold(
       routes: const [
         HomeRoute(),
+        CategoryRoute(),
       ],
       bottomNavigationBuilder: (_, tabRouter) {
         return BottomMenubar(

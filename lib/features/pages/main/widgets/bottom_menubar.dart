@@ -2,21 +2,130 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 
-/// Bottom Menubar - Custom navigation bar for Happyco
-/// 
-/// Based on Figma Design Node 1-728
-/// Features:
-/// - Individual items for Home, Category, News, and Account
-/// - Floating center Buy button
-/// - Custom styling with red-tinted shadow and top rounded corners
+/// Custom bottom navigation bar with floating buy button for Happyco app.
+///
+/// This widget provides the main app navigation with four standard tabs
+/// (Home, Category, News, Account) and a prominent floating "Buy" button
+/// in the center. The bar features rounded top corners and a subtle shadow
+/// for visual depth.
+///
+/// **Used in:**
+/// - [HomePage]: Main navigation throughout the home experience
+/// - [CategoryPage]: Navigation while browsing categories
+/// - [NewsPage]: Navigation while reading articles
+/// - [AccountPage]: Navigation while managing account
+/// - All authenticated pages requiring main app navigation
+///
+/// **Design Specs (Figma node 1:728):**
+/// - Container height: 80px (top padding: 16px, content: 40px, bottom padding: 24px)
+/// - Top border radius: 24px on both corners
+/// - Horizontal padding: 16px
+/// - Shadow color: Red-tinted (#D32D27 with opacity)
+/// - Shadow blur radius: 4px
+/// - Nav item icon size: 24x24px
+/// - Nav item label font: 10sp
+/// - Nav item label weight: 600 (active) / 400 (inactive)
+/// - Nav item spacing: space-around
+/// - Center button diameter: 56px
+/// - Center button vertical offset: -16px (floating above bar)
+/// - Active color: Primary (#D32D27)
+/// - Inactive color: Gray 500 (#9CA3AF)
+///
+/// **Features:**
+/// - Four standard navigation items with icons and labels
+/// - Floating circular "Buy" button in center
+/// - Visual feedback for active/inactive states
+/// - Rounded top corners for modern look
+/// - SafeArea support for proper padding on different devices
+/// - Custom red-tinted shadow for brand consistency
+///
+/// **Navigation Structure:**
+/// ```
+/// Index 0: Trang chủ (Home)
+/// Index 1: Danh mục (Category)
+/// Index 2: Tin tức (News)
+/// Index 3: Tài khoản (Account)
+/// Center: Buy button (independent callback)
+/// ```
+///
+/// **Example:**
+/// ```dart
+/// int currentIndex = 0;
+///
+/// BottomMenubar(
+///   currentIndex: currentIndex,
+///   onTap: (index) {
+///     setState(() {
+///       currentIndex = index;
+///       // Handle navigation to corresponding page
+///     });
+///   },
+///   onBuyTap: () {
+///     // Handle buy button action
+///     showCartBottomSheet();
+///   },
+/// )
+/// ```
+///
+/// **Example (With State Management):**
+/// ```dart
+/// BlocBuilder<NavigationBloc, NavigationState>(
+///   builder: (context, state) {
+///     return BottomMenubar(
+///       currentIndex: state.currentIndex,
+///       onTap: (index) => context
+///           .read<NavigationBloc>()
+///           .add(NavigateToIndex(index)),
+///       onBuyTap: () => context
+///           .read<CartBloc>()
+///           .add(OpenCart()),
+///     );
+///   },
+/// )
+/// ```
+///
+/// **See also:**
+/// - [BottomNavigationBar]: Material Design bottom navigation bar
+/// - [FloatingActionButton]: For alternative floating button pattern
 class BottomMenubar extends StatelessWidget {
-  /// Current active tab index
+  /// The index of the currently active navigation tab.
+  ///
+  /// Valid values are 0-3, corresponding to:
+  /// - 0: Home (Trang chủ)
+  /// - 1: Category (Danh mục)
+  /// - 2: News (Tin tức)
+  /// - 3: Account (Tài khoản)
+  ///
+  /// The active tab is highlighted with the primary color and bold text weight.
   final int currentIndex;
 
-  /// Callback when a tab is tapped
+  /// Callback when a navigation tab is tapped.
+  ///
+  /// Called with the [int] index of the tapped tab (0-3).
+  /// Typically used to update [currentIndex] and navigate to the
+  /// corresponding page.
+  ///
+  /// Example:
+  /// ```dart
+  /// onTap: (index) {
+  ///   setState(() => currentIndex = index);
+  ///   switch(index) {
+  ///     case 0: navigateToHome(); break;
+  ///     case 1: navigateToCategory(); break;
+  ///     case 2: navigateToNews(); break;
+  ///     case 3: navigateToAccount(); break;
+  ///   }
+  /// }
+  /// ```
   final ValueChanged<int> onTap;
 
-  /// Callback when the center buy button is tapped
+  /// Callback when the center floating "Buy" button is tapped.
+  ///
+  /// This button is independent of the tab navigation and is typically
+  /// used to quickly access the shopping cart, create a new order, or
+  /// perform other buy-related actions.
+  ///
+  /// If null, the button is still displayed but tap is disabled.
   final VoidCallback? onBuyTap;
 
   const BottomMenubar({
@@ -89,7 +198,6 @@ class BottomMenubar extends StatelessWidget {
             ),
           ),
         ),
-
         Positioned(
           top: -UISizes.height.h16,
           left: 0,
@@ -103,11 +211,39 @@ class BottomMenubar extends StatelessWidget {
   }
 }
 
-/// Individual Navigation Item
+/// Individual navigation item widget for bottom menu bar.
+///
+/// Displays a navigation item with an SVG icon and text label below it.
+/// Changes color and font weight based on active/inactive state.
+///
+/// **Design Specs:**
+/// - Icon size: 24x24px
+/// - Label font: 10sp
+/// - Label weight: 600 (active) / 400 (inactive)
+/// - Active color: Primary (#D32D27)
+/// - Inactive color: Gray 500 (#9CA3AF)
 class _NavItem extends StatelessWidget {
+  /// The text label to display below the icon.
+  ///
+  /// Typically a short Vietnamese label like "Trang chủ", "Danh mục", etc.
   final String label;
+
+  /// The SVG asset path for the icon.
+  ///
+  /// Should be a path relative to the assets folder, e.g., UISvgs.navHome.
   final String svgPath;
+
+  /// Whether this navigation item is currently active.
+  ///
+  /// When true, the icon and label are displayed in the primary color
+  /// with bold (600) font weight. When false, they use gray color with
+  /// normal (400) font weight.
   final bool isActive;
+
+  /// Callback when this navigation item is tapped.
+  ///
+  /// Typically used to update the [BottomMenubar.currentIndex] and
+  /// navigate to the corresponding page.
   final VoidCallback onTap;
 
   const _NavItem({
@@ -148,8 +284,23 @@ class _NavItem extends StatelessWidget {
   }
 }
 
-/// Floating Center Buy Button
+/// Floating circular buy button for the bottom menu bar.
+///
+/// This button floats above the navigation bar with the buy cart icon.
+/// It has a circular shape with the primary background color and white icon.
+///
+/// **Design Specs:**
+/// - Diameter: 56px
+/// - Background: Primary color (#D32D27)
+/// - Icon: 24x24px, white color
+/// - Vertical offset: -16px (floats above bar)
+/// - Shadow: Red-tinted, 4px blur radius
 class _CenterBuyButton extends StatelessWidget {
+  /// Callback when the buy button is tapped.
+  ///
+  /// Typically used to open the shopping cart, show a buy dialog,
+  /// or navigate to a checkout flow. If null, the tap interaction
+  /// is disabled.
   final VoidCallback? onTap;
 
   const _CenterBuyButton({this.onTap});
@@ -177,7 +328,8 @@ class _CenterBuyButton extends StatelessWidget {
             UISvgs.navBuy,
             width: UISizes.width.w24,
             height: UISizes.width.w24,
-            colorFilter: const ColorFilter.mode(UIColors.white, BlendMode.srcIn),
+            colorFilter:
+                const ColorFilter.mode(UIColors.white, BlendMode.srcIn),
           ),
         ),
       ),

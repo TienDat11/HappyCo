@@ -33,10 +33,8 @@ class HomeHeader extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: UISizes.width.w16),
             child: Row(
               children: [
-                // Search bar
                 Expanded(child: _buildSearchBar()),
                 SizedBox(width: UISizes.width.w12),
-                // Notification
                 _buildNotification(),
               ],
             ),
@@ -103,7 +101,6 @@ class HomeHeader extends StatelessWidget {
             color: UIColors.gray700,
           ),
         ),
-        // Badge counter
         Positioned(
           top: 0,
           right: -2,
