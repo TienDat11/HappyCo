@@ -1,3 +1,4 @@
+import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:happyco/domain/domain_locator.config.dart';
@@ -22,6 +23,11 @@ void setupDomainLocator() {
   );
   domainLocator.registerFactory<GetRecommendedProductsUseCase>(
     () => GetRecommendedProductsUseCase(
+      repository: domainLocator<ProductRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<GetCategoryProductsUseCase>(
+    () => GetCategoryProductsUseCase(
       repository: domainLocator<ProductRepository>(),
     ),
   );

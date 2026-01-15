@@ -6,37 +6,149 @@ import 'package:happyco/domain/repositories/product_repository.dart';
 /// Provides mock data for development.
 /// Replace with ProductRepositoryImpl connected to API for production.
 class ProductRepositoryMock implements ProductRepository {
+  /// Mock data for all 8 categories
+  final Map<String, List<ProductEntity>> _mockData;
+
+  ProductRepositoryMock()
+      : _mockData = {
+          'dining_set': [
+            ProductEntity(
+              id: 'ds_1',
+              name: 'Bộ bàn ăn gỗ sồi 6 ghế',
+              priceInVnd: 12500000,
+              oldPriceInVnd: 15000000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1617806118233-18e1de247200d2?w=400',
+              category: 'dining_set',
+              isFeatured: true,
+            ),
+            ProductEntity(
+              id: 'ds_2',
+              name: 'Bàn ăn gỗ hương thơm 6 ghế',
+              priceInVnd: 890000,
+              oldPriceInVnd: 10500000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1617806118233-18e1de247200d2?w=400',
+              category: 'dining_set',
+              isFeatured: false,
+            ),
+          ],
+          'dining_chair': [
+            ProductEntity(
+              id: 'dc_1',
+              name: 'Ghế ăn gỗ tự nhiên',
+              priceInVnd: 1200000,
+              oldPriceInVnd: 15000000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1592078615290-033ee584e267d2?w=400',
+              category: 'dining_chair',
+              isFeatured: true,
+            ),
+          ],
+          'sofa': [
+            ProductEntity(
+              id: 'sf_1',
+              name: 'Sofa gỗ óc chó',
+              priceInVnd: 12800000,
+              oldPriceInVnd: 15000000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+              category: 'sofa',
+              isFeatured: true,
+            ),
+          ],
+          'shoe_cabinet': [
+            ProductEntity(
+              id: 'sc_1',
+              name: 'Tủ giày cao cấp',
+              priceInVnd: 1620000,
+              oldPriceInVnd: 17000000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1617806118233-18e1de247200d2?w=400',
+              category: 'shoe_cabinet',
+              isFeatured: true,
+            ),
+          ],
+          'vanity_table': [
+            ProductEntity(
+              id: 'vt_1',
+              name: 'Bàn trang điểm gỗ',
+              priceInVnd: 4500000,
+              oldPriceInVnd: 520000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-15946203022009a762244a156bd?w=400',
+              category: 'vanity_table',
+              isFeatured: true,
+            ),
+          ],
+          'altar': [
+            ProductEntity(
+              id: 'at_1',
+              name: 'Tủ thờ gỗ cao cấp',
+              priceInVnd: 890000,
+              oldPriceInVnd: 10500000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1617806118233-18e1de247200d2?w=400',
+              category: 'altar',
+              isFeatured: true,
+            ),
+          ],
+          'display_shelf': [
+            ProductEntity(
+              id: 'ds_1',
+              name: 'Kệ sách gỗ pine',
+              priceInVnd: 230000,
+              oldPriceInVnd: 280000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=400',
+              category: 'display_shelf',
+              isFeatured: true,
+            ),
+          ],
+          'kitchen_cabinet': [
+            ProductEntity(
+              id: 'kc_1',
+              name: 'Tủ bếp gỗ sồi',
+              priceInVnd: 670000,
+              oldPriceInVnd: 750000,
+              imageUrl:
+                  'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=400',
+              category: 'kitchen_cabinet',
+              isFeatured: true,
+            ),
+          ],
+        };
+
   @override
   Future<List<ProductEntity>> getFeaturedProducts() async {
-    // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 1000));
 
     return const [
       ProductEntity(
         id: '1',
         name: 'Bàn ăn gỗ sồi',
-        priceInVnd: 5500000,
-        oldPriceInVnd: 6500000,
+        priceInVnd: 550000,
+        oldPriceInVnd: 650000,
         imageUrl:
-            'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=400',
+            'https://images.unsplash.com/photo-1617806118233-18e1de247200d2?w=400',
         category: 'table',
         isFeatured: true,
       ),
       ProductEntity(
         id: '2',
         name: 'Ghế gỗ tự nhiên',
-        priceInVnd: 1200000,
-        oldPriceInVnd: 1500000,
+        priceInVnd: 120000,
+        oldPriceInVnd: 150000,
         imageUrl:
-            'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400',
+            'https://images.unsplash.com/photo-1592078615290-033ee584e267d2?w=400',
         category: 'chair',
         isFeatured: true,
       ),
       ProductEntity(
         id: '3',
         name: 'Sofa gỗ óc chó',
-        priceInVnd: 12800000,
-        oldPriceInVnd: 15000000,
+        priceInVnd: 128000,
+        oldPriceInVnd: 150000,
         imageUrl:
             'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
         category: 'sofa',
@@ -45,10 +157,10 @@ class ProductRepositoryMock implements ProductRepository {
       ProductEntity(
         id: '4',
         name: 'Kệ sách gỗ pine',
-        priceInVnd: 2300000,
-        oldPriceInVnd: 2800000,
+        priceInVnd: 230000,
+        oldPriceInVnd: 280000,
         imageUrl:
-            'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=400',
+            'https://images.unsplash.com/photo-15946203022009a762244a156bd?w=400',
         category: 'shelf',
         isFeatured: true,
       ),
@@ -63,38 +175,42 @@ class ProductRepositoryMock implements ProductRepository {
       ProductEntity(
         id: '5',
         name: 'Tủ áo gỗ thông',
-        priceInVnd: 4200000,
-        oldPriceInVnd: 5000000,
+        priceInVnd: 420000,
+        oldPriceInVnd: 500000,
         imageUrl:
             'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=400',
         category: 'wardrobe',
+        isFeatured: false,
       ),
       ProductEntity(
         id: '6',
         name: 'Bàn làm việc hiện đại',
-        priceInVnd: 3500000,
-        oldPriceInVnd: 4200000,
+        priceInVnd: 350000,
+        oldPriceInVnd: 420000,
         imageUrl:
-            'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400',
+            'https://images.unsplash.com/photo-1592078615290-033ee584e267d2?w=400',
         category: 'desk',
+        isFeatured: false,
       ),
       ProductEntity(
         id: '7',
         name: 'Giường ngủ đôi',
-        priceInVnd: 8900000,
+        priceInVnd: 890000,
         oldPriceInVnd: 10500000,
         imageUrl:
-            'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400',
+            'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
         category: 'bed',
+        isFeatured: false,
       ),
       ProductEntity(
         id: '8',
         name: 'Kệ TV gỗ tự nhiên',
-        priceInVnd: 6700000,
-        oldPriceInVnd: 7500000,
+        priceInVnd: 670000,
+        oldPriceInVnd: 750000,
         imageUrl:
-            'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=400',
+            'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
         category: 'shelf',
+        isFeatured: false,
       ),
     ];
   }
@@ -103,12 +219,13 @@ class ProductRepositoryMock implements ProductRepository {
   Future<List<ProductEntity>> getProductsByCategory(String categoryId) async {
     await Future.delayed(const Duration(milliseconds: 300));
 
-    final allProducts = [
-      ...await getFeaturedProducts(),
-      ...await getRecommendedProducts(),
-    ];
+    final categoryData = _mockData[categoryId];
 
-    return allProducts.where((p) => p.category == categoryId).toList();
+    if (categoryData != null && categoryData.isNotEmpty) {
+      return categoryData;
+    }
+
+    return [];
   }
 
   @override

@@ -5,10 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
-import 'package:happyco/features/pages/home/widgets/home_banner.dart';
-import 'package:happyco/features/pages/home/widgets/home_categories.dart';
-import 'package:happyco/features/pages/home/widgets/home_header.dart';
-import 'package:happyco/features/pages/home/widgets/home_product_grid.dart';
+import 'package:happyco/features/widgets/sections/promotional_banner.dart';
+import 'package:happyco/features/widgets/sections/home_categories.dart';
+import 'package:happyco/features/widgets/common/home_header.dart';
+import 'package:happyco/features/widgets/product/product_grid.dart';
 
 /// Home Page - Vietnamese Furniture E-commerce
 ///
@@ -73,17 +73,17 @@ class _HomePageContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: UISizes.height.h16),
-          const HomeBanner(isLoading: true),
+          const PromotionalBanner(isLoading: true),
           SizedBox(height: UISizes.height.h24),
           HomeCategories(isLoading: true),
           SizedBox(height: UISizes.height.h24),
-          const HomeProductGrid(
+          const ProductGrid(
             title: 'Sản phẩm nổi bật',
             isLoading: true,
             products: [],
           ),
           SizedBox(height: UISizes.height.h24),
-          const HomeProductGrid(
+          const ProductGrid(
             title: 'Gợi ý hôm nay',
             isLoading: true,
             products: [],
@@ -93,7 +93,6 @@ class _HomePageContent extends StatelessWidget {
       ),
     );
   }
-
 
   /// Displays error state with retry button
   Widget _buildErrorState(BuildContext context, String error) {
@@ -146,11 +145,11 @@ class _HomePageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: UISizes.height.h16),
-            const HomeBanner(),
+            const PromotionalBanner(),
             SizedBox(height: UISizes.height.h24),
             HomeCategories(),
             SizedBox(height: UISizes.height.h24),
-            HomeProductGrid(
+            ProductGrid(
               title: 'Sản phẩm nổi bật',
               actionText: 'Xem tất cả',
               onActionTap: () {
@@ -161,7 +160,7 @@ class _HomePageContent extends StatelessWidget {
               onAddToCart: _onAddToCart,
             ),
             SizedBox(height: UISizes.height.h24),
-            HomeProductGrid(
+            ProductGrid(
               title: 'Gợi ý hôm nay',
               actionText: 'Xem tất cả',
               onActionTap: () {

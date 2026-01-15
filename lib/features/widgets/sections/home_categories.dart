@@ -7,11 +7,13 @@ import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
 
 /// Home Category Item Model
 class HomeCategoryItem {
+  final String id;
   final String imageUrl;
   final String label;
   final VoidCallback? onTap;
 
   const HomeCategoryItem({
+    required this.id,
     required this.imageUrl,
     required this.label,
     this.onTap,
@@ -23,37 +25,44 @@ class HomeCategoryItem {
 /// Horizontal scrollable list of category images with labels
 /// Displays 8 furniture categories wrapped in a card
 class HomeCategories extends StatelessWidget {
-
   static final _defaultCategories = [
     const HomeCategoryItem(
+      id: 'dining_set',
       imageUrl: UIImages.categoryDiningSet,
       label: 'Bộ bàn ăn',
     ),
     const HomeCategoryItem(
+      id: 'dining_chair',
       imageUrl: UIImages.categoryDiningChair,
       label: 'Ghế ăn',
     ),
     const HomeCategoryItem(
+      id: 'sofa',
       imageUrl: UIImages.categorySofa,
       label: 'Sofa gỗ',
     ),
     const HomeCategoryItem(
+      id: 'shoe_cabinet',
       imageUrl: UIImages.categoryShoeCabinet,
       label: 'Tủ giày',
     ),
     const HomeCategoryItem(
+      id: 'vanity_table',
       imageUrl: UIImages.categoryVanityTable,
       label: 'Bàn trang điểm',
     ),
     const HomeCategoryItem(
+      id: 'altar',
       imageUrl: UIImages.categoryAltar,
       label: 'Tủ thờ',
     ),
     const HomeCategoryItem(
+      id: 'display_shelf',
       imageUrl: UIImages.categoryDisplayShelf,
       label: 'Kệ trang trí',
     ),
     const HomeCategoryItem(
+      id: 'kitchen_cabinet',
       imageUrl: UIImages.categoryKitchenCabinet,
       label: 'Tủ bếp',
     ),
@@ -61,11 +70,15 @@ class HomeCategories extends StatelessWidget {
 
   final List<HomeCategoryItem> categories;
   final bool isLoading;
+  final String? selectedCategoryId;
+  final ValueChanged<String>? onCategoryTap;
 
   HomeCategories({
     super.key,
     List<HomeCategoryItem>? categories,
     this.isLoading = false,
+    this.selectedCategoryId,
+    this.onCategoryTap,
   }) : categories = categories ?? _defaultCategories;
 
   @override
@@ -99,8 +112,12 @@ class HomeCategories extends StatelessWidget {
 
   /// Builds individual category item with image and label
   Widget _buildCategoryItem(HomeCategoryItem category) {
+    final isSelected = selectedCategoryId == category.id;
+
     return GestureDetector(
-      onTap: category.onTap,
+      onTap: onCategoryTap != null
+          ? () => onCategoryTap!(category.id)
+          : category.onTap,
       child: Container(
         margin: EdgeInsets.only(right: UISizes.width.w12),
         child: Column(
@@ -119,6 +136,12 @@ class HomeCategories extends StatelessWidget {
                     offset: const Offset(0, 0),
                   ),
                 ],
+                border: isSelected
+                    ? Border.all(
+                        color: UIColors.primary,
+                        width: 0.5,
+                      )
+                    : null,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(UISizes.square.r8),

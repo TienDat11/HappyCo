@@ -1,9 +1,11 @@
+import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:happyco/features/feature_locator.config.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_recommended_products_usecase.dart';
+import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 
 final featureLocator = GetIt.instance;
 
@@ -20,6 +22,11 @@ void setupFeatureLocator() {
       getFeaturedProductsUseCase: featureLocator<GetFeaturedProductsUseCase>(),
       getRecommendedProductsUseCase:
           featureLocator<GetRecommendedProductsUseCase>(),
+    ),
+  );
+  featureLocator.registerFactory<CategoryBloc>(
+    () => CategoryBloc(
+      getCategoryProductsUseCase: featureLocator<GetCategoryProductsUseCase>(),
     ),
   );
 

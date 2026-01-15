@@ -18,22 +18,28 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-    // Main route with bottom navigation (AutoTabsScaffold)
-    AutoRoute(
-      page: MainRoute.page,
-      path: '/main',
-      initial: true,
-      children: [
-        // Home tab (initial)
+        // Main route with bottom navigation (AutoTabsScaffold)
         AutoRoute(
-          page: HomeRoute.page,
-          path: 'home',
+          page: MainRoute.page,
+          path: '/main',
           initial: true,
+          children: [
+            // Home tab (initial)
+            AutoRoute(
+              page: HomeRoute.page,
+              path: 'home',
+              initial: true,
+            ),
+            // Category tab
+            AutoRoute(
+              page: CategoryRoute.page,
+              path: 'category',
+            ),
+            // Placeholder for future tabs
+
+            // AutoRoute(page: ProductsRoute.page, path: 'products'),
+            // AutoRoute(page: ProfileRoute.page, path: 'profile'),
+          ],
         ),
-        // Placeholder for future tabs
-        // AutoRoute(page: ProductsRoute.page, path: 'products'),
-        // AutoRoute(page: ProfileRoute.page, path: 'profile'),
-      ],
-    ),
-  ];
+      ];
 }
