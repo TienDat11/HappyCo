@@ -10,6 +10,13 @@
 /// ```
 class UIImages {
   // ========================================
+  // APP LOGO
+  // ========================================
+
+  /// Happyco logo (PNG for splash screen and launcher icon)
+  static const String logo = 'assets/images/logo.png';
+
+  // ========================================
   // BANNER IMAGES
   // ========================================
 

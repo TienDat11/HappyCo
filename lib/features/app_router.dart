@@ -4,6 +4,7 @@ import 'package:happyco/features/app_router.gr.dart';
 /// App Router - Minimal configuration for Happyco
 ///
 /// Routes:
+/// - SplashRoute (initial - app launch)
 /// - MainRoute (with AutoTabsScaffold for bottom nav)
 ///   - HomeRoute (initial tab)
 ///
@@ -18,19 +19,21 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        // Main route with bottom navigation (AutoTabsScaffold)
+        // Splash route (initial - app launch)
+        AutoRoute(
+          page: SplashRoute.page,
+          path: '/splash',
+          initial: true,
+        ),
         AutoRoute(
           page: MainRoute.page,
           path: '/main',
-          initial: true,
           children: [
-            // Home tab (initial)
             AutoRoute(
               page: HomeRoute.page,
               path: 'home',
               initial: true,
             ),
-            // Category tab
             AutoRoute(
               page: CategoryRoute.page,
               path: 'category',
