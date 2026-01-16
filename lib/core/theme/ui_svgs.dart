@@ -1,6 +1,6 @@
 /// SVG Asset Paths for Happyco Design System
 ///
-/// This class contains constant paths to all SVG assets used in the app.
+/// This class contains constant paths to all SVG assets used in app.
 /// Add your SVG files to assets/svgs/ and reference them here.
 ///
 /// Usage:
