@@ -217,6 +217,9 @@ Desktop.ini
 # AI Skills infrastructure
 .skills/
 
+# Skill files (local AI development)
+*.skill
+
 # AI Documentation (keep local)
 CLAUDE.md
 INDEX.md

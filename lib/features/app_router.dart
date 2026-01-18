@@ -38,6 +38,10 @@ class AppRouter extends RootStackRouter {
               page: CategoryRoute.page,
               path: 'category',
             ),
+            AutoRoute(
+              page: NewsRoute.page,
+              path: 'news',
+            ),
             // Placeholder for future tabs
 
             // AutoRoute(page: ProductsRoute.page, path: 'products'),

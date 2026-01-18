@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:happyco/core/config/app_constants.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
@@ -111,8 +112,8 @@ class _CategoryPageContent extends StatelessWidget {
             onPressed: () {
               context.read<CategoryBloc>().add(OnCategoryRefresh());
             },
-            child: UIText(
-              title: 'Thử lại',
+            child: const UIText(
+              title: AppErrorMessages.retry,
               titleColor: UIColors.white,
             ),
           ),
@@ -184,17 +185,17 @@ class _CategoryPageContent extends StatelessWidget {
   }
 
   String _getCategoryName(String categoryId) {
-    const categoryNames = {
-      'dining_set': 'Bộ bàn ăn',
-      'dining_chair': 'Ghế ăn',
-      'sofa': 'Sofa gỗ',
-      'shoe_cabinet': 'Tủ giày',
-      'vanity_table': 'Bàn trang điểm',
-      'altar': 'Tủ thờ',
-      'display_shelf': 'Kệ trang trí',
-      'kitchen_cabinet': 'Tủ bếp',
+    final categoryNames = {
+      AppCategoryIds.diningSet: AppCategoryNames.diningSet,
+      AppCategoryIds.diningChair: AppCategoryNames.diningChair,
+      AppCategoryIds.sofa: AppCategoryNames.sofa,
+      AppCategoryIds.shoeCabinet: AppCategoryNames.shoeCabinet,
+      AppCategoryIds.vanityTable: AppCategoryNames.vanityTable,
+      AppCategoryIds.altar: AppCategoryNames.altar,
+      AppCategoryIds.displayShelf: AppCategoryNames.displayShelf,
+      AppCategoryIds.kitchenCabinet: AppCategoryNames.kitchenCabinet,
     };
-    return categoryNames[categoryId] ?? 'Sản phẩm';
+    return categoryNames[categoryId] ?? AppSectionTitles.products;
   }
 
   void _onProductTap(ProductEntity product) {

@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:happyco/core/config/app_constants.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
+import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
 import 'package:happyco/features/widgets/sections/promotional_banner.dart';
@@ -78,13 +80,13 @@ class _HomePageContent extends StatelessWidget {
           HomeCategories(isLoading: true),
           SizedBox(height: UISizes.height.h24),
           const ProductGrid(
-            title: 'Sản phẩm nổi bật',
+            title: AppSectionTitles.featuredProducts,
             isLoading: true,
             products: [],
           ),
           SizedBox(height: UISizes.height.h24),
           const ProductGrid(
-            title: 'Gợi ý hôm nay',
+            title: AppSectionTitles.recommendedProducts,
             isLoading: true,
             products: [],
           ),
@@ -106,20 +108,16 @@ class _HomePageContent extends StatelessWidget {
             color: UIColors.gray400,
           ),
           SizedBox(height: UISizes.height.h16),
-          Text(
-            'Đã có lỗi xảy ra',
-            style: TextStyle(
-              fontSize: UISizes.font.sp16,
-              color: UIColors.gray600,
-            ),
+          UIText(
+            title: AppErrorMessages.genericError,
+            titleSize: UISizes.font.sp16,
+            titleColor: UIColors.gray600,
           ),
           SizedBox(height: UISizes.height.h8),
-          Text(
-            error,
-            style: TextStyle(
-              fontSize: UISizes.font.sp14,
-              color: UIColors.gray400,
-            ),
+          UIText(
+            title: error,
+            titleSize: UISizes.font.sp14,
+            titleColor: UIColors.gray400,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: UISizes.height.h24),
@@ -127,7 +125,10 @@ class _HomePageContent extends StatelessWidget {
             onPressed: () {
               context.read<HomeBloc>().add(OnHomeRefresh());
             },
-            child: const Text('Thử lại'),
+            child: const UIText(
+              title: AppErrorMessages.retry,
+              titleColor: UIColors.white,
+            ),
           ),
         ],
       ),
@@ -150,8 +151,8 @@ class _HomePageContent extends StatelessWidget {
             HomeCategories(),
             SizedBox(height: UISizes.height.h24),
             ProductGrid(
-              title: 'Sản phẩm nổi bật',
-              actionText: 'Xem tất cả',
+              title: AppSectionTitles.featuredProducts,
+              actionText: AppActionTexts.viewAll,
               onActionTap: () {
                 // Navigate to all featured products
               },
@@ -161,8 +162,8 @@ class _HomePageContent extends StatelessWidget {
             ),
             SizedBox(height: UISizes.height.h24),
             ProductGrid(
-              title: 'Gợi ý hôm nay',
-              actionText: 'Xem tất cả',
+              title: AppSectionTitles.recommendedProducts,
+              actionText: AppActionTexts.viewAll,
               onActionTap: () {
                 // Navigate to all recommended products
               },
