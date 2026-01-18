@@ -210,3 +210,21 @@ firebase.json
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# ============================================================================
+# AI SKILLS & DEVELOPMENT TOOLS (Local use only)
+# ============================================================================
+# AI Skills infrastructure
+.skills/
+
+# AI Documentation (keep local)
+CLAUDE.md
+INDEX.md
+QUICK_START.md
+SKILLS_README.md
+NEXT_STEPS.md
+prompt.md
+
+# Beads task management (local AI memory)
+.beads/
+*.bead
