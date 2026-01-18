@@ -18,6 +18,7 @@ class MainScreen extends StatelessWidget {
       routes: const [
         HomeRoute(),
         CategoryRoute(),
+        NewsRoute(),
       ],
       bottomNavigationBuilder: (_, tabRouter) {
         return BottomMenubar(
