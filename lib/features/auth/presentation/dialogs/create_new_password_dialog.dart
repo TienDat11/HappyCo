@@ -4,7 +4,6 @@ import 'package:happyco/core/theme/ui_sizes.dart';
 import 'package:happyco/core/ui/dialogs/dialog_config.dart';
 import 'package:happyco/core/ui/widgets/buttons/ui_button.dart';
 import 'package:happyco/core/ui/widgets/inputs/ui_text_input.dart';
-import 'package:happyco/core/ui/widgets/labels/ui_sub_text.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 
 /// Create new password Dialog
@@ -42,7 +41,6 @@ class _CreateNewPasswordDialogState extends State<CreateNewPasswordDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Logo placeholder (109x52)
           SizedBox(
             width: UISizes.width.w109,
             height: UISizes.height.h52,
@@ -58,7 +56,6 @@ class _CreateNewPasswordDialogState extends State<CreateNewPasswordDialog> {
 
           SizedBox(height: UISizes.height.h16),
 
-          // Title
           UIText(
             title: 'Tạo mật khẩu mới',
             titleSize: UISizes.font.sp18,
@@ -76,7 +73,6 @@ class _CreateNewPasswordDialogState extends State<CreateNewPasswordDialog> {
           _bulletText('Không chứa các ký tự đặc biệt'),
 
           SizedBox(height: UISizes.height.h8),
-          // New Password input
           const UITextInput(
             label: 'Mật khẩu mới',
             placeholder: 'Vui lòng nhập',
@@ -87,7 +83,6 @@ class _CreateNewPasswordDialogState extends State<CreateNewPasswordDialog> {
 
           SizedBox(height: UISizes.height.h8),
 
-          // Verify Password input
           const UITextInput(
             label: 'Nhập lại mật khẩu',
             placeholder: 'Vui lòng nhập',
@@ -98,7 +93,6 @@ class _CreateNewPasswordDialogState extends State<CreateNewPasswordDialog> {
 
           SizedBox(height: UISizes.height.h12),
 
-          // Suggest button
           UIButton(
             text: 'Xác nhận',
             onPressed: widget.onSuggest,

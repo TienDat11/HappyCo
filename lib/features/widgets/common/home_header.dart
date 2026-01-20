@@ -110,10 +110,6 @@ class HomeHeader extends StatelessWidget {
             right: -2,
             child: Container(
               padding: EdgeInsets.all(UISizes.width.w1),
-              decoration: const BoxDecoration(
-                color: UIColors.white,
-                shape: BoxShape.circle,
-              ),
               child: Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: UISizes.width.w4,

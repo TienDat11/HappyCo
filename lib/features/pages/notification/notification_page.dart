@@ -7,8 +7,10 @@ import 'package:happyco/core/theme/ui_colors.dart';
 import 'package:happyco/core/theme/ui_sizes.dart';
 import 'package:happyco/core/theme/ui_svgs.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
+import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
 import 'package:happyco/features/app_router.gr.dart';
 import 'package:happyco/features/pages/notification/bloc/notification_page_bloc.dart';
+import 'package:happyco/features/pages/notification/widget/notification_item_shimmer.dart';
 import 'package:happyco/features/pages/notification/widget/notification_item_widget.dart';
 import 'package:happyco/features/widgets/common/main_appbar.dart';
 
@@ -40,6 +42,7 @@ class _NotificationPageContent extends StatelessWidget {
             child: BlocBuilder<NotificationPageBloc, NotificationPageState>(
               builder: (context, state) {
                 if (state is NotificationLoading) {
+                  debugPrint('🔥 LOADING STATE');
                   return _buildLoadingState();
                 }
 
@@ -68,9 +71,9 @@ class _NotificationPageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: UISizes.height.h16),
-            _buildHeader(unreadCount: 0),
+            _buildHeaderShimmer(),
             SizedBox(height: UISizes.height.h16),
-            const NotificationItemWidget(items: []),
+            _buildNotificationListShimmer(),
             SizedBox(height: UISizes.height.h24),
           ],
         ),
@@ -217,6 +220,47 @@ class _NotificationPageContent extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildNotificationListShimmer() {
+    return Column(
+      children: List.generate(
+        6,
+        (_) => const Padding(
+          padding: EdgeInsets.only(bottom: 12),
+          child: NotificationItemShimmer(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderShimmer() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // Left text shimmer
+        HappyShimmer.rounded(
+          width: UISizes.width.w140,
+          height: UISizes.height.h16,
+          borderRadius: UISizes.square.r6,
+        ),
+
+        // Right action shimmer
+        Row(
+          children: [
+            HappyShimmer.rounded(
+              width: UISizes.width.w90,
+              height: UISizes.height.h16,
+              borderRadius: UISizes.square.r6,
+            ),
+            SizedBox(width: UISizes.width.w8),
+            HappyShimmer.circular(
+              size: UISizes.font.sp24,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -3,9 +3,9 @@ import 'package:happyco/core/theme/ui_colors.dart';
 import 'package:happyco/core/theme/ui_sizes.dart';
 import 'package:happyco/core/ui/dialogs/dialog_config.dart';
 import 'package:happyco/core/ui/widgets/buttons/ui_button.dart';
-import 'package:happyco/core/ui/widgets/labels/ui_sub_text.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 
+/// OTP verift password Dialog
 class OtpVerifyDialog extends StatefulWidget {
   final DialogConfig config;
   final VoidCallback? onConfirm;
@@ -51,7 +51,6 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          /// Logo
           SizedBox(
             width: UISizes.width.w109,
             height: UISizes.height.h52,
@@ -67,7 +66,6 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
 
           SizedBox(height: UISizes.height.h16),
 
-          /// Title
           UIText(
             title: 'Nhập mã OTP',
             titleSize: UISizes.font.sp18,
@@ -85,7 +83,6 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
 
           SizedBox(height: UISizes.height.h16),
 
-          /// OTP inputs
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(
@@ -96,7 +93,6 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
 
           SizedBox(height: UISizes.height.h24),
 
-          /// Confirm button
           UIButton(
             text: 'Xác nhận',
             onPressed: widget.onConfirm,

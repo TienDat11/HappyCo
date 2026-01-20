@@ -4,9 +4,9 @@ import 'package:happyco/core/theme/ui_sizes.dart';
 import 'package:happyco/core/ui/dialogs/dialog_config.dart';
 import 'package:happyco/core/ui/widgets/buttons/ui_button.dart';
 import 'package:happyco/core/ui/widgets/inputs/ui_text_input.dart';
-import 'package:happyco/core/ui/widgets/labels/ui_sub_text.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 
+/// Forgot password Dialog
 class ForgotPasswordDialog extends StatefulWidget {
   final DialogConfig config;
   final VoidCallback? onSuggest;
@@ -37,7 +37,6 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Logo placeholder (109x52)
           SizedBox(
             width: UISizes.width.w109,
             height: UISizes.height.h52,
@@ -53,7 +52,6 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
 
           SizedBox(height: UISizes.height.h16),
 
-          // Title
           UIText(
             title: 'Quên mật khẩu',
             titleSize: UISizes.font.sp18,
@@ -67,7 +65,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
             titleColor: UIColors.textSecondary,
             ),
           SizedBox(height: UISizes.height.h8),
-          // New Password input
+
           const UITextInput(
             label: 'Số điện thoại',
             placeholder: 'Vui lòng nhập',
@@ -78,7 +76,6 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
 
           SizedBox(height: UISizes.height.h12),
 
-          // Suggest button
           UIButton(
             text: 'Xác nhận',
             onPressed: widget.onSuggest,
@@ -90,3 +87,4 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
     );
   }
 }
+  
