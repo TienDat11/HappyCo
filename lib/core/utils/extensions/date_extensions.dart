@@ -21,6 +21,19 @@ extension DateTimeExtensions on DateTime {
     return '$dateStr $hourStr:$minuteStr';
   }
 
+  String toVietnameseAmPmDateTimeFormat() {
+    final hour12 = hour % 12 == 0 ? 12 : hour % 12;
+    final hourStr = hour12.toString().padLeft(2, '0');
+    final minuteStr = minute.toString().padLeft(2, '0');
+    final period = hour >= 12 ? 'PM' : 'AM';
+
+    final dayStr = day.toString().padLeft(2, '0');
+    final monthStr = month.toString().padLeft(2, '0');
+    final yearStr = year.toString();
+
+    return '$hourStr:$minuteStr $period, $dayStr/$monthStr/$yearStr';
+  }
+
   /// Format date as Vietnamese long format
   /// Example: "Tháng 1, 2024"
   String toVietnameseLongFormat() {

@@ -102,6 +102,7 @@ class UIWidthSizes {
   double get w99 => 99.w;
   double get w100 => 100.w;
   double get w109 => 109.w;
+  double get w112 => 112.w;
   double get w124 => 124.w;
   double get w128 => 128.w;
   double get w133 => 133.w;

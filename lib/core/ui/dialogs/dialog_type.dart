@@ -5,6 +5,7 @@ enum DialogType {
   // Authentication dialogs
   login,
   register,
+  createNewPassword,
   forgotPassword,
   otpVerification,
 

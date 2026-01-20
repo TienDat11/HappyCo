@@ -8,7 +8,9 @@ import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 /// - Search bar with pill shape
 /// - Notification with badge
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  final VoidCallback? onNotificationTap;
+
+  const HomeHeader({super.key, this.onNotificationTap});
 
   @override
   Widget build(BuildContext context) {
@@ -79,58 +81,61 @@ class HomeHeader extends StatelessWidget {
 
   /// Builds the notification icon with badge counter
   Widget _buildNotification() {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          padding: EdgeInsets.all(UISizes.width.w10),
-          decoration: BoxDecoration(
-            color: UIColors.white,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.08),
-                blurRadius: UISizes.square.r4,
-                offset: const Offset(0, 0),
-              ),
-            ],
-          ),
-          child: Icon(
-            Icons.notifications_outlined,
-            size: UISizes.width.w24,
-            color: UIColors.gray700,
-          ),
-        ),
-        Positioned(
-          top: 0,
-          right: -2,
-          child: Container(
-            padding: EdgeInsets.all(UISizes.width.w1),
-            decoration: const BoxDecoration(
+    return GestureDetector(
+      onTap: onNotificationTap,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            padding: EdgeInsets.all(UISizes.width.w10),
+            decoration: BoxDecoration(
               color: UIColors.white,
               shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: UISizes.square.r4,
+                  offset: const Offset(0, 0),
+                ),
+              ],
             ),
+            child: Icon(
+              Icons.notifications_outlined,
+              size: UISizes.width.w24,
+              color: UIColors.gray700,
+            ),
+          ),
+          Positioned(
+            top: 0,
+            right: -2,
             child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: UISizes.width.w4,
-                vertical: UISizes.height.h2,
-              ),
+              padding: EdgeInsets.all(UISizes.width.w1),
               decoration: const BoxDecoration(
-                color: UIColors.red500,
+                color: UIColors.white,
                 shape: BoxShape.circle,
               ),
-              child: Center(
-                child: UIText(
-                  title: '4',
-                  titleColor: UIColors.white,
-                  titleSize: UISizes.font.sp10,
-                  fontWeight: FontWeight.w500,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: UISizes.width.w4,
+                  vertical: UISizes.height.h2,
+                ),
+                decoration: const BoxDecoration(
+                  color: UIColors.red500,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: UIText(
+                    title: '4',
+                    titleColor: UIColors.white,
+                    titleSize: UISizes.font.sp10,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
