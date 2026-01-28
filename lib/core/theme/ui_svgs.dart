@@ -41,6 +41,17 @@ class UISvgs {
   static const String shelfSvg = 'assets/svgs/ic_shelf.svg';
 
   // ============================================
+  // NOTIFICATION ICONS (Furniture)
+  // ============================================
+
+  static const String notiEmptySvg = 'assets/svgs/noti_empty.svg';
+  static const String notiDiscountSvg = 'assets/svgs/noti_discount.svg';
+  static const String notiSettingSvg = 'assets/svgs/noti_setting.svg';
+  static const String notiOderSvg = 'assets/svgs/noti_oder.svg';
+  static const String notiCarInTransitSvg = 'assets/svgs/noti_car_in_transit.svg';
+  static const String notiCarDeliveredSvg = 'assets/svgs/noti_car_delivered.svg';
+
+  // ============================================
   // MISC ICONS
   // ============================================
 

@@ -99,22 +99,31 @@ class DialogConfig {
           padding: EdgeInsets.all(24),
         );
 
-      case DialogType.forgotPassword:
-        return const DialogConfig(
-          title: 'Quên mật khẩu',
-          message: 'Nhập email để nhận liên kết đặt lại mật khẩu',
-          confirmText: 'Gửi',
-          cancelText: 'Hủy',
+      case DialogType.createNewPassword:
+        return DialogConfig(
           barrierDismissible: true,
+          barrierColor: UIColors.black,
+          backgroundColor: UIColors.white,
+          borderRadius: UISizes.square.r16,
+          padding: EdgeInsets.all(UISizes.square.r16),
+        );
+
+      case DialogType.forgotPassword:
+        return DialogConfig(
+          barrierDismissible: true,
+          barrierColor: UIColors.black,
+          backgroundColor: UIColors.white,
+          borderRadius: UISizes.square.r16,
+          padding: EdgeInsets.all(UISizes.square.r16),
         );
 
       case DialogType.otpVerification:
-        return const DialogConfig(
-          title: 'Xác thực OTP',
-          message: 'Nhập mã OTP đã được gửi đến điện thoại của bạn',
-          confirmText: 'Xác nhận',
-          cancelText: 'Hủy',
-          barrierDismissible: false,
+        return DialogConfig(
+          barrierDismissible: true,
+          barrierColor: UIColors.black,
+          backgroundColor: UIColors.white,
+          borderRadius: UISizes.square.r16,
+          padding: EdgeInsets.all(UISizes.square.r16),
         );
 
       // Confirmation dialogs

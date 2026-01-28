@@ -6,6 +6,7 @@ import 'package:happyco/core/config/app_constants.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
+import 'package:happyco/features/app_router.gr.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
 import 'package:happyco/features/widgets/sections/promotional_banner.dart';
 import 'package:happyco/features/widgets/sections/home_categories.dart';
@@ -44,7 +45,11 @@ class _HomePageContent extends StatelessWidget {
       backgroundColor: UIColors.background,
       body: Column(
         children: [
-          const HomeHeader(),
+          HomeHeader(
+            onNotificationTap: () {
+              context.router.push(const NotificationRoute());
+            },
+          ),
           Expanded(
             child: BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
