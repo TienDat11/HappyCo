@@ -154,7 +154,9 @@ class MockNewsData {
           imageUrl: 'assets/images/news/video1.jpg',
           publishDate: '',
           category: NewsCategory.promotion,
-          videoUrl: 'https://youtube.com/watch?v=example1',
+          // Sample video for testing - Big Buck Bunny (short clip)
+          videoUrl:
+              'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         ),
         NewsEntity(
           id: 'v2',
@@ -163,7 +165,9 @@ class MockNewsData {
           imageUrl: 'assets/images/news/video2.jpg',
           publishDate: '',
           category: NewsCategory.promotion,
-          videoUrl: 'https://youtube.com/watch?v=example2',
+          // Sample video for testing - Elephant Dream
+          videoUrl:
+              'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
         ),
         NewsEntity(
           id: 'v3',
@@ -172,7 +176,9 @@ class MockNewsData {
           imageUrl: 'assets/images/news/video3.jpg',
           publishDate: '',
           category: NewsCategory.promotion,
-          videoUrl: 'https://youtube.com/watch?v=example3',
+          // Sample video for testing - Tears of Steel
+          videoUrl:
+              'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
         ),
       ];
 
