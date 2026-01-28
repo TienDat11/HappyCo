@@ -1,21 +1,21 @@
+import 'package:get_it/get_it.dart';
+import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_notification_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_nottification_items_usecase.dart';
-import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:happyco/features/pages/notification-detail/bloc/notification_detail_bloc.dart';
-import 'package:happyco/features/pages/notification/bloc/notification_page_bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:happyco/features/feature_locator.config.dart';
+import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
 import 'package:happyco/features/pages/news/bloc/news_bloc.dart';
+import 'package:happyco/features/pages/notification/bloc/notification_page_bloc.dart';
+import 'package:happyco/features/pages/notification-detail/bloc/notification_detail_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
-import 'package:happyco/domain/usecases/get_news_by_category_usecase.dart';
 import 'package:happyco/domain/usecases/get_latest_news_usecase.dart';
+import 'package:happyco/domain/usecases/get_news_by_category_usecase.dart';
 import 'package:happyco/domain/usecases/get_promotions_usecase.dart';
 import 'package:happyco/domain/usecases/get_qa_usecase.dart';
 import 'package:happyco/domain/usecases/get_recommended_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_related_videos_usecase.dart';
-import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 
 final featureLocator = GetIt.instance;
 
@@ -27,6 +27,7 @@ final featureLocator = GetIt.instance;
 @InjectableInit(initializerName: 'initFeatureLocator')
 void setupFeatureLocator() {
   // Register BLoCs manually
+
   featureLocator.registerFactory<HomeBloc>(
     () => HomeBloc(
       getFeaturedProductsUseCase: featureLocator<GetFeaturedProductsUseCase>(),
@@ -51,12 +52,14 @@ void setupFeatureLocator() {
   );
   featureLocator.registerFactory<NotificationPageBloc>(
     () => NotificationPageBloc(
-      getNottificationItemsUsecase: featureLocator<GetNottificationItemsUsecase>(),
+      getNottificationItemsUsecase:
+          featureLocator<GetNottificationItemsUsecase>(),
     ),
   );
   featureLocator.registerFactory<NotificationDetailBloc>(
     () => NotificationDetailBloc(
-      getNotificationDetailUsecase: featureLocator<GetNotificationDetailUsecase>(),
+      getNotificationDetailUsecase:
+          featureLocator<GetNotificationDetailUsecase>(),
     ),
   );
 
