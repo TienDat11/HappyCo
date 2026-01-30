@@ -198,11 +198,7 @@ class _CategoryPageContent extends StatelessWidget {
     return categoryNames[categoryId] ?? AppSectionTitles.products;
   }
 
-  void _onProductTap(ProductEntity product) {
-    // Navigate to product details
-  }
+  void _onProductTap(ProductEntity product) {}
 
-  void _onAddToCart(ProductEntity product) {
-    // Add to cart action
-  }
+  void _onAddToCart(ProductEntity product) {}
 }

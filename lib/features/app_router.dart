@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:happyco/data/data_locator.dart';
 import 'package:happyco/features/app_router.gr.dart';
 
 /// App Router - Minimal configuration for Happyco
@@ -57,4 +59,7 @@ class AppRouter extends RootStackRouter {
           path: '/notifications_detail',
         ),
       ];
+
+  @override
+  GlobalKey<NavigatorState> get navigatorKey => appNavigatorKey;
 }

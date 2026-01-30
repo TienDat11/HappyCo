@@ -133,16 +133,12 @@ class ProductCard extends StatelessWidget {
   /// Builds the actual product content with image, name, price, and button.
   List<Widget> _buildProductContent() {
     return [
-      // Product image (Fixed height 140px)
       _buildProductImage(),
       SizedBox(height: UISizes.width.w8),
-      // Product Name (subtitle 2: sp14, SemiBold)
       _buildProductName(),
       SizedBox(height: UISizes.width.w4),
-      // Price section (Safe from overflow)
       _buildPriceSection(),
       SizedBox(height: UISizes.width.w8),
-      // Add to cart button (Button Sm: sp13, Medium)
       _buildAddToCartButton(),
     ];
   }

@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:firebase_core/firebase_core.dart';
+// Temporarily commented out until firebase_core is properly set up
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happyco/application.dart';
 import 'package:happyco/core/config/app_config.dart';
 import 'package:happyco/core/services/talker_service.dart';
-import 'package:happyco/firebase_options.dart';
+// import 'package:happyco/firebase_options.dart';
 import 'package:happyco/setup_locator.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 
@@ -34,6 +35,7 @@ void main() {
       talker.error('AppConfig init failed', e, stackTrace);
     }
 
+    /*
     try {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
@@ -43,6 +45,7 @@ void main() {
       talker.warning(
           'Firebase init failed - continuing in offline mode', e, stackTrace);
     }
+    */
 
     await setupLocator();
     talker.info('DI setup complete');

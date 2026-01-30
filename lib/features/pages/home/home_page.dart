@@ -158,9 +158,7 @@ class _HomePageContent extends StatelessWidget {
             ProductGrid(
               title: AppSectionTitles.featuredProducts,
               actionText: AppActionTexts.viewAll,
-              onActionTap: () {
-                // Navigate to all featured products
-              },
+              onActionTap: () {},
               products: state.featuredProducts,
               onProductTap: _onProductTap,
               onAddToCart: _onAddToCart,
@@ -169,9 +167,7 @@ class _HomePageContent extends StatelessWidget {
             ProductGrid(
               title: AppSectionTitles.recommendedProducts,
               actionText: AppActionTexts.viewAll,
-              onActionTap: () {
-                // Navigate to all recommended products
-              },
+              onActionTap: () {},
               products: state.recommendedProducts,
               onProductTap: _onProductTap,
               onAddToCart: _onAddToCart,
@@ -183,11 +179,7 @@ class _HomePageContent extends StatelessWidget {
     );
   }
 
-  void _onProductTap(ProductEntity product) {
-    // Navigate to product details
-  }
+  void _onProductTap(ProductEntity product) {}
 
-  void _onAddToCart(ProductEntity product) {
-    // Add to cart action
-  }
+  void _onAddToCart(ProductEntity product) {}
 }
