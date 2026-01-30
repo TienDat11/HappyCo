@@ -2,7 +2,8 @@
 // Ignore this file for now - Firebase configuration will be added later
 // when Firebase project is set up.
 
-import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+// Temporarily commented out until firebase_core is properly set up
+// import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 
 /// Default FirebaseOptions for current platform.
 ///
@@ -11,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 /// 2. Add Android app with package name: com.example.happyco
 /// 3. Add iOS app with bundle ID: com.example.happyco
 /// 4. Copy the configuration here
+/*
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     // Stub configuration - replace with actual Firebase config
@@ -22,3 +24,4 @@ class DefaultFirebaseOptions {
     );
   }
 }
+*/
