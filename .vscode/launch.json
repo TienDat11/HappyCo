@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Happyco (Development)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--dart-define=FLUTTER_ENV=development"],
+      "env": {
+        "FLUTTER_ENV": "development"
+      }
+    },
+    {
+      "name": "Happyco (Production)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--dart-define=FLUTTER_ENV=production"],
+      "env": {
+        "FLUTTER_ENV": "production"
+      }
+    }
+  ]
+}

@@ -145,35 +145,54 @@ flutter run
 
 ### Environment Setup
 
-1. **Copy environment file**
+Happyco supports 2 environments: **development** and **production**.
+
+#### Running with Specific Environment
+
+**Development**:
 ```bash
-cp .env.example .env
+flutter run --dart-define=FLUTTER_ENV=development
 ```
 
-2. **Configure environment variables**
+**Production**:
+```bash
+flutter run --dart-define=FLUTTER_ENV=production
+```
+
+**VS Code**: Use Run & Debug panel → Select "Happyco (Development)" or "Happyco (Production)"
+
+#### Building for Release
+
+**Development APK**:
+```bash
+flutter build apk --dart-define=FLUTTER_ENV=development --debug
+```
+
+**Production APK**:
+```bash
+flutter build apk --release --dart-define=FLUTTER_ENV=production
+```
+
+**Production iOS**:
+```bash
+flutter build ios --release --dart-define=FLUTTER_ENV=production
+```
+
+#### Environment Files
+
+- `.env.development` - Development configuration (debug logging enabled)
+- `.env.production` - Production configuration (debug logging disabled)
+- `.env.example` - Template with all available variables
+
+#### Changing API URL
+
+Edit `.env.development` or `.env.production`:
+
 ```env
-# API Configuration
-API_BASE_URL=https://api.happyco.com
-API_KEY=your_api_key_here
-
-# Firebase Configuration
-FIREBASE_PROJECT_ID=your_project_id
-
-# Other configurations
-SENTRY_DSN=your_sentry_dsn_here
+API_BASE_URL=http://103.9.211.145:3014
 ```
 
-3. **Firebase setup**
-```bash
-# Install Firebase CLI
-npm install -g firebase-tools
-
-# Login to Firebase
-firebase login
-
-# Initialize Firebase in your project
-firebase init
-```
+**Important**: Changing environment requires **full restart** (not hot reload).
 
 ## 📁 Cấu trúc dự án
 
