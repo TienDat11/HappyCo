@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:happyco/core/theme/ui_images.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/dialogs/dialog_config.dart';
 import 'package:happyco/core/ui/widgets/buttons/ui_button.dart';
+import 'package:happyco/core/ui/widgets/inputs/auth_footer.dart';
+import 'package:happyco/core/ui/widgets/inputs/toggle_switch.dart';
 import 'package:happyco/core/ui/widgets/inputs/ui_text_input.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
+import 'package:happyco/core/utils/validators/auth_validators.dart';
+import 'package:happyco/features/auth/bloc/auth_bloc.dart';
 
 /// Login Dialog
 class LoginDialog extends StatefulWidget {
   final DialogConfig config;
-  final VoidCallback? onLogin;
+  final VoidCallback? onLoginSuccess;
   final VoidCallback? onForgotPassword;
   final VoidCallback? onRegister;
 
   const LoginDialog({
     super.key,
     required this.config,
-    this.onLogin,
+    this.onLoginSuccess,
     this.onForgotPassword,
     this.onRegister,
   });
@@ -28,173 +34,229 @@ class LoginDialog extends StatefulWidget {
 class _LoginDialogState extends State<LoginDialog> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _phoneFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+
+  String? _phoneError;
+  String? _passwordError;
+  String? _authErrorMessage;
+
   bool _rememberMe = false;
+  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
     _phoneController.dispose();
     _passwordController.dispose();
+    _phoneFocusNode.dispose();
+    _passwordFocusNode.dispose();
     super.dispose();
+  }
+
+  void _validateAndSubmit() {
+    setState(() {
+      _phoneError = AuthValidators.validatePhone(_phoneController.text);
+      _passwordError =
+          AuthValidators.validatePassword(_passwordController.text);
+      _authErrorMessage = null;
+    });
+
+    if (_phoneError == null && _passwordError == null) {
+      final bloc = context.read<AuthBloc>();
+      bloc.add(OnLogin(
+        username: _phoneController.text,
+        password: _passwordController.text,
+      ));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: UISizes.width.w358,
-      padding: EdgeInsets.all(UISizes.width.w16),
-      decoration: BoxDecoration(
-        color: UIColors.white,
-        borderRadius: BorderRadius.circular(UISizes.square.r24),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Logo placeholder (109x52)
-          SizedBox(
-            width: 109,
-            height: UISizes.height.h52,
-            child: Center(
-              child: UIText(
-                title: 'LOGO',
-                titleSize: UISizes.font.sp20,
-                titleColor: UIColors.primary,
-                fontWeight: FontWeight.bold,
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthAuthenticated) {
+          widget.onLoginSuccess?.call();
+          Navigator.of(context).pop();
+        } else if (state is AuthFieldError) {
+          final usernameError =
+              state.fieldErrors['username'] ?? state.fieldErrors['phone'];
+          final passwordError = state.fieldErrors['password'];
+          final isCredentialFailure = usernameError != null &&
+              passwordError != null &&
+              usernameError == passwordError;
+
+          setState(() {
+            if (isCredentialFailure) {
+              _phoneError = null;
+              _passwordError = null;
+              _authErrorMessage = usernameError;
+            } else {
+              _phoneError = usernameError;
+              _passwordError = passwordError;
+              _authErrorMessage = null;
+            }
+          });
+        } else if (state is AuthError) {
+          final message = state.error.replaceAll('Exception: ', '');
+          setState(() {
+            _authErrorMessage = message;
+          });
+        }
+      },
+      child: Container(
+        width: UISizes.width.w358,
+        padding: EdgeInsets.all(UISizes.width.w16),
+        decoration: BoxDecoration(
+          color: UIColors.white,
+          borderRadius: BorderRadius.circular(UISizes.square.r24),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: UISizes.width.w109,
+              height: UISizes.height.h52,
+              child: Center(
+                child: Image.asset(
+                  UIImages.logo,
+                  width: UISizes.width.w109,
+                  height: UISizes.height.h52,
+                ),
               ),
             ),
-          ),
 
-          SizedBox(height: UISizes.height.h16),
+            SizedBox(height: UISizes.height.h16),
 
-          // Title
-          UIText(
-            title: 'Đăng nhập ngay!',
-            titleSize: UISizes.font.sp18,
-            fontWeight: FontWeight.bold,
-            titleColor: UIColors.primary,
-          ),
+            UIText(
+              title: 'Đăng nhập ngay!',
+              titleSize: UISizes.font.sp18,
+              fontWeight: FontWeight.bold,
+              titleColor: UIColors.primary,
+            ),
 
-          SizedBox(height: UISizes.height.h12),
+            SizedBox(height: UISizes.height.h12),
 
-          // Phone input
-          UITextInput(
-            label: 'Số điện thoại',
-            placeholder: 'Vui lòng nhập',
-            isRequired: true,
-            keyboardType: TextInputType.phone,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
-          ),
+            UITextInput(
+              controller: _phoneController,
+              focusNode: _phoneFocusNode,
+              label: 'Số điện thoại',
+              placeholder: 'Vui lòng nhập',
+              isRequired: true,
+              keyboardType: TextInputType.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(10),
+              ],
+              errorMessage: _phoneError,
+              semanticLabel: 'Nhập số điện thoại',
+              onChanged: (_) {
+                if (_phoneError != null) {
+                  setState(() => _phoneError = null);
+                }
+              },
+            ),
 
-          SizedBox(height: UISizes.height.h8),
+            SizedBox(height: UISizes.height.h8),
+            UITextInput(
+              controller: _passwordController,
+              focusNode: _passwordFocusNode,
+              label: 'Mật khẩu',
+              placeholder: 'Vui lòng nhập',
+              isRequired: true,
+              obscureText: !_isPasswordVisible,
+              showPasswordToggle: true,
+              errorMessage: _passwordError,
+              semanticLabel: 'Nhập mật khẩu',
+              onChanged: (_) {
+                if (_passwordError != null) {
+                  setState(() => _passwordError = null);
+                }
+              },
+            ),
 
-          // Password input
-          const UITextInput(
-            label: 'Mật khẩu',
-            placeholder: 'Vui lòng nhập',
-            isRequired: true,
-            obscureText: true,
-            showPasswordToggle: true,
-          ),
+            SizedBox(height: UISizes.height.h12),
 
-          SizedBox(height: UISizes.height.h12),
-
-          // Remember me and forgot password row
-          Row(
-            children: [
-              // Remember me toggle
-              Row(
-                mainAxisSize: MainAxisSize.min,
+            // Remember me and forgot password row
+            Semantics(
+              container: true,
+              child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
+                  ToggleSwitch(
+                    value: _rememberMe,
+                    onChanged: (value) {
                       setState(() {
-                        _rememberMe = !_rememberMe;
+                        _rememberMe = value;
                       });
                     },
-                    child: Container(
-                      width: UISizes.width.w36,
-                      height: UISizes.height.h20,
-                      decoration: BoxDecoration(
-                        color:
-                            _rememberMe ? UIColors.primary : UIColors.gray200,
-                        borderRadius: BorderRadius.circular(UISizes.square.r100),
-                      ),
-                      child: Align(
-                        alignment: _rememberMe
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: Container(
-                          width: UISizes.width.w16,
-                          height: UISizes.width.w16,
-                          decoration: const BoxDecoration(
-                            color: UIColors.white,
-                            shape: BoxShape.circle,
-                          ),
-                          margin: EdgeInsets.all(UISizes.width.w2),
-                        ),
+                    label: 'Nhớ tài khoản',
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: widget.onForgotPassword,
+                    child: Semantics(
+                      label: 'Quên mật khẩu',
+                      button: true,
+                      child: UIText(
+                        title: 'Quên mật khẩu?',
+                        titleSize: UISizes.font.sp14,
+                        titleColor: UIColors.primary,
                       ),
                     ),
                   ),
-                  SizedBox(width: UISizes.width.w8),
-                  UIText(
-                    title: 'Nhớ tài khoản',
-                    titleSize: UISizes.font.sp14,
-                    titleColor: UIColors.gray500,
-                  ),
                 ],
               ),
+            ),
 
-              const Spacer(),
+            SizedBox(height: UISizes.height.h16),
 
-              // Forgot password link
-              GestureDetector(
-                onTap: widget.onForgotPassword,
+            // Login button
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                final isLoading = state is AuthLoading;
+                return UIButton(
+                  text: 'Đăng nhập ngay!',
+                  onPressed: isLoading ? null : _validateAndSubmit,
+                  style: UIButtonStyle.primary,
+                  isFullWidth: true,
+                );
+              },
+            ),
+
+            if (_authErrorMessage != null) ...[
+              SizedBox(height: UISizes.height.h8),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                  horizontal: UISizes.width.w12,
+                  vertical: UISizes.height.h10,
+                ),
+                decoration: BoxDecoration(
+                  color: UIColors.red50,
+                  borderRadius: BorderRadius.circular(UISizes.square.r12),
+                  border:
+                      Border.all(color: UIColors.error.withValues(alpha: 0.3)),
+                ),
                 child: UIText(
-                  title: 'Quên mật khẩu?',
-                  titleSize: UISizes.font.sp14,
-                  titleColor: UIColors.primary,
+                  title: _authErrorMessage!,
+                  titleSize: UISizes.font.sp13,
+                  titleColor: UIColors.error,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
-          ),
 
-          SizedBox(height: UISizes.height.h12),
+            SizedBox(height: UISizes.height.h12),
 
-          // Login button
-          UIButton(
-            text: 'Đăng nhập ngay!',
-            onPressed: widget.onLogin,
-            style: UIButtonStyle.primary,
-            isFullWidth: true,
-          ),
+            // Register link
+            AuthFooter(
+              leftText: 'Bạn chưa có tài khoản?',
+              rightText: 'Đăng ký ngay!',
+              onLinkTap: widget.onRegister,
+            ),
 
-          SizedBox(height: UISizes.height.h12),
-
-          // Register link
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              UIText(
-                title: 'Bạn chưa có tài khoản?',
-                titleSize: UISizes.font.sp14,
-                titleColor: UIColors.gray700,
-              ),
-              SizedBox(width: UISizes.width.w8),
-              GestureDetector(
-                onTap: widget.onRegister,
-                child: UIText(
-                  title: 'Đăng ký ngay!',
-                  titleSize: UISizes.font.sp14,
-                  titleColor: UIColors.primary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(height: UISizes.height.h8),
-        ],
+            SizedBox(height: UISizes.height.h8),
+          ],
+        ),
       ),
     );
   }

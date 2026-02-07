@@ -4,7 +4,8 @@ import 'package:happyco/core/ui/dialogs/dialog_type.dart';
 
 /// Dialog Configuration for Happyco App
 ///
-/// Provides default styling and behavior for each dialog type
+/// Defines visual attributes, behavior flags,
+/// and runtime payload for dialog rendering.
 class DialogConfig {
   /// Dialog title
   final String? title;
@@ -54,8 +55,14 @@ class DialogConfig {
   /// Dialog height (null for content-based)
   final double? height;
 
-  /// Whether dialog should consume taps
+  /// Whether dialog should consume taps outside its bounds
   final bool consumeOutsideTap;
+
+  /// Runtime payload passed between dialog transitions.
+  ///
+  /// Intended for non-UI data such as identifiers,
+  /// emails, tokens, or flow-specific parameters.
+  final Map<String, dynamic>? extra;
 
   const DialogConfig({
     this.title,
@@ -75,9 +82,13 @@ class DialogConfig {
     this.maxWidth,
     this.height,
     this.consumeOutsideTap = false,
+    this.extra,
   });
 
-  /// Get default config for each dialog type
+  /// Returns default configuration for a given dialog type.
+  ///
+  /// Defaults define visual consistency only.
+  /// Runtime data should be supplied via [extra].
   factory DialogConfig.getDefault(DialogType type) {
     switch (type) {
       // Authentication dialogs
@@ -267,7 +278,7 @@ class DialogConfig {
     }
   }
 
-  /// Create a copy with modified fields
+  /// Returns a new instance with selectively overridden fields.
   DialogConfig copyWith({
     String? title,
     String? message,
@@ -286,6 +297,7 @@ class DialogConfig {
     double? maxWidth,
     double? height,
     bool? consumeOutsideTap,
+    Map<String, dynamic>? extra,
   }) {
     return DialogConfig(
       title: title ?? this.title,
@@ -305,6 +317,7 @@ class DialogConfig {
       maxWidth: maxWidth ?? this.maxWidth,
       height: height ?? this.height,
       consumeOutsideTap: consumeOutsideTap ?? this.consumeOutsideTap,
+      extra: extra ?? this.extra,
     );
   }
 }

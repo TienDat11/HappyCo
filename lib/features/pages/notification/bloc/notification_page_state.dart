@@ -6,12 +6,14 @@ sealed class NotificationPageState extends BaseBlocState {
 }
 
 /// Initial state before data is loaded
-class NotificationInitial extends NotificationPageState implements InitialState {
+class NotificationInitial extends NotificationPageState
+    implements InitialState {
   NotificationInitial();
 }
 
 /// Loading state while fetching data
-class NotificationLoading extends NotificationPageState implements LoadingState {
+class NotificationLoading extends NotificationPageState
+    implements LoadingState {
   NotificationLoading();
 }
 

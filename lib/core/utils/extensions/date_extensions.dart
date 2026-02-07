@@ -145,7 +145,8 @@ extension DateTimeExtensions on DateTime {
 
   /// Get end of month
   DateTime get endOfMonth {
-    final nextMonth = month == 12 ? DateTime(year + 1, 1) : DateTime(year, month + 1);
+    final nextMonth =
+        month == 12 ? DateTime(year + 1, 1) : DateTime(year, month + 1);
     return nextMonth.subtract(const Duration(microseconds: 1)).endOfDay;
   }
 
@@ -161,7 +162,8 @@ extension DateTimeExtensions on DateTime {
   }
 
   /// Check if date is weekend (Saturday or Sunday)
-  bool get isWeekend => weekday == DateTime.saturday || weekday == DateTime.sunday;
+  bool get isWeekend =>
+      weekday == DateTime.saturday || weekday == DateTime.sunday;
 
   /// Check if date is weekday (Monday to Friday)
   bool get isWeekday => !isWeekend;

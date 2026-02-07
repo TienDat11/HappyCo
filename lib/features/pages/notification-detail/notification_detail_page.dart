@@ -5,9 +5,9 @@ import 'package:get_it/get_it.dart';
 import 'package:happyco/core/theme/ui_colors.dart';
 import 'package:happyco/core/theme/ui_sizes.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
+import 'package:happyco/core/ui/widgets/layouts/main_appbar.dart';
 import 'package:happyco/core/utils/extensions/date_extensions.dart';
 import 'package:happyco/features/pages/notification-detail/bloc/notification_detail_bloc.dart';
-import 'package:happyco/features/widgets/common/main_appbar.dart';
 
 @RoutePage()
 class NotificationDetailPage extends StatelessWidget {

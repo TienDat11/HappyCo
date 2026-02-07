@@ -39,8 +39,7 @@ class NotificationDetailBloc
     Emitter<NotificationDetailState> emit,
   ) async {
     try {
-      final notification =
-          await getNotificationDetailUsecase.exec(id);
+      final notification = await getNotificationDetailUsecase.exec(id);
 
       emit(
         NotificationDetailLoaded(
@@ -55,5 +54,5 @@ class NotificationDetailBloc
         stackTrace,
       );
     }
-  } 
+  }
 }
