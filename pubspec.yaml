@@ -74,7 +74,6 @@ flutter:
     - assets/svgs/
     - .env
     - .env.development
-    - .env.staging
     - .env.production
 
   fonts:

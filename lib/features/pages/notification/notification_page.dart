@@ -12,7 +12,7 @@ import 'package:happyco/features/app_router.gr.dart';
 import 'package:happyco/features/pages/notification/bloc/notification_page_bloc.dart';
 import 'package:happyco/features/pages/notification/widget/notification_item_shimmer.dart';
 import 'package:happyco/features/pages/notification/widget/notification_item_widget.dart';
-import 'package:happyco/features/widgets/common/main_appbar.dart';
+import 'package:happyco/core/ui/widgets/layouts/main_appbar.dart';
 
 @RoutePage()
 class NotificationPage extends StatelessWidget {

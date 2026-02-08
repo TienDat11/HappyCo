@@ -24,6 +24,24 @@ class DioClient {
       ),
     );
 
+    // Add logging to debug URL issues
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          print('🚀 [DioClient] Request: ${options.method} ${options.uri}');
+          print('🚀 [DioClient] BaseURL: ${options.baseUrl}');
+          print('🚀 [DioClient] Path: ${options.path}');
+          return handler.next(options);
+        },
+        onError: (e, handler) {
+          print('❌ [DioClient] Error: ${e.message}');
+          print('❌ [DioClient] URL: ${e.requestOptions.uri}');
+          print('❌ [DioClient] Status: ${e.response?.statusCode}');
+          return handler.next(e);
+        },
+      ),
+    );
+
     _dio.interceptors.add(_interceptor);
   }
 

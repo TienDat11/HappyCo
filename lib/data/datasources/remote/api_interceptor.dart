@@ -71,7 +71,15 @@ class ApiInterceptor extends Interceptor {
     if (err.response?.statusCode == 500) {
       _showErrorPage(ErrorType.serverError);
     } else if (err.response?.statusCode == 404) {
-      _showErrorPage(ErrorType.notFound);
+      // Don't show global error page for Auth endpoints (user not found, etc)
+      // and when the error is a business logic error (contains message)
+      final isAuthEndpoint = err.requestOptions.path.contains('/auth/');
+      final hasMessage = err.response?.data is Map &&
+          (err.response?.data as Map).containsKey('message');
+
+      if (!isAuthEndpoint && !hasMessage) {
+        _showErrorPage(ErrorType.notFound);
+      }
     } else if (err.type == DioExceptionType.connectionTimeout ||
         err.type == DioExceptionType.receiveTimeout ||
         err.type == DioExceptionType.connectionError) {

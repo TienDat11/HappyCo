@@ -128,6 +128,9 @@ class UIColors {
   static const Color green500 = Color(0xFF22C55E);
   static const Color green600 = Color(0xFF16A34A);
 
+  /// Primary Green for Input Focus (from Figma Auth Dialogs #236E45)
+  static const Color primaryGreen = Color(0xFF236E45);
+
   // Blue Palette (info states)
   static const Color blue50 = Color(0xFFEFF6FF);
   static const Color blue100 = Color(0xFFDBEAFE);
