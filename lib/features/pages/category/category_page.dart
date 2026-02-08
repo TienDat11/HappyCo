@@ -7,11 +7,11 @@ import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
-import 'package:happyco/features/widgets/sections/promotional_banner.dart';
-import 'package:happyco/features/widgets/sections/home_categories.dart';
-import 'package:happyco/features/widgets/common/home_header.dart';
-import 'package:happyco/features/widgets/product/product_grid.dart';
-import 'package:happyco/features/widgets/sections/section_title.dart';
+import 'package:happyco/core/ui/widgets/banners/promotional_banner.dart';
+import 'package:happyco/features/home/widgets/home_categories.dart';
+import 'package:happyco/features/home/widgets/home_header.dart';
+import 'package:happyco/features/products/widgets/product_grid.dart';
+import 'package:happyco/core/ui/widgets/labels/section_title.dart';
 
 /// Category Page - Furniture Category Detail
 ///

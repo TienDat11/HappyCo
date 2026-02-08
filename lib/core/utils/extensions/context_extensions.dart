@@ -301,7 +301,8 @@ extension BuildContextExtensions on BuildContext {
         margin: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
         decoration: BoxDecoration(
           color: theme.scaffoldBackgroundColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(UISizes.square.r20)),
+          borderRadius:
+              BorderRadius.vertical(top: Radius.circular(UISizes.square.r20)),
         ),
         child: child,
       ),

@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:happyco/core/services/dialog_service.dart';
 import 'package:happyco/data/datasources/remote/api_interceptor.dart';
+import 'package:happyco/data/datasources/remote/auth_remote_datasource.dart';
+import 'package:happyco/data/datasources/remote/auth_remote_datasource_impl.dart';
+import 'package:happyco/data/repositories/auth_repository_impl.dart';
 import 'package:happyco/data/repositories/notification_repository_mock.dart';
+import 'package:happyco/domain/repositories/auth_repository.dart';
 import 'package:happyco/domain/repositories/notification_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:happyco/data/datasources/remote/remote_config.dart';
@@ -34,6 +38,8 @@ final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 /// - ProductRemoteDataSource
 /// - ProductRepository
 /// - SharedPreferences
+/// - AuthRemoteDataSource
+/// - AuthRepository
 Future<void> setupDataLocator() async {
   final prefs = await SharedPreferences.getInstance();
   dataLocator.registerSingleton<SharedPreferences>(prefs);
@@ -71,5 +77,19 @@ Future<void> setupDataLocator() async {
   );
   dataLocator.registerLazySingleton<NotificationRepository>(
     () => NotificationRepositoryMock(),
+  );
+
+  // Auth dependencies
+  dataLocator.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(
+      dioClient: dataLocator<DioClient>(),
+    ),
+  );
+
+  dataLocator.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: dataLocator<AuthRemoteDataSource>(),
+      storage: dataLocator<StorageRepository>(),
+    ),
   );
 }

@@ -90,7 +90,8 @@ class _HappyVideoPlayerState extends State<HappyVideoPlayer> {
           backgroundColor: UIColors.gray300,
         ),
         placeholder: widget.placeholder ?? _buildShimmerPlaceholder(),
-        errorBuilder: (context, errorMessage) => _buildErrorWidget(errorMessage),
+        errorBuilder: (context, errorMessage) =>
+            _buildErrorWidget(errorMessage),
       );
 
       if (mounted) {

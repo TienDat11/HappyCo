@@ -15,7 +15,8 @@ class NotificationRepositoryMock implements NotificationRepository {
               iconName: 'discount',
               isRead: false,
               createdAt: DateTime.now(),
-              imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+              imageUrl:
+                  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
             ),
             NotificationEntity(
               id: 'nt_2',
@@ -24,7 +25,8 @@ class NotificationRepositoryMock implements NotificationRepository {
                   'Đơn hàng của bạn đã được xác nhận và đang được chuẩn bị.',
               iconName: 'order_confirm',
               isRead: false,
-              imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+              imageUrl:
+                  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
               createdAt: DateTime.now(),
             ),
             NotificationEntity(
@@ -34,7 +36,8 @@ class NotificationRepositoryMock implements NotificationRepository {
                   'Đơn hàng của bạn đang trên đường giao đến địa chỉ nhận.',
               iconName: 'shipping',
               isRead: true,
-              imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+              imageUrl:
+                  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
               createdAt: DateTime.now(),
             ),
             NotificationEntity(
@@ -44,7 +47,8 @@ class NotificationRepositoryMock implements NotificationRepository {
                   'Đơn hàng đã được giao thành công. Cảm ơn bạn đã mua sắm!',
               iconName: 'delivered',
               isRead: true,
-              imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+              imageUrl:
+                  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
               createdAt: DateTime.now(),
             ),
             NotificationEntity(
@@ -54,7 +58,8 @@ class NotificationRepositoryMock implements NotificationRepository {
                   'Ưu đãi đặc biệt chỉ áp dụng trong thời gian giới hạn.',
               iconName: 'discount',
               isRead: true,
-              imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+              imageUrl:
+                  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
               createdAt: DateTime.now(),
             ),
             NotificationEntity(
@@ -64,7 +69,8 @@ class NotificationRepositoryMock implements NotificationRepository {
                   'Khám phá ngay mẫu bàn lễ 2025 với thiết kế hoàn toàn mới.',
               iconName: 'new_product',
               isRead: true,
-              imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+              imageUrl:
+                  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
               createdAt: DateTime.now(),
             ),
           ],
