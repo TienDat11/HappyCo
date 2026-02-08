@@ -3,70 +3,29 @@ import 'package:flutter/services.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 
-/// Standardized Text Input Widget
 class UITextInput extends StatefulWidget {
-  /// Input label text
   final String? label;
-
-  /// Placeholder text
   final String? placeholder;
-
-  /// Current text value
   final String? value;
-
-  /// Callback when text changes
   final ValueChanged<String>? onChanged;
-
-  /// Callback when text is submitted
   final ValueChanged<String>? onSubmitted;
-
-  /// Whether field is required (shows asterisk)
   final bool isRequired;
-
-  /// Whether field is enabled
   final bool isEnabled;
-
-  /// Text input type
   final TextInputType? keyboardType;
-
-  /// Input formatter (e.g., phone number, numeric)
   final List<TextInputFormatter>? inputFormatters;
-
-  /// Max lines (1 = single line)
   final int? maxLines;
-
-  /// Max character count
   final int? maxLength;
-
-  /// Obscure text (for passwords)
   final bool obscureText;
-
-  /// Show/hide password toggle
   final bool showPasswordToggle;
-
-  /// Prefix icon
   final IconData? prefixIcon;
-
-  /// Suffix icon (widget)
   final Widget? suffixIcon;
-
-  /// Error message to display
   final String? errorMessage;
-
-  /// Helper text below input
   final String? helperText;
-
-  /// Readonly state
   final bool readOnly;
-
-  /// Focus node
   final FocusNode? focusNode;
-
-  /// Text align
   final TextAlign textAlign;
-
-  /// External controller (optional - if not provided, internal one is used)
   final TextEditingController? controller;
+  final String? semanticLabel;
 
   const UITextInput({
     super.key,
@@ -91,6 +50,7 @@ class UITextInput extends StatefulWidget {
     this.focusNode,
     this.textAlign = TextAlign.start,
     this.controller,
+    this.semanticLabel,
   });
 
   @override
@@ -108,206 +68,224 @@ class _UITextInputState extends State<UITextInput> {
   void initState() {
     super.initState();
     _obscureText = widget.obscureText;
+    _initializeController();
+    _initializeFocusNode();
+  }
 
+  void _initializeController() {
     if (widget.controller != null) {
       _controller = widget.controller!;
     } else {
       _controller = TextEditingController(text: widget.value ?? '');
       _ownsController = true;
     }
+  }
 
+  void _initializeFocusNode() {
     if (widget.focusNode != null) {
       _focusNode = widget.focusNode!;
     } else {
       _focusNode = FocusNode();
       _ownsFocusNode = true;
     }
-
-    // Listen to focus changes for border color
-    _focusNode.addListener(_onFocusChange);
+    _focusNode.addListener(_handleFocusChange);
   }
 
   @override
   void didUpdateWidget(UITextInput oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Update text if value prop changed and we own the controller
     if (_ownsController && widget.value != oldWidget.value) {
-      final newValue = widget.value ?? '';
-      if (_controller.text != newValue) {
-        _controller.text = newValue;
-        _controller.selection = TextSelection.collapsed(
-          offset: newValue.length,
-        );
-      }
+      _updateControllerValue(widget.value ?? '');
     }
 
     if (widget.controller != oldWidget.controller) {
-      if (_ownsController) {
-        _controller.dispose();
-      }
-      if (widget.controller != null) {
-        _controller = widget.controller!;
-        _ownsController = false;
-      } else {
-        _controller = TextEditingController(text: widget.value ?? '');
-        _ownsController = true;
-      }
+      _handleControllerUpdate(widget.controller);
     }
 
     if (widget.focusNode != oldWidget.focusNode) {
-      _focusNode.removeListener(_onFocusChange);
-      if (_ownsFocusNode) {
-        _focusNode.dispose();
-      }
-      if (widget.focusNode != null) {
-        _focusNode = widget.focusNode!;
-        _ownsFocusNode = false;
-      } else {
-        _focusNode = FocusNode();
-        _ownsFocusNode = true;
-      }
-      _focusNode.addListener(_onFocusChange);
+      _handleFocusNodeUpdate(widget.focusNode);
     }
   }
 
-  void _onFocusChange() {
-    setState(() {});
+  void _updateControllerValue(String newValue) {
+    if (_controller.text != newValue) {
+      _controller.text = newValue;
+      _controller.selection = TextSelection.collapsed(offset: newValue.length);
+    }
   }
+
+  void _handleControllerUpdate(TextEditingController? newController) {
+    if (_ownsController) _controller.dispose();
+    if (newController != null) {
+      _controller = newController;
+      _ownsController = false;
+    } else {
+      _controller = TextEditingController(text: widget.value ?? '');
+      _ownsController = true;
+    }
+  }
+
+  void _handleFocusNodeUpdate(FocusNode? newFocusNode) {
+    _focusNode.removeListener(_handleFocusChange);
+    if (_ownsFocusNode) _focusNode.dispose();
+
+    if (newFocusNode != null) {
+      _focusNode = newFocusNode;
+      _ownsFocusNode = false;
+    } else {
+      _focusNode = FocusNode();
+      _ownsFocusNode = true;
+    }
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() => setState(() {});
 
   @override
   void dispose() {
-    _focusNode.removeListener(_onFocusChange);
-    if (_ownsController) {
-      _controller.dispose();
-    }
-    if (_ownsFocusNode) {
-      _focusNode.dispose();
-    }
+    _focusNode.removeListener(_handleFocusChange);
+    if (_ownsController) _controller.dispose();
+    if (_ownsFocusNode) _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final hasError = widget.errorMessage?.isNotEmpty == true;
+    final bool hasError = widget.errorMessage?.isNotEmpty == true;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (widget.label != null)
-          Row(
-            children: [
-              UIText(
-                title: widget.label!,
-                titleSize: UISizes.font.sp14,
-                titleColor: UIColors.gray500,
-              ),
-              if (widget.isRequired) ...[
-                SizedBox(width: UISizes.width.w4),
-                UIText(
-                  title: '*',
-                  titleSize: UISizes.font.sp16,
-                  titleColor: UIColors.red500,
-                ),
-              ],
-            ],
-          ),
+        if (widget.label != null) _buildLabel(),
         if (widget.label != null) SizedBox(height: UISizes.height.h8),
+        _buildInputContainer(hasError),
+        if (hasError) _buildErrorMessage(),
+        if (widget.helperText != null && !hasError) _buildHelperText(),
+      ],
+    );
+  }
 
-        Container(
-          height: UISizes.height.h48,
-          decoration: BoxDecoration(
-            color: widget.isEnabled ? UIColors.white : UIColors.gray100,
-            borderRadius: BorderRadius.circular(UISizes.square.r12),
-            border: Border.all(
-              color: hasError
-                  ? UIColors.red500
-                  : (_focusNode.hasFocus
-                      ? const Color(0xFF236E45) // Primary Green
-                      : UIColors.gray200),
-              width: 1,
-            ),
+  Widget _buildLabel() {
+    return Row(
+      children: [
+        UIText(
+          title: widget.label!,
+          titleSize: UISizes.font.sp14,
+          titleColor: UIColors.gray500,
+        ),
+        if (widget.isRequired) ...[
+          SizedBox(width: UISizes.width.w4),
+          UIText(
+            title: '*',
+            titleSize: UISizes.font.sp16,
+            titleColor: UIColors.red500,
           ),
-          child: TextField(
-            controller: _controller,
-            focusNode: _focusNode,
-            enabled: widget.isEnabled,
-            keyboardType: widget.keyboardType,
-            inputFormatters: widget.inputFormatters,
-            maxLines: widget.maxLines,
-            maxLength: widget.maxLength,
-            obscureText: _obscureText,
-            readOnly: widget.readOnly,
-            textAlign: widget.textAlign,
-            style: TextStyle(
+        ],
+      ],
+    );
+  }
+
+  Widget _buildInputContainer(bool hasError) {
+    return Container(
+      height: UISizes.height.h48,
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: widget.isEnabled ? UIColors.white : UIColors.gray100,
+        borderRadius: BorderRadius.circular(UISizes.square.r12),
+        border: Border.all(
+          color: _getBorderColor(hasError),
+          width: 1,
+        ),
+      ),
+      child: Semantics(
+        label: widget.semanticLabel,
+        child: TextField(
+          controller: _controller,
+          focusNode: _focusNode,
+          enabled: widget.isEnabled,
+          keyboardType: widget.keyboardType,
+          inputFormatters: widget.inputFormatters,
+          maxLines: widget.maxLines,
+          maxLength: widget.maxLength,
+          obscureText: _obscureText,
+          readOnly: widget.readOnly,
+          textAlignVertical: TextAlignVertical.center,
+          textAlign: widget.textAlign,
+          style: TextStyle(
+            fontSize: UISizes.font.sp14,
+            fontWeight: FontWeight.w500,
+            color: UIColors.gray700,
+          ),
+          decoration: InputDecoration(
+            isDense: true,
+            hintText: widget.placeholder,
+            hintStyle: TextStyle(
               fontSize: UISizes.font.sp14,
               fontWeight: FontWeight.w500,
-              color: UIColors.gray700,
+              color: UIColors.gray300,
             ),
-            decoration: InputDecoration(
-              hintText: widget.placeholder,
-              hintStyle: TextStyle(
-                fontSize: UISizes.font.sp14,
-                fontWeight: FontWeight.w500,
-                color: UIColors.gray300,
-              ),
-              prefixIcon: widget.prefixIcon != null
-                  ? Icon(
-                      widget.prefixIcon,
-                      size: UISizes.width.w20,
-                      color: UIColors.gray400,
-                    )
-                  : null,
-              suffixIcon: _buildSuffixIcon(),
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: UISizes.width.w16,
-              ),
-              counterText: '', // Hide character counter
+            prefixIcon: widget.prefixIcon != null
+                ? Icon(
+                    widget.prefixIcon,
+                    size: UISizes.width.w20,
+                    color: UIColors.gray400,
+                  )
+                : null,
+            suffixIcon: _buildSuffixIcon(),
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: UISizes.width.w16,
+              vertical: UISizes.height.h14,
             ),
-            onChanged: widget.onChanged,
-            onSubmitted: widget.onSubmitted,
+            counterText: '',
           ),
+          onChanged: widget.onChanged,
+          onSubmitted: widget.onSubmitted,
         ),
+      ),
+    );
+  }
 
-        if (hasError)
-          Padding(
-            padding: EdgeInsets.only(
-              top: UISizes.height.h4,
-              left: UISizes.width.w16,
-            ),
-            child: UIText(
-              title: widget.errorMessage!,
-              titleSize: UISizes.font.sp12,
-              titleColor: UIColors.red500,
-            ),
-          ),
+  Color _getBorderColor(bool hasError) {
+    if (hasError) return UIColors.red500;
+    if (_focusNode.hasFocus) return UIColors.primaryGreen;
+    return UIColors.gray200;
+  }
 
-        if (widget.helperText != null && !hasError)
-          Padding(
-            padding: EdgeInsets.only(
-              top: UISizes.height.h4,
-              left: UISizes.width.w16,
-            ),
-            child: UIText(
-              title: widget.helperText!,
-              titleSize: UISizes.font.sp12,
-              titleColor: UIColors.gray500,
-            ),
-          ),
-      ],
+  Widget _buildErrorMessage() {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: UISizes.height.h4,
+        left: UISizes.width.w16,
+      ),
+      child: UIText(
+        title: widget.errorMessage!,
+        titleSize: UISizes.font.sp12,
+        titleColor: UIColors.red500,
+      ),
+    );
+  }
+
+  Widget _buildHelperText() {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: UISizes.height.h4,
+        left: UISizes.width.w16,
+      ),
+      child: UIText(
+        title: widget.helperText!,
+        titleSize: UISizes.font.sp12,
+        titleColor: UIColors.gray500,
+      ),
     );
   }
 
   Widget? _buildSuffixIcon() {
     if (widget.showPasswordToggle) {
       return GestureDetector(
-        onTap: () {
-          setState(() {
-            _obscureText = !_obscureText;
-          });
-        },
+        onTap: () => setState(() => _obscureText = !_obscureText),
         child: Icon(
           _obscureText ? Icons.visibility_off : Icons.visibility,
           size: UISizes.width.w24,

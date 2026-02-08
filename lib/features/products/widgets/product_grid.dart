@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
+import 'package:happyco/core/ui/widgets/labels/section_title.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
-import 'package:happyco/features/widgets/product/product_card.dart';
-import 'package:happyco/features/widgets/sections/section_title.dart';
+import 'package:happyco/features/products/widgets/product_card.dart';
 
 /// A reusable product grid widget that displays items in a 2-column layout.
 ///

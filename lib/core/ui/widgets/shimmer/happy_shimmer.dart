@@ -3,7 +3,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 
 /// HappyShimmer - Base shimmer widget for the app
-/// 
+///
 /// Uses standard gray palette from UIColors
 class HappyShimmer extends StatelessWidget {
   final double width;

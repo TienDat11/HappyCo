@@ -10,13 +10,13 @@ import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
 import 'package:happyco/domain/entities/news_entity.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/features/pages/news/bloc/news_bloc.dart';
-import 'package:happyco/features/widgets/common/filter_tabs.dart';
-import 'package:happyco/features/widgets/common/home_header.dart';
-import 'package:happyco/features/widgets/news/compact_news_card.dart';
-import 'package:happyco/features/widgets/news/news_card.dart';
-import 'package:happyco/features/widgets/news/product_compact_card.dart';
-import 'package:happyco/features/widgets/news/video_card.dart';
-import 'package:happyco/features/widgets/sections/section_header.dart';
+import 'package:happyco/core/ui/widgets/filters/filter_tabs.dart';
+import 'package:happyco/features/home/widgets/home_header.dart';
+import 'package:happyco/features/news/widgets/compact_news_card.dart';
+import 'package:happyco/features/news/widgets/news_card.dart';
+import 'package:happyco/features/news/widgets/product_compact_card.dart';
+import 'package:happyco/features/news/widgets/video_card.dart';
+import 'package:happyco/core/ui/widgets/layouts/section_header.dart';
 
 /// News screen displaying articles, Q&A, products, and videos.
 ///

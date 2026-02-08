@@ -63,7 +63,8 @@ class DialogService {
     );
     _dialogStack.add(entry);
 
-    debugPrint('DialogService: Opening dialog $type (stack size: ${_dialogStack.length})');
+    debugPrint(
+        'DialogService: Opening dialog $type (stack size: ${_dialogStack.length})');
 
     final completer = Completer<T?>();
 
@@ -192,8 +193,7 @@ class DialogEntry {
   });
 
   @override
-  String toString() =>
-      'DialogEntry(type: $type, timestamp: $timestamp)';
+  String toString() => 'DialogEntry(type: $type, timestamp: $timestamp)';
 }
 
 /// Completer for async dialog results

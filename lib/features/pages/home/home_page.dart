@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:happyco/core/config/app_constants.dart';
+import 'package:happyco/core/services/dialog_service.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
+import 'package:happyco/core/ui/dialogs/dialog_type.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
+import 'package:happyco/domain/repositories/storage_repository.dart';
 import 'package:happyco/features/app_router.gr.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
-import 'package:happyco/features/widgets/sections/promotional_banner.dart';
-import 'package:happyco/features/widgets/sections/home_categories.dart';
-import 'package:happyco/features/widgets/common/home_header.dart';
-import 'package:happyco/features/widgets/product/product_grid.dart';
+import 'package:happyco/core/ui/widgets/banners/promotional_banner.dart';
+import 'package:happyco/features/home/widgets/home_categories.dart';
+import 'package:happyco/features/home/widgets/home_header.dart';
+import 'package:happyco/features/products/widgets/product_grid.dart';
 
 /// Home Page - Vietnamese Furniture E-commerce
 ///
@@ -24,8 +27,30 @@ import 'package:happyco/features/widgets/product/product_grid.dart';
 /// - Category icons (8 furniture categories)
 /// - Product grid sections (Featured & Recommended)
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkAuthAndShowLogin();
+    });
+  }
+
+  void _checkAuthAndShowLogin() {
+    final storageRepository = GetIt.I<StorageRepository>();
+    if (!storageRepository.isLoggedIn()) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        GetIt.I<DialogService>().show(DialogType.login);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -71,8 +71,7 @@ class AppConfig {
     apiBaseUrl = dotenv.env['API_BASE_URL'] ?? _getDefaultApiUrl(environment);
     apiTimeout = int.tryParse(dotenv.env['API_TIMEOUT'] ?? '') ?? 30000;
 
-    previewEnabled =
-        dotenv.env['PREVIEW_ENABLED']?.toLowerCase() == 'true' ||
+    previewEnabled = dotenv.env['PREVIEW_ENABLED']?.toLowerCase() == 'true' ||
         environment != Environment.production;
 
     talker.info('AppConfig initialized: env=$environment, url=$apiBaseUrl');

@@ -44,13 +44,12 @@ class NotificationItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       UIText(
-                        title: item.title,
-                        titleSize: UISizes.font.sp14,
-                        fontWeight: FontWeight.w600,
-                        titleColor: UIColors.red500,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis
-                      ),
+                          title: item.title,
+                          titleSize: UISizes.font.sp14,
+                          fontWeight: FontWeight.w600,
+                          titleColor: UIColors.red500,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
                       SizedBox(height: UISizes.height.h4),
                       UIText(
                         title: item.description,

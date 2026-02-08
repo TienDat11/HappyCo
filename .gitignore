@@ -213,6 +213,8 @@ Desktop.ini
 
 # ============================================================================
 # AI SKILLS & DEVELOPMENT TOOLS (Local use only)
+# ============================================================================
+
 # AI Skills infrastructure
 .skills/
 
@@ -233,3 +235,38 @@ prompt.md
 # Beads task management (local AI memory)
 .beads/
 *.bead
+
+# ============================================================================
+# CLAUDE CODE CONFIGURATION FILES (Local development only)
+# ============================================================================
+
+# Claude project configuration and memory
+.claude/
+.claude/*
+!.claude/.gitkeep
+
+# Claude local settings (user-specific MCP configs, permissions)
+.claude.json
+.claude-settings.json
+settings.local.json
+
+# Claude memory and optimization files
+.claude/memory/
+.claude/api_specs/
+.claude/plans/
+.claude/skills/
+
+# MCP configuration files (may contain API keys)
+mcp_config.json
+claude_desktop_config.json
+
+# Permissions and tool configurations
+.claude/settings.local.json
+.claude/permissions.json
+
+# Generated reports and analysis
+.claude/*.md
+.claude/reports/
+
+# Everything Claude Code repo (if cloned locally)
+everything-claude-code/

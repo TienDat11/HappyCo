@@ -101,9 +101,8 @@ class _VideoCardState extends State<VideoCard>
           borderRadius: BorderRadius.circular(UISizes.square.r12),
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            child: _isPlaying
-                ? _buildVideoPlayer()
-                : _buildThumbnailWithOverlay(),
+            child:
+                _isPlaying ? _buildVideoPlayer() : _buildThumbnailWithOverlay(),
           ),
         ),
       ),

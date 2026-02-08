@@ -1,4 +1,13 @@
+import 'package:happyco/domain/repositories/auth_repository.dart';
 import 'package:happyco/domain/repositories/notification_repository.dart';
+import 'package:happyco/domain/usecases/auth/check_auth_status_usecase.dart';
+import 'package:happyco/domain/usecases/auth/forgot_password_usecase.dart';
+import 'package:happyco/domain/usecases/auth/login_usecase.dart';
+import 'package:happyco/domain/usecases/auth/logout_usecase.dart';
+import 'package:happyco/domain/usecases/auth/refresh_otp_usecase.dart';
+import 'package:happyco/domain/usecases/auth/register_usecase.dart';
+import 'package:happyco/domain/usecases/auth/reset_password_usecase.dart';
+import 'package:happyco/domain/usecases/auth/verify_otp_usecase.dart';
 import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_latest_news_usecase.dart';
@@ -14,6 +23,7 @@ import 'package:injectable/injectable.dart';
 import 'package:happyco/domain/domain_locator.config.dart';
 import 'package:happyco/domain/repositories/news_repository.dart';
 import 'package:happyco/domain/repositories/product_repository.dart';
+import 'package:happyco/features/auth/bloc/auth_bloc.dart';
 
 final domainLocator = GetIt.instance;
 
@@ -75,6 +85,63 @@ void setupDomainLocator() {
   domainLocator.registerFactory<GetRelatedVideosUseCase>(
     () => GetRelatedVideosUseCase(
       repository: domainLocator<NewsRepository>(),
+    ),
+  );
+
+  // Auth use cases
+  domainLocator.registerFactory<LoginUseCase>(
+    () => LoginUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<RegisterUseCase>(
+    () => RegisterUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<ForgotPasswordUseCase>(
+    () => ForgotPasswordUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<VerifyOtpUseCase>(
+    () => VerifyOtpUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<RefreshOtpUseCase>(
+    () => RefreshOtpUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<ResetPasswordUseCase>(
+    () => ResetPasswordUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<LogoutUseCase>(
+    () => LogoutUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<CheckAuthStatusUseCase>(
+    () => CheckAuthStatusUseCase(
+      repository: domainLocator<AuthRepository>(),
+    ),
+  );
+
+  // Auth Bloc
+  domainLocator.registerFactory<AuthBloc>(
+    () => AuthBloc(
+      loginUseCase: domainLocator<LoginUseCase>(),
+      registerUseCase: domainLocator<RegisterUseCase>(),
+      forgotPasswordUseCase: domainLocator<ForgotPasswordUseCase>(),
+      verifyOtpUseCase: domainLocator<VerifyOtpUseCase>(),
+      refreshOtpUseCase: domainLocator<RefreshOtpUseCase>(),
+      resetPasswordUseCase: domainLocator<ResetPasswordUseCase>(),
+      logoutUseCase: domainLocator<LogoutUseCase>(),
+      checkAuthStatusUseCase: domainLocator<CheckAuthStatusUseCase>(),
+      authRepository: domainLocator<AuthRepository>(),
     ),
   );
 
