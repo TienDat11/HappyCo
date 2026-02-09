@@ -8,6 +8,9 @@ class RemoteConfig {
   /// Base API URL from environment
   String get baseUrl => AppConfig.instance.apiBaseUrl;
 
+  /// Base URL for images (usually same as baseUrl + uploads path)
+  String get imageBaseUrl => AppConfig.instance.apiBaseUrl;
+
   /// API timeout in milliseconds
   int get timeout => AppConfig.instance.apiTimeout;
 

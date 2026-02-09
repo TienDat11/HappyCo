@@ -2,7 +2,7 @@ import 'package:happyco/domain/entities/product_entity.dart';
 
 /// Product Repository Interface
 ///
-/// Defines the contract for product data access.
+/// Defines of contract for product data access.
 /// Interface lives in domain layer, implementation in data layer.
 abstract class ProductRepository {
   /// Get featured products for home page
@@ -19,4 +19,13 @@ abstract class ProductRepository {
 
   /// Search products by name
   Future<List<ProductEntity>> searchProducts(String query);
+
+  /// Get products with pagination and filters
+  Future<List<ProductEntity>> getProducts({
+    int limit = 6,
+    int offset = 0,
+    String? search,
+    bool? hot,
+    String? category,
+  });
 }

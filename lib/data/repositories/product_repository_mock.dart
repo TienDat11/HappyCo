@@ -260,4 +260,45 @@ class ProductRepositoryMock implements ProductRepository {
         .where((p) => p.name.toLowerCase().contains(lowerQuery))
         .toList();
   }
+
+  @override
+  Future<List<ProductEntity>> getProducts({
+    int limit = 6,
+    int offset = 0,
+    String? search,
+    bool? hot,
+    String? category,
+  }) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    final allProducts = [
+      ...await getFeaturedProducts(),
+      ...await getRecommendedProducts(),
+      ..._mockData.values.expand((list) => list),
+    ];
+
+    // Filter by category
+    List<ProductEntity> filtered = allProducts;
+    if (category != null) {
+      filtered = filtered.where((p) => p.category == category).toList();
+    }
+
+    // Filter by hot
+    if (hot == true) {
+      filtered = filtered.where((p) => p.isFeatured).toList();
+    }
+
+    // Filter by search
+    if (search != null && search.isNotEmpty) {
+      final lowerQuery = search.toLowerCase();
+      filtered = filtered
+          .where((p) => p.name.toLowerCase().contains(lowerQuery))
+          .toList();
+    }
+
+    // Pagination
+    final start = offset;
+    final end = (offset + limit).clamp(0, filtered.length);
+    return filtered.sublist(start, end);
+  }
 }

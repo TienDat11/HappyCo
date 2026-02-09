@@ -5,11 +5,15 @@ class CategoryEntity {
   final String id;
   final String name;
   final String? iconName;
+  final String? imageUrl;
+  final int productCount;
 
   const CategoryEntity({
     required this.id,
     required this.name,
     this.iconName,
+    this.imageUrl,
+    this.productCount = 0,
   });
 
   @override
