@@ -42,6 +42,11 @@ class ApiEndpoints {
   static String categoryProducts(String id) => "/categories/$id/products";
 
   // ============================================
+  // BANNER ENDPOINTS
+  // ============================================
+  static const String banners = "/banners";
+
+  // ============================================
   // CART ENDPOINTS
   // ============================================
   static const String cart = "/cart";

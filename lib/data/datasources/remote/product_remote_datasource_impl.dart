@@ -53,6 +53,30 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     return _handleListResponse(response.data);
   }
 
+  @override
+  Future<List<Map<String, dynamic>>> getProducts({
+    int limit = 6,
+    int offset = 0,
+    String? search,
+    bool? hot,
+    String? category,
+  }) async {
+    final queryParams = <String, dynamic>{
+      'limit': limit,
+      'offset': offset,
+    };
+
+    if (search != null) queryParams['search'] = search;
+    if (hot != null) queryParams['hot'] = hot;
+    if (category != null) queryParams['category'] = category;
+
+    final response = await _dioClient.get<dynamic>(
+      ApiEndpoints.products,
+      queryParameters: queryParams,
+    );
+    return _handleListResponse(response.data);
+  }
+
   List<Map<String, dynamic>> _handleListResponse(dynamic data) {
     if (data is List<Map<String, dynamic>>) {
       return data;

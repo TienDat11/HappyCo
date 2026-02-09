@@ -58,4 +58,22 @@ class ProductRepositoryImpl implements ProductRepository {
     final response = await _dataSource.searchProducts(query);
     return response.map((json) => _mapToEntity(json)).toList();
   }
+
+  @override
+  Future<List<ProductEntity>> getProducts({
+    int limit = 6,
+    int offset = 0,
+    String? search,
+    bool? hot,
+    String? category,
+  }) async {
+    final response = await _dataSource.getProducts(
+      limit: limit,
+      offset: offset,
+      search: search,
+      hot: hot,
+      category: category,
+    );
+    return response.map((json) => _mapToEntity(json)).toList();
+  }
 }

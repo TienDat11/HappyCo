@@ -17,4 +17,13 @@ abstract class ProductRemoteDataSource {
 
   /// Search products by name
   Future<List<Map<String, dynamic>>> searchProducts(String query);
+
+  /// Get products with pagination and filters
+  Future<List<Map<String, dynamic>>> getProducts({
+    int limit = 6,
+    int offset = 0,
+    String? search,
+    bool? hot,
+    String? category,
+  });
 }
