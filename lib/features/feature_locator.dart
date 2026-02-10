@@ -4,15 +4,13 @@ import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_banners_usecase.dart';
 import 'package:happyco/domain/usecases/search_products_usecase.dart';
-import 'package:happyco/domain/usecases/get_latest_news_usecase.dart';
 import 'package:happyco/domain/usecases/get_news_by_category_usecase.dart';
+import 'package:happyco/domain/usecases/get_news_categories_usecase.dart';
+import 'package:happyco/domain/usecases/get_news_videos_usecase.dart';
 import 'package:happyco/domain/usecases/get_product_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_notification_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_nottification_items_usecase.dart';
-import 'package:happyco/domain/usecases/get_promotions_usecase.dart';
-import 'package:happyco/domain/usecases/get_qa_usecase.dart';
-import 'package:happyco/domain/usecases/get_related_videos_usecase.dart';
 import 'package:happyco/features/feature_locator.config.dart';
 import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
@@ -53,12 +51,9 @@ void setupFeatureLocator() {
   );
   featureLocator.registerFactory<NewsBloc>(
     () => NewsBloc(
-      getNewsByCategoryUseCase: featureLocator<GetNewsByCategoryUseCase>(),
-      getLatestNewsUseCase: featureLocator<GetLatestNewsUseCase>(),
-      getQAUseCase: featureLocator<GetQAUseCase>(),
-      getPromotionsUseCase: featureLocator<GetPromotionsUseCase>(),
-      getFeaturedProductsUseCase: featureLocator<GetFeaturedProductsUseCase>(),
-      getRelatedVideosUseCase: featureLocator<GetRelatedVideosUseCase>(),
+      getNewsCategoriesUseCase: featureLocator<GetNewsCategoriesUseCase>(),
+      getNewsUseCase: featureLocator<GetNewsUseCase>(),
+      getNewsVideosUseCase: featureLocator<GetNewsVideosUseCase>(),
     ),
   );
   featureLocator.registerFactory<NotificationPageBloc>(

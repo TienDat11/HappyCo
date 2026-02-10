@@ -42,6 +42,13 @@ class ApiEndpoints {
   static String categoryProducts(String id) => "/products?category=$id";
 
   // ============================================
+  // NEWS ENDPOINTS
+  // ============================================
+  static const String newsCategories = "/news-ctg";
+  static const String news = "/news";
+  static const String newsVideos = "/news-video";
+
+  // ============================================
   // BANNER ENDPOINTS
   // ============================================
   static const String banners = "/news-banner";
