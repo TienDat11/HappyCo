@@ -22,7 +22,9 @@ import 'package:happyco/domain/repositories/notification_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:happyco/data/datasources/remote/remote_config.dart';
 import 'package:happyco/data/datasources/remote/dio_client.dart';
-import 'package:happyco/data/repositories/news_repository_mock.dart';
+import 'package:happyco/data/datasources/remote/news_remote_datasource.dart';
+import 'package:happyco/data/datasources/remote/news_remote_datasource_impl.dart';
+import 'package:happyco/data/repositories/news_repository_impl.dart';
 import 'package:happyco/domain/repositories/news_repository.dart';
 import 'package:happyco/domain/repositories/product_repository.dart';
 import 'package:happyco/domain/repositories/storage_repository.dart';
@@ -109,8 +111,12 @@ Future<void> setupDataLocator() async {
     ),
   );
 
+  // News dependencies
+  final NewsRemoteDataSource newsRemoteDataSource =
+      NewsRemoteDataSourceImpl(dioClient: dataLocator<DioClient>());
+
   dataLocator.registerLazySingleton<NewsRepository>(
-    () => NewsRepositoryMock(),
+    () => NewsRepositoryImpl(dataSource: newsRemoteDataSource),
   );
   dataLocator.registerLazySingleton<NotificationRepository>(
     () => NotificationRepositoryMock(),

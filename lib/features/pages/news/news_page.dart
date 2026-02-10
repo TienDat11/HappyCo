@@ -8,13 +8,10 @@ import 'package:happyco/core/ui/widgets/cards/ui_card.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
 import 'package:happyco/domain/entities/news_entity.dart';
-import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/features/pages/news/bloc/news_bloc.dart';
 import 'package:happyco/core/ui/widgets/filters/filter_tabs.dart';
 import 'package:happyco/features/home/widgets/home_header.dart';
-import 'package:happyco/features/news/widgets/compact_news_card.dart';
 import 'package:happyco/features/news/widgets/news_card.dart';
-import 'package:happyco/features/news/widgets/product_compact_card.dart';
 import 'package:happyco/features/news/widgets/video_card.dart';
 import 'package:happyco/core/ui/widgets/layouts/section_header.dart';
 
@@ -436,6 +433,7 @@ class _NewsPageContent extends StatelessWidget {
           const HomeHeader(),
           SizedBox(height: UISizes.height.h8),
           FilterTabs(
+            categories: state.categories,
             selectedCategory: state.selectedCategory,
             onCategorySelected: (category) {
               context.read<NewsBloc>().add(OnNewsFilterChange(category));
@@ -453,17 +451,15 @@ class _NewsPageContent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildPromotionsSection(state.newsByCategory),
-                    SizedBox(height: UISizes.height.h24),
-                    _buildBannerSection(state.banner),
-                    SizedBox(height: UISizes.height.h24),
-                    _buildQASection(state.qaList),
-                    SizedBox(height: UISizes.height.h24),
-                    _buildLatestNewsSection(state.latestNews),
-                    SizedBox(height: UISizes.height.h24),
-                    _buildFeaturedProductsSection(state.featuredProducts),
-                    SizedBox(height: UISizes.height.h24),
-                    _buildRelatedVideosSection(state.relatedVideos),
+                    _buildNewsSection(state.newsByCategory),
+                    if (state.videos.isNotEmpty) ...[
+                      SizedBox(height: UISizes.height.h24),
+                      _buildRelatedVideosSection(
+                        context,
+                        state.videos,
+                        state.showAllVideos,
+                      ),
+                    ],
                     SizedBox(height: UISizes.height.h24),
                   ],
                 ),
@@ -475,93 +471,47 @@ class _NewsPageContent extends StatelessWidget {
     );
   }
 
-  Widget _buildPromotionsSection(List<NewsEntity> news) {
+  Widget _buildNewsSection(List<NewsEntity> news) {
+    if (news.isEmpty) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: UISizes.height.h40),
+        child: Center(
+          child: UIText(
+            title: 'Không có tin tức.',
+            titleSize: UISizes.font.sp14,
+            titleColor: UIColors.gray500,
+          ),
+        ),
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: news.map((article) => NewsCard(news: article)).toList(),
     );
   }
 
-  Widget _buildBannerSection(NewsEntity? banner) {
-    if (banner == null) return const SizedBox.shrink();
+  Widget _buildRelatedVideosSection(
+    BuildContext context,
+    List<NewsEntity> videos,
+    bool showAll,
+  ) {
+    final displayVideos = showAll ? videos : videos.take(3).toList();
+    final hasMoreThanThree = videos.length > 3;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(UISizes.square.r12),
-      child: Image.network(
-        banner.imageUrl,
-        height: UISizes.height.h133,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return Container(
-            height: UISizes.height.h133,
-            width: double.infinity,
-            color: UIColors.gray200,
-            child: Icon(
-              Icons.error_outline,
-              size: UISizes.width.w48,
-              color: UIColors.gray400,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildLatestNewsSection(List<NewsEntity> news) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(
-          title: AppSectionTitles.latestNews,
-          actionText: AppActionTexts.viewAll,
-        ),
-        SizedBox(height: UISizes.height.h12),
-        ...news.take(3).map((article) => CompactNewsCard(news: article)),
-      ],
-    );
-  }
-
-  Widget _buildQASection(List<NewsEntity> qaList) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SectionHeader(
-          title: AppSectionTitles.qAndA,
-          actionText: AppActionTexts.viewAll,
-        ),
-        SizedBox(height: UISizes.height.h12),
-        ...qaList.take(3).map((qa) => CompactNewsCard(news: qa)),
-      ],
-    );
-  }
-
-  Widget _buildFeaturedProductsSection(List<ProductEntity> products) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SectionHeader(
-          title: AppSectionTitles.featuredProducts,
-          actionText: AppActionTexts.viewAll,
-        ),
-        SizedBox(height: UISizes.height.h12),
-        ...products
-            .take(3)
-            .map((product) => ProductCompactCard(product: product)),
-      ],
-    );
-  }
-
-  Widget _buildRelatedVideosSection(List<NewsEntity> videos) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SectionHeader(
+        SectionHeader(
           title: AppSectionTitles.relatedVideos,
-          actionText: AppActionTexts.viewAll,
+          actionText: hasMoreThanThree
+              ? (showAll ? 'Ẩn bớt' : AppActionTexts.viewAll)
+              : null,
+          onActionTap: hasMoreThanThree
+              ? () => context.read<NewsBloc>().add(OnNewsToggleAllVideos())
+              : null,
         ),
         SizedBox(height: UISizes.height.h12),
-        ...videos.map((video) => VideoCard(video: video)),
+        ...displayVideos.map((video) => VideoCard(video: video)),
       ],
     );
   }

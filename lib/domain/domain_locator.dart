@@ -14,15 +14,13 @@ import 'package:happyco/domain/usecases/get_categories_usecase.dart';
 import 'package:happyco/domain/usecases/get_banners_usecase.dart';
 import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
-import 'package:happyco/domain/usecases/get_latest_news_usecase.dart';
 import 'package:happyco/domain/usecases/get_product_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_news_by_category_usecase.dart';
-import 'package:happyco/domain/usecases/get_promotions_usecase.dart';
-import 'package:happyco/domain/usecases/get_qa_usecase.dart';
+import 'package:happyco/domain/usecases/get_news_categories_usecase.dart';
+import 'package:happyco/domain/usecases/get_news_videos_usecase.dart';
 import 'package:happyco/domain/usecases/get_recommended_products_usecase.dart';
 import 'package:happyco/domain/usecases/search_products_usecase.dart';
-import 'package:happyco/domain/usecases/get_related_videos_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:happyco/domain/usecases/get_notification_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_nottification_items_usecase.dart';
@@ -94,28 +92,18 @@ void setupDomainLocator() {
   );
 
   // Register news use cases
-  domainLocator.registerFactory<GetNewsByCategoryUseCase>(
-    () => GetNewsByCategoryUseCase(
+  domainLocator.registerFactory<GetNewsCategoriesUseCase>(
+    () => GetNewsCategoriesUseCase(
       repository: domainLocator<NewsRepository>(),
     ),
   );
-  domainLocator.registerFactory<GetLatestNewsUseCase>(
-    () => GetLatestNewsUseCase(
+  domainLocator.registerFactory<GetNewsUseCase>(
+    () => GetNewsUseCase(
       repository: domainLocator<NewsRepository>(),
     ),
   );
-  domainLocator.registerFactory<GetQAUseCase>(
-    () => GetQAUseCase(
-      repository: domainLocator<NewsRepository>(),
-    ),
-  );
-  domainLocator.registerFactory<GetPromotionsUseCase>(
-    () => GetPromotionsUseCase(
-      repository: domainLocator<NewsRepository>(),
-    ),
-  );
-  domainLocator.registerFactory<GetRelatedVideosUseCase>(
-    () => GetRelatedVideosUseCase(
+  domainLocator.registerFactory<GetNewsVideosUseCase>(
+    () => GetNewsVideosUseCase(
       repository: domainLocator<NewsRepository>(),
     ),
   );

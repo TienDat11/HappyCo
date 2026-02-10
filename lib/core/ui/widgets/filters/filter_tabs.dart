@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
-import 'package:happyco/domain/entities/news_entity.dart';
-import 'package:happyco/domain/extensions/news_category_extension.dart';
+import 'package:happyco/domain/entities/news_category_entity.dart';
 
 /// A horizontal scrollable filter bar for news categories.
 ///
-/// Displays 5 tabs matching Figma design node-id=1:2453.
+/// Displays dynamic tabs from API, matching Figma design node-id=1:2453.
 /// Active tab has a red background and border, while inactive tabs
 /// have a white background and gray border.
 class FilterTabs extends StatelessWidget {
+  /// Available categories from API.
+  final List<NewsCategoryEntity> categories;
+
   /// The currently selected category.
-  final NewsCategory selectedCategory;
+  final NewsCategoryEntity selectedCategory;
 
   /// Callback when a category is selected.
-  final ValueChanged<NewsCategory> onCategorySelected;
+  final ValueChanged<NewsCategoryEntity> onCategorySelected;
 
   const FilterTabs({
     super.key,
+    required this.categories,
     required this.selectedCategory,
     required this.onCategorySelected,
   });
@@ -28,8 +31,8 @@ class FilterTabs extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.symmetric(horizontal: UISizes.width.w12),
       child: Row(
-        children: NewsCategory.values.map((category) {
-          final isSelected = category == selectedCategory;
+        children: categories.map((category) {
+          final isSelected = category.id == selectedCategory.id;
           return Padding(
             padding: EdgeInsets.only(right: UISizes.width.w12),
             child: _FilterTabItem(
@@ -45,7 +48,7 @@ class FilterTabs extends StatelessWidget {
 }
 
 class _FilterTabItem extends StatelessWidget {
-  final NewsCategory category;
+  final NewsCategoryEntity category;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -73,7 +76,7 @@ class _FilterTabItem extends StatelessWidget {
           ),
         ),
         child: UIText(
-          title: category.displayName,
+          title: category.name,
           titleSize: UISizes.font.sp14,
           titleColor: isSelected ? UIColors.primary : UIColors.gray700,
           fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,

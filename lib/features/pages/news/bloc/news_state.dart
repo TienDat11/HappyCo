@@ -11,55 +11,49 @@ class NewsLoading extends NewsState {}
 
 /// State when news data is successfully loaded.
 class NewsLoaded extends NewsState {
+  /// Available news categories for the TabBar.
+  final List<NewsCategoryEntity> categories;
+
+  /// The currently selected category.
+  final NewsCategoryEntity selectedCategory;
+
   /// News articles filtered by the selected category.
   final List<NewsEntity> newsByCategory;
 
-  /// Most recent news articles.
-  final List<NewsEntity> latestNews;
+  /// Video content for the news screen.
+  final List<NewsEntity> videos;
 
-  /// Frequently asked questions.
-  final List<NewsEntity> qaList;
+  /// Current search query, if any.
+  final String? searchQuery;
 
-  /// Products highlighted on the news screen.
-  final List<ProductEntity> featuredProducts;
-
-  /// Related video content.
-  final List<NewsEntity> relatedVideos;
-
-  /// The currently selected filter category.
-  final NewsCategory selectedCategory;
-
-  /// Banner image for middle section
-  final NewsEntity? banner;
+  /// Whether to show all videos or only the first 3.
+  final bool showAllVideos;
 
   NewsLoaded({
+    required this.categories,
+    required this.selectedCategory,
     required this.newsByCategory,
-    required this.latestNews,
-    required this.qaList,
-    required this.featuredProducts,
-    required this.relatedVideos,
-    this.selectedCategory = NewsCategory.promotion,
-    this.banner,
+    required this.videos,
+    this.searchQuery,
+    this.showAllVideos = false,
   });
 
   /// Creates a copy of this state with updated fields.
   NewsLoaded copyWith({
+    List<NewsCategoryEntity>? categories,
+    NewsCategoryEntity? selectedCategory,
     List<NewsEntity>? newsByCategory,
-    List<NewsEntity>? latestNews,
-    List<NewsEntity>? qaList,
-    List<ProductEntity>? featuredProducts,
-    List<NewsEntity>? relatedVideos,
-    NewsCategory? selectedCategory,
-    NewsEntity? banner,
+    List<NewsEntity>? videos,
+    String? searchQuery,
+    bool? showAllVideos,
   }) {
     return NewsLoaded(
-      newsByCategory: newsByCategory ?? this.newsByCategory,
-      latestNews: latestNews ?? this.latestNews,
-      qaList: qaList ?? this.qaList,
-      featuredProducts: featuredProducts ?? this.featuredProducts,
-      relatedVideos: relatedVideos ?? this.relatedVideos,
+      categories: categories ?? this.categories,
       selectedCategory: selectedCategory ?? this.selectedCategory,
-      banner: banner ?? this.banner,
+      newsByCategory: newsByCategory ?? this.newsByCategory,
+      videos: videos ?? this.videos,
+      searchQuery: searchQuery ?? this.searchQuery,
+      showAllVideos: showAllVideos ?? this.showAllVideos,
     );
   }
 }
