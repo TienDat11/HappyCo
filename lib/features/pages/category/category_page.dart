@@ -5,21 +5,22 @@ import 'package:get_it/get_it.dart';
 import 'package:happyco/core/config/app_constants.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
+import 'package:happyco/domain/entities/category_entity.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
 import 'package:happyco/core/ui/widgets/banners/promotional_banner.dart';
-import 'package:happyco/features/home/widgets/home_categories.dart';
 import 'package:happyco/features/home/widgets/home_header.dart';
+import 'package:happyco/features/home/widgets/home_categories.dart';
+import 'package:happyco/features/pages/category/widgets/category_section.dart';
 import 'package:happyco/features/products/widgets/product_grid.dart';
-import 'package:happyco/core/ui/widgets/labels/section_title.dart';
 
-/// Category Page - Furniture Category Detail
+/// Category Page - Browse All Categories
 ///
 /// Displays:
 /// - Header with search & notification (reuse HomeHeader)
-/// - Banner carousel (reuse HomeBanner)
-/// - Category chips (reuse HomeCategories with selected state)
-/// - Product grid by category (reuse HomeProductGrid)
+/// - Banner carousel
+/// - All categories with products in collapsible sections
+/// - See More/Show Less toggle per category
 @RoutePage()
 class CategoryPage extends StatelessWidget {
   const CategoryPage({super.key});
@@ -42,7 +43,14 @@ class _CategoryPageContent extends StatelessWidget {
       backgroundColor: UIColors.background,
       body: Column(
         children: [
-          const HomeHeader(),
+          HomeHeader(
+            onSearch: (query) {
+              context.read<CategoryBloc>().add(OnCategorySearch(query));
+            },
+            onSearchCleared: () {
+              context.read<CategoryBloc>().add(OnCategorySearchCleared());
+            },
+          ),
           Expanded(
             child: BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
@@ -54,7 +62,11 @@ class _CategoryPageContent extends StatelessWidget {
                   return _buildErrorState(context, state.error);
                 }
 
-                return _buildMainContent(context, state);
+                if (state is CategoryLoaded) {
+                  return _buildMainContent(context, state);
+                }
+
+                return const SizedBox.shrink();
               },
             ),
           ),
@@ -70,14 +82,18 @@ class _CategoryPageContent extends StatelessWidget {
         children: [
           SizedBox(height: UISizes.height.h16),
           const PromotionalBanner(isLoading: true),
-          SizedBox(height: UISizes.height.h24),
-          HomeCategories(isLoading: true),
-          SizedBox(height: UISizes.height.h24),
-          const ProductGrid(
-            title: '',
-            isLoading: true,
-            products: [],
-          ),
+          SizedBox(height: UISizes.height.h16),
+          const HomeCategories(isLoading: true),
+          SizedBox(height: UISizes.height.h8),
+          // Loading skeleton sections
+          for (int i = 0; i < 3; i++)
+            CategorySection(
+              category: CategoryEntity.empty(),
+              products: const [],
+              isExpanded: false,
+              onToggle: () {},
+              isLoading: true,
+            ),
           SizedBox(height: UISizes.height.h32),
         ],
       ),
@@ -122,28 +138,17 @@ class _CategoryPageContent extends StatelessWidget {
     );
   }
 
-  Widget _buildMainContent(BuildContext context, CategoryState state) {
-    final isLoading = state is CategoryLoading;
-    final isProductsLoading = state is CategoryProductsLoading;
-
-    String selectedCategoryId;
-    List<ProductEntity> products;
-
-    if (state is CategoryLoaded) {
-      selectedCategoryId = state.selectedCategoryId;
-      products = state.products;
-    } else if (state is CategoryProductsLoading) {
-      selectedCategoryId = state.selectedCategoryId;
-      products = state.products;
-    } else {
-      selectedCategoryId = 'dining_set';
-      products = [];
+  Widget _buildMainContent(BuildContext context, CategoryLoaded state) {
+    if (state.categories.isEmpty) {
+      return _buildEmptyState();
     }
 
-    if (isLoading) {
-      return _buildLoadingState();
+    // Show filtered products when searching or category filter is active
+    if (state.isSearching || state.selectedCategoryId != null) {
+      return _buildFilteredProducts(context, state);
     }
 
+    // Show all categories with their products
     return RefreshIndicator(
       onRefresh: () async {
         context.read<CategoryBloc>().add(OnCategoryRefresh());
@@ -154,26 +159,77 @@ class _CategoryPageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: UISizes.height.h16),
-            const PromotionalBanner(),
-            SizedBox(height: UISizes.height.h24),
+            PromotionalBanner(banners: state.banners),
+            SizedBox(height: UISizes.height.h16),
             HomeCategories(
-              selectedCategoryId: selectedCategoryId,
+              categories: state.categories,
+              selectedCategoryId: state.selectedCategoryId,
               onCategoryTap: (categoryId) {
-                context.read<CategoryBloc>().add(OnCategorySelect(categoryId));
+                context
+                    .read<CategoryBloc>()
+                    .add(OnCategoryFilterSelected(categoryId));
               },
             ),
-            SizedBox(height: UISizes.height.h14),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: UISizes.width.w16),
-              child: SectionTitle(
-                title: _getCategoryName(selectedCategoryId),
-              ),
+            SizedBox(height: UISizes.height.h8),
+            // Dynamic category sections
+            ...state.categories.map((category) {
+              final products = state.productsByCategory[category.id] ?? [];
+              final isExpanded =
+                  state.expandedCategoryIds.contains(category.id);
+
+              return CategorySection(
+                category: category,
+                products: products,
+                isExpanded: isExpanded,
+                onToggle: () => context
+                    .read<CategoryBloc>()
+                    .add(OnCategoryToggleExpansion(category.id)),
+                onProductTap: _onProductTap,
+                onAddToCart: _onAddToCart,
+              );
+            }),
+            SizedBox(height: UISizes.height.h32),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilteredProducts(
+    BuildContext context,
+    CategoryLoaded state,
+  ) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<CategoryBloc>().add(OnCategoryRefresh());
+      },
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: UISizes.height.h16),
+            PromotionalBanner(banners: state.banners),
+            SizedBox(height: UISizes.height.h16),
+            HomeCategories(
+              categories: state.categories,
+              selectedCategoryId: state.selectedCategoryId,
+              onCategoryTap: (categoryId) {
+                context
+                    .read<CategoryBloc>()
+                    .add(OnCategoryFilterSelected(categoryId));
+              },
             ),
-            SizedBox(height: UISizes.height.h14),
+            SizedBox(height: UISizes.height.h8),
             ProductGrid(
-              title: '',
-              isLoading: isProductsLoading,
-              products: products,
+              title: state.isSearching
+                  ? 'Kết quả tìm kiếm'
+                  : state.categories
+                          .where((c) => c.id == state.selectedCategoryId)
+                          .map((c) => c.name)
+                          .firstOrNull ??
+                      'Sản phẩm',
+              products: state.filteredProducts,
               onProductTap: _onProductTap,
               onAddToCart: _onAddToCart,
             ),
@@ -184,21 +240,32 @@ class _CategoryPageContent extends StatelessWidget {
     );
   }
 
-  String _getCategoryName(String categoryId) {
-    final categoryNames = {
-      AppCategoryIds.diningSet: AppCategoryNames.diningSet,
-      AppCategoryIds.diningChair: AppCategoryNames.diningChair,
-      AppCategoryIds.sofa: AppCategoryNames.sofa,
-      AppCategoryIds.shoeCabinet: AppCategoryNames.shoeCabinet,
-      AppCategoryIds.vanityTable: AppCategoryNames.vanityTable,
-      AppCategoryIds.altar: AppCategoryNames.altar,
-      AppCategoryIds.displayShelf: AppCategoryNames.displayShelf,
-      AppCategoryIds.kitchenCabinet: AppCategoryNames.kitchenCabinet,
-    };
-    return categoryNames[categoryId] ?? AppSectionTitles.products;
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.category_outlined,
+            size: UISizes.width.w48,
+            color: UIColors.gray400,
+          ),
+          SizedBox(height: UISizes.height.h16),
+          UIText(
+            title: 'Không có danh mục sản phẩm',
+            titleSize: UISizes.font.sp16,
+            titleColor: UIColors.gray600,
+          ),
+        ],
+      ),
+    );
   }
 
-  void _onProductTap(ProductEntity product) {}
+  void _onProductTap(ProductEntity product) {
+    // TODO: Navigate to product detail
+  }
 
-  void _onAddToCart(ProductEntity product) {}
+  void _onAddToCart(ProductEntity product) {
+    // TODO: Add to cart
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:happyco/core/config/app_config.dart';
 import 'package:happyco/data/models/banner_dto.dart';
 import 'package:happyco/domain/entities/banner_entity.dart';
 
@@ -5,11 +6,11 @@ import 'package:happyco/domain/entities/banner_entity.dart';
 ///
 /// Handles conversion between DTOs (data layer) and entities (domain layer).
 extension BannerMapper on BannerDto {
-  BannerEntity toEntity({required String baseUrl}) {
+  BannerEntity toEntity() {
     return BannerEntity(
       id: id,
       title: title,
-      imageUrl: _formatImageUrl(image, baseUrl),
+      imageUrl: _formatImageUrl(image, AppConfig.instance.imageBaseUrl),
       actionUrl: actionUrl,
     );
   }
@@ -22,7 +23,7 @@ extension BannerMapper on BannerDto {
 }
 
 extension BannerListMapper on BannerListResponse {
-  List<BannerEntity> toEntityList({required String baseUrl}) {
-    return data.map((dto) => dto.toEntity(baseUrl: baseUrl)).toList();
+  List<BannerEntity> toEntityList() {
+    return data.map((dto) => dto.toEntity()).toList();
   }
 }

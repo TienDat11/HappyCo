@@ -1,85 +1,29 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
-import 'package:happyco/core/theme/ui_images.dart';
 import 'package:happyco/core/ui/widgets/cards/ui_card.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
-
-/// Home Category Item Model
-class HomeCategoryItem {
-  final String id;
-  final String imageUrl;
-  final String label;
-  final VoidCallback? onTap;
-
-  const HomeCategoryItem({
-    required this.id,
-    required this.imageUrl,
-    required this.label,
-    this.onTap,
-  });
-}
+import 'package:happyco/domain/entities/category_entity.dart';
 
 /// Home Categories Widget
 ///
-/// Horizontal scrollable list of category images with labels
-/// Displays 8 furniture categories wrapped in a card
+/// Horizontal scrollable list of category images with labels.
+/// Fetches categories from API. First tab is "Tất cả".
+/// Selection indicator: 2px primary border + tint background + bold label.
 class HomeCategories extends StatelessWidget {
-  static final _defaultCategories = [
-    const HomeCategoryItem(
-      id: 'dining_set',
-      imageUrl: UIImages.categoryDiningSet,
-      label: 'Bộ bàn ăn',
-    ),
-    const HomeCategoryItem(
-      id: 'dining_chair',
-      imageUrl: UIImages.categoryDiningChair,
-      label: 'Ghế ăn',
-    ),
-    const HomeCategoryItem(
-      id: 'sofa',
-      imageUrl: UIImages.categorySofa,
-      label: 'Sofa gỗ',
-    ),
-    const HomeCategoryItem(
-      id: 'shoe_cabinet',
-      imageUrl: UIImages.categoryShoeCabinet,
-      label: 'Tủ giày',
-    ),
-    const HomeCategoryItem(
-      id: 'vanity_table',
-      imageUrl: UIImages.categoryVanityTable,
-      label: 'Bàn trang điểm',
-    ),
-    const HomeCategoryItem(
-      id: 'altar',
-      imageUrl: UIImages.categoryAltar,
-      label: 'Tủ thờ',
-    ),
-    const HomeCategoryItem(
-      id: 'display_shelf',
-      imageUrl: UIImages.categoryDisplayShelf,
-      label: 'Kệ trang trí',
-    ),
-    const HomeCategoryItem(
-      id: 'kitchen_cabinet',
-      imageUrl: UIImages.categoryKitchenCabinet,
-      label: 'Tủ bếp',
-    ),
-  ];
-
-  final List<HomeCategoryItem> categories;
+  final List<CategoryEntity> categories;
   final bool isLoading;
   final String? selectedCategoryId;
-  final ValueChanged<String>? onCategoryTap;
+  final ValueChanged<String?>? onCategoryTap;
 
-  HomeCategories({
+  const HomeCategories({
     super.key,
-    List<HomeCategoryItem>? categories,
+    this.categories = const [],
     this.isLoading = false,
     this.selectedCategoryId,
     this.onCategoryTap,
-  }) : categories = categories ?? _defaultCategories;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -90,17 +34,20 @@ class HomeCategories extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Horizontal category list
           SizedBox(
             height: UISizes.height.h100,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: isLoading ? 6 : categories.length,
+              itemCount: isLoading ? 6 : categories.length + 1,
               itemBuilder: (context, index) {
                 if (isLoading) {
                   return _buildShimmerItem();
                 }
-                final category = categories[index];
+                // First item is "Tất cả"
+                if (index == 0) {
+                  return _buildAllTab();
+                }
+                final category = categories[index - 1];
                 return _buildCategoryItem(category);
               },
             ),
@@ -110,68 +57,135 @@ class HomeCategories extends StatelessWidget {
     );
   }
 
-  /// Builds individual category item with image and label
-  Widget _buildCategoryItem(HomeCategoryItem category) {
-    final isSelected = selectedCategoryId == category.id;
+  /// Builds the "Tất cả" tab — first item
+  Widget _buildAllTab() {
+    final isSelected = selectedCategoryId == null;
 
     return GestureDetector(
-      onTap: onCategoryTap != null
-          ? () => onCategoryTap!(category.id)
-          : category.onTap,
+      onTap: () => onCategoryTap?.call(null),
       child: Container(
         margin: EdgeInsets.only(right: UISizes.width.w12),
+        width: UISizes.width.w64,
         child: Column(
           children: [
-            // Category image container
             Container(
               width: UISizes.width.w52,
               height: UISizes.width.w52,
               decoration: BoxDecoration(
-                color: UIColors.white,
+                color: isSelected
+                    ? UIColors.primary.withValues(alpha: 0.08)
+                    : UIColors.white,
                 borderRadius: BorderRadius.circular(UISizes.square.r8),
                 boxShadow: [
                   BoxShadow(
                     color: UIColors.cardShadow,
-                    blurRadius: UISizes.square.r4,
+                    blurRadius:
+                        isSelected ? UISizes.square.r8 : UISizes.square.r4,
                     offset: const Offset(0, 0),
                   ),
                 ],
                 border: isSelected
-                    ? Border.all(
-                        color: UIColors.primary,
-                        width: 0.5,
-                      )
+                    ? Border.all(color: UIColors.primary, width: 2.0)
                     : null,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(UISizes.square.r8),
-                child: Image.asset(
-                  category.imageUrl,
-                  width: UISizes.width.w52,
-                  height: UISizes.width.w52,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: UISizes.width.w52,
-                      height: UISizes.width.w52,
-                      color: UIColors.gray100,
-                      child: Icon(
-                        Icons.image_outlined,
-                        size: UISizes.width.w24,
-                        color: UIColors.gray400,
-                      ),
-                    );
-                  },
+              child: Center(
+                child: Icon(
+                  Icons.grid_view_rounded,
+                  size: UISizes.width.w24,
+                  color: isSelected ? UIColors.primary : UIColors.gray400,
                 ),
               ),
             ),
             SizedBox(height: UISizes.height.h4),
-            // Category label
             UIText(
-              title: category.label,
+              title: 'Tất cả',
               titleSize: UISizes.font.sp10,
-              titleColor: UIColors.categoryLabel,
-              fontWeight: FontWeight.w400,
+              titleColor: isSelected ? UIColors.primary : UIColors.gray600,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Builds individual category item with network image and label
+  Widget _buildCategoryItem(CategoryEntity category) {
+    final isSelected = selectedCategoryId == category.id;
+
+    return GestureDetector(
+      onTap: () => onCategoryTap?.call(category.id),
+      child: Container(
+        margin: EdgeInsets.only(right: UISizes.width.w12),
+        width: UISizes.width.w64,
+        child: Column(
+          children: [
+            Container(
+              width: UISizes.width.w52,
+              height: UISizes.width.w52,
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? UIColors.primary.withValues(alpha: 0.08)
+                    : UIColors.white,
+                borderRadius: BorderRadius.circular(UISizes.square.r8),
+                boxShadow: [
+                  BoxShadow(
+                    color: UIColors.cardShadow,
+                    blurRadius:
+                        isSelected ? UISizes.square.r8 : UISizes.square.r4,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
+                border: isSelected
+                    ? Border.all(color: UIColors.primary, width: 2.0)
+                    : null,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(UISizes.square.r8),
+                child:
+                    category.imageUrl != null && category.imageUrl!.isNotEmpty
+                        ? CachedNetworkImage(
+                            imageUrl: category.imageUrl!,
+                            width: UISizes.width.w52,
+                            height: UISizes.width.w52,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => HappyShimmer.rounded(
+                              width: UISizes.width.w52,
+                              height: UISizes.width.w52,
+                              borderRadius: UISizes.square.r8,
+                            ),
+                            errorWidget: (context, url, error) => Container(
+                              width: UISizes.width.w52,
+                              height: UISizes.width.w52,
+                              color: UIColors.gray100,
+                              child: Icon(
+                                Icons.image_outlined,
+                                size: UISizes.width.w24,
+                                color: UIColors.gray400,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            width: UISizes.width.w52,
+                            height: UISizes.width.w52,
+                            color: UIColors.gray100,
+                            child: Icon(
+                              Icons.image_outlined,
+                              size: UISizes.width.w24,
+                              color: UIColors.gray400,
+                            ),
+                          ),
+              ),
+            ),
+            SizedBox(height: UISizes.height.h4),
+            UIText(
+              title: category.name,
+              titleSize: UISizes.font.sp10,
+              titleColor: isSelected ? UIColors.primary : UIColors.gray600,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

@@ -1,0 +1,581 @@
+00:00 +0: loading D:/Duan_Flutter/duan_happyco/happyco/test/features/home/home_bloc_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: HomeBloc initial state should have HomeInitial as initial state
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 202ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 219ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +1: HomeBloc OnHomeInitialize emits [HomeLoading, HomeLoaded] when data loads successfully
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 232ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 242ms | HomeBloc event: OnHomeInitialize[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 244ms | HomeBloc state: HomeInitial → HomeLoading[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 253ms | HomeBloc state: HomeLoading → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 255ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 264ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +2: HomeBloc OnHomeInitialize emits [HomeLoading, HomeError] when featured products fetch fails
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 272ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 276ms | HomeBloc event: OnHomeInitialize[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 276ms | HomeBloc state: HomeInitial → HomeLoading[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m│ [error] | 23:56:51 277ms | HomeBloc emitting error state[0m
+[38;5;1m│ Exception: Failed to fetch featured products[0m
+[38;5;1m│ StackTrace: #0      When.thenThrow.<anonymous closure> (package:mocktail/src/mocktail.dart:249:7)[0m
+[38;5;1m│ #1      Mock.noSuchMethod (package:mocktail/src/mocktail.dart:131:37)[0m
+[38;5;1m│ #2      MockGetFeaturedProductsUseCase.exec (file:///D:/Duan_Flutter/duan_happyco/happyco/test/features/home/home_bloc_test.dart:16:7)[0m
+[38;5;1m│ #3      HomeBloc._loadInitialData (package:happyco/features/pages/home/bloc/home_bloc.dart:169:36)[0m
+[38;5;1m│ #4      HomeBloc._onInitialize (package:happyco/features/pages/home/bloc/home_bloc.dart:49:11)[0m
+[38;5;1m│ #5      Bloc.on.<anonymous closure>.handleEvent (package:bloc/src/bloc.dart:229:26)[0m
+[38;5;1m│ #6      Bloc.on.<anonymous closure> (package:bloc/src/bloc.dart:238:9)[0m
+[38;5;1m│ #7      _MapStream._handleData (dart:async/stream_pipe.dart:247:31)[0m
+[38;5;1m│ #8      _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #9      StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #10     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #11     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #12     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #13     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #14     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #15     CastStreamSubscription._onData (dart:_internal/async_cast.dart:95:11)[0m
+[38;5;1m│ #16     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #17     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #18     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #19     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #20     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #21     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #22     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #23     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:312:7)[0m
+[38;5;1m│ #24     _ForwardingStreamSubscription._add (dart:async/stream_pipe.dart:154:11)[0m
+[38;5;1m│ #25     _WhereStream._handleData (dart:async/stream_pipe.dart:229:12)[0m
+[38;5;1m│ #26     _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #27     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #28     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #29     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #30     _rootRunUnary (dart:async/zone.dart:1546:13)[0m
+[38;5;1m│ #31     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #32     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #33     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #34     _DelayedData.perform (dart:async/stream_impl.dart:573:14)[0m
+[38;5;1m│ #35     _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)[0m
+[38;5;1m│ #36     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)[0m
+[38;5;1m│ #37     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #38     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #39     _rootRun (dart:async/zone.dart:1517:47)[0m
+[38;5;1m│ #40     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #41     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #42     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #43     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #44     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #45     _rootRun (dart:async/zone.dart:1525:13)[0m
+[38;5;1m│ #46     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #47     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #48     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #49     _microtaskLoop (dart:async/schedule_microtask.dart:40:35)[0m
+[38;5;1m│ #50     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)[0m
+[38;5;1m│ }[0m
+[38;5;1m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 278ms | HomeBloc state: HomeLoading → HomeError[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 279ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 281ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +3: HomeBloc OnHomeInitialize emits [HomeLoading, HomeError] when categories fetch fails
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 304ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 307ms | HomeBloc event: OnHomeInitialize[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 307ms | HomeBloc state: HomeInitial → HomeLoading[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m│ [error] | 23:56:51 308ms | HomeBloc emitting error state[0m
+[38;5;1m│ Exception: Failed to fetch categories[0m
+[38;5;1m│ StackTrace: #0      When.thenThrow.<anonymous closure> (package:mocktail/src/mocktail.dart:249:7)[0m
+[38;5;1m│ #1      Mock.noSuchMethod (package:mocktail/src/mocktail.dart:131:37)[0m
+[38;5;1m│ #2      MockGetCategoriesUseCase.exec (file:///D:/Duan_Flutter/duan_happyco/happyco/test/features/home/home_bloc_test.dart:19:7)[0m
+[38;5;1m│ #3      HomeBloc._loadInitialData (package:happyco/features/pages/home/bloc/home_bloc.dart:170:30)[0m
+[38;5;1m│ #4      HomeBloc._onInitialize (package:happyco/features/pages/home/bloc/home_bloc.dart:49:11)[0m
+[38;5;1m│ #5      Bloc.on.<anonymous closure>.handleEvent (package:bloc/src/bloc.dart:229:26)[0m
+[38;5;1m│ #6      Bloc.on.<anonymous closure> (package:bloc/src/bloc.dart:238:9)[0m
+[38;5;1m│ #7      _MapStream._handleData (dart:async/stream_pipe.dart:247:31)[0m
+[38;5;1m│ #8      _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #9      StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #10     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #11     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #12     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #13     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #14     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #15     CastStreamSubscription._onData (dart:_internal/async_cast.dart:95:11)[0m
+[38;5;1m│ #16     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #17     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #18     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #19     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #20     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #21     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #22     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #23     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:312:7)[0m
+[38;5;1m│ #24     _ForwardingStreamSubscription._add (dart:async/stream_pipe.dart:154:11)[0m
+[38;5;1m│ #25     _WhereStream._handleData (dart:async/stream_pipe.dart:229:12)[0m
+[38;5;1m│ #26     _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #27     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #28     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #29     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #30     _rootRunUnary (dart:async/zone.dart:1546:13)[0m
+[38;5;1m│ #31     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #32     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #33     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #34     _DelayedData.perform (dart:async/stream_impl.dart:573:14)[0m
+[38;5;1m│ #35     _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)[0m
+[38;5;1m│ #36     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)[0m
+[38;5;1m│ #37     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #38     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #39     _rootRun (dart:async/zone.dart:1517:47)[0m
+[38;5;1m│ #40     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #41     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #42     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #43     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #44     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #45     _rootRun (dart:async/zone.dart:1525:13)[0m
+[38;5;1m│ #46     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #47     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #48     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #49     _microtaskLoop (dart:async/schedule_microtask.dart:40:35)[0m
+[38;5;1m│ #50     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)[0m
+[38;5;1m│ }[0m
+[38;5;1m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 309ms | HomeBloc state: HomeLoading → HomeError[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 310ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 312ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +4: HomeBloc OnHomeRefresh emits [HomeLoaded] with updated data when refresh succeeds
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 335ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 339ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 340ms | HomeBloc event: OnHomeRefresh[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 341ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 342ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 345ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +5: HomeBloc OnHomeRefresh emits [HomeError] when refresh fails
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 352ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 354ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 354ms | HomeBloc event: OnHomeRefresh[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m│ [error] | 23:56:51 355ms | HomeBloc emitting error state[0m
+[38;5;1m│ Exception: Failed to refresh[0m
+[38;5;1m│ StackTrace: #0      When.thenThrow.<anonymous closure> (package:mocktail/src/mocktail.dart:249:7)[0m
+[38;5;1m│ #1      Mock.noSuchMethod (package:mocktail/src/mocktail.dart:131:37)[0m
+[38;5;1m│ #2      MockGetFeaturedProductsUseCase.exec (file:///D:/Duan_Flutter/duan_happyco/happyco/test/features/home/home_bloc_test.dart:16:7)[0m
+[38;5;1m│ #3      HomeBloc._loadInitialData (package:happyco/features/pages/home/bloc/home_bloc.dart:169:36)[0m
+[38;5;1m│ #4      HomeBloc._onRefresh (package:happyco/features/pages/home/bloc/home_bloc.dart:56:11)[0m
+[38;5;1m│ #5      Bloc.on.<anonymous closure>.handleEvent (package:bloc/src/bloc.dart:229:26)[0m
+[38;5;1m│ #6      Bloc.on.<anonymous closure> (package:bloc/src/bloc.dart:238:9)[0m
+[38;5;1m│ #7      _MapStream._handleData (dart:async/stream_pipe.dart:247:31)[0m
+[38;5;1m│ #8      _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #9      StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #10     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #11     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #12     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #13     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #14     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #15     CastStreamSubscription._onData (dart:_internal/async_cast.dart:95:11)[0m
+[38;5;1m│ #16     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #17     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #18     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #19     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #20     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #21     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #22     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #23     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:312:7)[0m
+[38;5;1m│ #24     _ForwardingStreamSubscription._add (dart:async/stream_pipe.dart:154:11)[0m
+[38;5;1m│ #25     _WhereStream._handleData (dart:async/stream_pipe.dart:229:12)[0m
+[38;5;1m│ #26     _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #27     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #28     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #29     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #30     _rootRunUnary (dart:async/zone.dart:1546:13)[0m
+[38;5;1m│ #31     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #32     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #33     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #34     _DelayedData.perform (dart:async/stream_impl.dart:573:14)[0m
+[38;5;1m│ #35     _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)[0m
+[38;5;1m│ #36     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)[0m
+[38;5;1m│ #37     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #38     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #39     _rootRun (dart:async/zone.dart:1517:47)[0m
+[38;5;1m│ #40     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #41     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #42     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #43     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #44     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #45     _rootRun (dart:async/zone.dart:1525:13)[0m
+[38;5;1m│ #46     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #47     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #48     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #49     _microtaskLoop (dart:async/schedule_microtask.dart:40:35)[0m
+[38;5;1m│ #50     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)[0m
+[38;5;1m│ }[0m
+[38;5;1m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 356ms | HomeBloc state: HomeLoaded → HomeError[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 357ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 359ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +6: HomeBloc OnHomeCategorySelected emits [HomeLoaded] with selectedCategoryId=null and empty filteredProducts when categoryId is null (Tất cả)
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 383ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 384ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 385ms | HomeBloc event: OnHomeCategorySelected[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 387ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 388ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 389ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +7: HomeBloc OnHomeCategorySelected emits [HomeLoaded] with category products when categoryId is provided
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 397ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 406ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 406ms | HomeBloc event: OnHomeCategorySelected[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 407ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 408ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 409ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 411ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +8: HomeBloc OnHomeCategorySelected emits [HomeError] when fetching category products fails
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 421ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 423ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 423ms | HomeBloc event: OnHomeCategorySelected[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 424ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m│ [error] | 23:56:51 424ms | HomeBloc emitting error state[0m
+[38;5;1m│ Exception: Failed to fetch category products[0m
+[38;5;1m│ StackTrace: #0      When.thenThrow.<anonymous closure> (package:mocktail/src/mocktail.dart:249:7)[0m
+[38;5;1m│ #1      Mock.noSuchMethod (package:mocktail/src/mocktail.dart:131:37)[0m
+[38;5;1m│ #2      MockGetCategoryProductsUseCase.exec (file:///D:/Duan_Flutter/duan_happyco/happyco/test/features/home/home_bloc_test.dart:21:7)[0m
+[38;5;1m│ #3      HomeBloc._onCategorySelected (package:happyco/features/pages/home/bloc/home_bloc.dart:83:57)[0m
+[38;5;1m│ #4      Bloc.on.<anonymous closure>.handleEvent (package:bloc/src/bloc.dart:229:26)[0m
+[38;5;1m│ #5      Bloc.on.<anonymous closure> (package:bloc/src/bloc.dart:238:9)[0m
+[38;5;1m│ #6      _MapStream._handleData (dart:async/stream_pipe.dart:247:31)[0m
+[38;5;1m│ #7      _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #8      StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #9      StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #10     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #11     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #12     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #13     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #14     CastStreamSubscription._onData (dart:_internal/async_cast.dart:95:11)[0m
+[38;5;1m│ #15     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #16     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #17     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #18     _rootRunUnary (dart:async/zone.dart:1538:47)[0m
+[38;5;1m│ #19     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #20     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #21     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #22     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:312:7)[0m
+[38;5;1m│ #23     _ForwardingStreamSubscription._add (dart:async/stream_pipe.dart:154:11)[0m
+[38;5;1m│ #24     _WhereStream._handleData (dart:async/stream_pipe.dart:229:12)[0m
+[38;5;1m│ #25     _ForwardingStreamSubscription._handleData (dart:async/stream_pipe.dart:184:13)[0m
+[38;5;1m│ #26     StackZoneSpecification._registerUnaryCallback.<anonymous closure>.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:36)[0m
+[38;5;1m│ #27     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #28     StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:127:24)[0m
+[38;5;1m│ #29     _rootRunUnary (dart:async/zone.dart:1546:13)[0m
+[38;5;1m│ #30     _CustomZone.runUnary (dart:async/zone.dart:1429:19)[0m
+[38;5;1m│ #31     _CustomZone.runUnaryGuarded (dart:async/zone.dart:1329:7)[0m
+[38;5;1m│ #32     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)[0m
+[38;5;1m│ #33     _DelayedData.perform (dart:async/stream_impl.dart:573:14)[0m
+[38;5;1m│ #34     _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)[0m
+[38;5;1m│ #35     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)[0m
+[38;5;1m│ #36     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #37     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #38     _rootRun (dart:async/zone.dart:1517:47)[0m
+[38;5;1m│ #39     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #40     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #41     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #42     StackZoneSpecification._run (package:stack_trace/src/stack_zone_specification.dart:207:15)[0m
+[38;5;1m│ #43     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:48)[0m
+[38;5;1m│ #44     _rootRun (dart:async/zone.dart:1525:13)[0m
+[38;5;1m│ #45     _CustomZone.run (dart:async/zone.dart:1422:19)[0m
+[38;5;1m│ #46     _CustomZone.runGuarded (dart:async/zone.dart:1321:7)[0m
+[38;5;1m│ #47     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1362:23)[0m
+[38;5;1m│ #48     _microtaskLoop (dart:async/schedule_microtask.dart:40:35)[0m
+[38;5;1m│ #49     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)[0m
+[38;5;1m│ }[0m
+[38;5;1m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 425ms | HomeBloc state: HomeLoaded → HomeError[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 426ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 428ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +9: HomeBloc OnHomeCategorySelected does nothing when state is not HomeLoaded
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 447ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 450ms | HomeBloc event: OnHomeCategorySelected[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 451ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 452ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +10: HomeBloc OnHomeSearch emits [HomeLoaded] with search results after debounce delay
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 458ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 460ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 461ms | HomeBloc event: OnHomeSearch[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 763ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 764ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 814ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 816ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +11: HomeBloc OnHomeSearch triggers OnHomeSearchCleared when query is empty
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 822ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 824ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 824ms | HomeBloc event: OnHomeSearch[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 824ms | HomeBloc event: OnHomeSearchCleared[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 825ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 826ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 827ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:00 +12: HomeBloc OnHomeSearch emits [HomeError] when search fails
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 834ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 836ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:51 836ms | HomeBloc event: OnHomeSearch[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 138ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;1m│ [error] | 23:56:52 139ms | HomeBloc emitting error state[0m
+[38;5;1m│ Exception: Search failed[0m
+[38;5;1m│ StackTrace: #0      When.thenThrow.<anonymous closure> (package:mocktail/src/mocktail.dart:249:7)[0m
+[38;5;1m│ #1      Mock.noSuchMethod (package:mocktail/src/mocktail.dart:131:37)[0m
+[38;5;1m│ #2      MockSearchProductsUseCase.exec (file:///D:/Duan_Flutter/duan_happyco/happyco/test/features/home/home_bloc_test.dart:24:7)[0m
+[38;5;1m│ #3      HomeBloc._onSearch (package:happyco/features/pages/home/bloc/home_bloc.dart:134:52)[0m
+[38;5;1m│ <asynchronous suspension>[0m
+[38;5;1m│ #4      Bloc.on.<anonymous closure>.handleEvent (package:bloc/src/bloc.dart:229:13)[0m
+[38;5;1m│ <asynchronous suspension>[0m
+[38;5;1m│ }[0m
+[38;5;1m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 139ms | HomeBloc state: HomeLoaded → HomeError[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 189ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 191ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +13: HomeBloc OnHomeSearch does nothing when state is not HomeLoaded
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 198ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 200ms | HomeBloc event: OnHomeSearch[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 201ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 201ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +14: HomeBloc OnHomeSearch cancels previous debounce timer when new query is entered
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 207ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 209ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 209ms | HomeBloc event: OnHomeSearch[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 312ms | HomeBloc event: OnHomeSearch[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 614ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 615ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 714ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 717ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +15: HomeBloc OnHomeSearchCleared resets search state and returns to featured products
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 721ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 723ms | HomeBloc state: HomeInitial → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 723ms | HomeBloc event: OnHomeSearchCleared[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 723ms | HomeBloc state: HomeLoaded → HomeLoaded[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 724ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 725ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +16: HomeBloc OnHomeSearchCleared does nothing when state is not HomeLoaded
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 730ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 731ms | HomeBloc event: OnHomeSearchCleared[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 734ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 735ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +17: HomeBloc HomeLoaded displayProducts displayProducts returns featured products when not searching and no category selected
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 740ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 742ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +18: HomeBloc HomeLoaded displayProducts displayProducts returns filtered products when searching
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 747ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 749ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +19: HomeBloc HomeLoaded displayProducts displayProducts returns filtered products when category selected
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 753ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 755ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +20: HomeBloc HomeLoaded displayProducts displayProducts returns filtered products when both searching and category selected
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 759ms | HomeBloc created[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;255m│ [debug] | 23:56:52 760ms | HomeBloc closed[0m
+[38;5;255m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:01 +21: (tearDownAll)
+00:01 +21: All tests passed!

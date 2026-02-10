@@ -6,14 +6,14 @@ import 'package:happyco/core/config/app_constants.dart';
 import 'package:happyco/core/services/dialog_service.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/ui/dialogs/dialog_type.dart';
+import 'package:happyco/core/ui/widgets/banners/promotional_banner.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/domain/repositories/storage_repository.dart';
 import 'package:happyco/features/app_router.gr.dart';
-import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
-import 'package:happyco/core/ui/widgets/banners/promotional_banner.dart';
 import 'package:happyco/features/home/widgets/home_categories.dart';
 import 'package:happyco/features/home/widgets/home_header.dart';
+import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
 import 'package:happyco/features/products/widgets/product_grid.dart';
 
 /// Home Page - Vietnamese Furniture E-commerce
@@ -22,10 +22,10 @@ import 'package:happyco/features/products/widgets/product_grid.dart';
 /// Architecture: Feature-first presentation layer with BLoC state management
 ///
 /// Features:
-/// - Header with search bar and notification
+/// - Header with functional search bar and notification
 /// - Hero banner carousel
-/// - Category icons (8 furniture categories)
-/// - Product grid sections (Featured & Recommended)
+/// - Category icons from API with selection indicator
+/// - Product grid sections (Featured & filtered by category/search)
 @RoutePage()
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -74,6 +74,12 @@ class _HomePageContent extends StatelessWidget {
             onNotificationTap: () {
               context.router.push(const NotificationRoute());
             },
+            onSearch: (query) {
+              context.read<HomeBloc>().add(OnHomeSearch(query: query));
+            },
+            onSearchCleared: () {
+              context.read<HomeBloc>().add(OnHomeSearchCleared());
+            },
           ),
           Expanded(
             child: BlocBuilder<HomeBloc, HomeState>(
@@ -107,7 +113,7 @@ class _HomePageContent extends StatelessWidget {
           SizedBox(height: UISizes.height.h16),
           const PromotionalBanner(isLoading: true),
           SizedBox(height: UISizes.height.h24),
-          HomeCategories(isLoading: true),
+          const HomeCategories(isLoading: true),
           SizedBox(height: UISizes.height.h24),
           const ProductGrid(
             title: AppSectionTitles.featuredProducts,
@@ -166,6 +172,13 @@ class _HomePageContent extends StatelessWidget {
   }
 
   Widget _buildLoadedState(BuildContext context, HomeLoaded state) {
+    final productsToShow = state.displayProducts;
+    final sectionTitle = state.isSearching
+        ? 'Kết quả tìm kiếm'
+        : state.selectedCategoryId != null
+            ? AppSectionTitles.products
+            : AppSectionTitles.featuredProducts;
+
     return RefreshIndicator(
       onRefresh: () async {
         context.read<HomeBloc>().add(OnHomeRefresh());
@@ -176,27 +189,59 @@ class _HomePageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: UISizes.height.h16),
-            const PromotionalBanner(),
+            // Hide banner when searching or filtering
+            if (!state.isSearching && state.selectedCategoryId == null)
+              PromotionalBanner(
+                banners: state.banners,
+              ),
             SizedBox(height: UISizes.height.h24),
-            HomeCategories(),
-            SizedBox(height: UISizes.height.h24),
-            ProductGrid(
-              title: AppSectionTitles.featuredProducts,
-              actionText: AppActionTexts.viewAll,
-              onActionTap: () {},
-              products: state.featuredProducts,
-              onProductTap: _onProductTap,
-              onAddToCart: _onAddToCart,
+            HomeCategories(
+              categories: state.categories,
+              selectedCategoryId: state.selectedCategoryId,
+              onCategoryTap: (categoryId) {
+                context
+                    .read<HomeBloc>()
+                    .add(OnHomeCategorySelected(categoryId: categoryId));
+              },
             ),
             SizedBox(height: UISizes.height.h24),
             ProductGrid(
-              title: AppSectionTitles.recommendedProducts,
-              actionText: AppActionTexts.viewAll,
-              onActionTap: () {},
-              products: state.recommendedProducts,
+              title: sectionTitle,
+              actionText: state.isSearching || state.selectedCategoryId != null
+                  ? null
+                  : state.isShowingAll
+                      ? 'Ẩn bớt'
+                      : AppActionTexts.viewAll,
+              onActionTap: () {
+                context.read<HomeBloc>().add(OnHomeToggleShowAll());
+              },
+              products: productsToShow,
               onProductTap: _onProductTap,
               onAddToCart: _onAddToCart,
             ),
+            // Show empty state for search/filter with no results
+            if (productsToShow.isEmpty &&
+                (state.isSearching || state.selectedCategoryId != null))
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: UISizes.height.h32),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.search_off,
+                        size: UISizes.width.w48,
+                        color: UIColors.gray300,
+                      ),
+                      SizedBox(height: UISizes.height.h12),
+                      UIText(
+                        title: 'Không tìm thấy sản phẩm',
+                        titleSize: UISizes.font.sp14,
+                        titleColor: UIColors.gray400,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             SizedBox(height: UISizes.height.h32),
           ],
         ),

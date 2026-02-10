@@ -5,12 +5,50 @@ import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 /// Home Header Widget
 ///
 /// Displays:
-/// - Search bar with pill shape
+/// - Functional search bar with pill shape
 /// - Notification with badge
-class HomeHeader extends StatelessWidget {
+class HomeHeader extends StatefulWidget {
   final VoidCallback? onNotificationTap;
+  final ValueChanged<String>? onSearch;
+  final VoidCallback? onSearchCleared;
 
-  const HomeHeader({super.key, this.onNotificationTap});
+  const HomeHeader({
+    super.key,
+    this.onNotificationTap,
+    this.onSearch,
+    this.onSearchCleared,
+  });
+
+  @override
+  State<HomeHeader> createState() => _HomeHeaderState();
+}
+
+class _HomeHeaderState extends State<HomeHeader> {
+  final _searchController = TextEditingController();
+  final _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _onChanged(String value) {
+    setState(() {});
+    if (value.trim().isEmpty) {
+      widget.onSearchCleared?.call();
+    } else {
+      widget.onSearch?.call(value);
+    }
+  }
+
+  void _onClear() {
+    _searchController.clear();
+    _focusNode.unfocus();
+    setState(() {});
+    widget.onSearchCleared?.call();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +68,6 @@ class HomeHeader extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Search bar and notification row
           Padding(
             padding: EdgeInsets.symmetric(horizontal: UISizes.width.w16),
             child: Row(
@@ -48,6 +85,8 @@ class HomeHeader extends StatelessWidget {
 
   /// Builds the search input field with pill-shaped container
   Widget _buildSearchBar() {
+    final hasText = _searchController.text.isNotEmpty;
+
     return Container(
       height: UISizes.height.h44,
       decoration: BoxDecoration(
@@ -69,11 +108,36 @@ class HomeHeader extends StatelessWidget {
             color: UIColors.gray700,
           ),
           SizedBox(width: UISizes.width.w12),
-          UIText(
-            title: 'Tìm kiếm sản phẩm',
-            titleColor: UIColors.gray300,
-            titleSize: UISizes.font.sp14,
+          Expanded(
+            child: TextField(
+              controller: _searchController,
+              focusNode: _focusNode,
+              onChanged: _onChanged,
+              style: TextStyle(
+                fontSize: UISizes.font.sp14,
+                color: UIColors.gray700,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Tìm kiếm sản phẩm',
+                hintStyle: TextStyle(
+                  fontSize: UISizes.font.sp14,
+                  color: UIColors.gray300,
+                ),
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
           ),
+          if (hasText)
+            GestureDetector(
+              onTap: _onClear,
+              child: Icon(
+                Icons.close,
+                size: UISizes.width.w20,
+                color: UIColors.gray400,
+              ),
+            ),
         ],
       ),
     );
@@ -82,7 +146,7 @@ class HomeHeader extends StatelessWidget {
   /// Builds the notification icon with badge counter
   Widget _buildNotification() {
     return GestureDetector(
-      onTap: onNotificationTap,
+      onTap: widget.onNotificationTap,
       child: Stack(
         clipBehavior: Clip.none,
         children: [

@@ -1,12 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
 import 'package:happyco/core/theme/ui_images.dart';
 import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
+import 'package:happyco/domain/entities/banner_entity.dart';
 
 /// A promotional banner widget for marketing campaigns and announcements.
 ///
-/// This widget displays a full-width banner image with rounded corners and
+/// This widget displays a full-width banner carousel with rounded corners and
 /// pagination dots indicator below. It's designed for hero sections and
 /// promotional content throughout the app.
 ///
@@ -19,27 +20,34 @@ import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
 /// - Height: 180px
 /// - Border radius: 16px
 /// - Horizontal padding: 16px
-/// - Dots indicator: 44x6px below banner
+/// - Dots indicator: Dynamic based on banner count
+///   - Active dot: 20x6px, primary color, rounded
+///   - Inactive dot: 6x6px circle, gray300
 /// - Supports image loading state with shimmer
 ///
 /// **Features:**
-/// - Asset-based image loading (can be extended for network images)
+/// - List of [BannerEntity] for carousel
+/// - PageView with swipe navigation
 /// - Shimmer loading state
 /// - Error fallback with placeholder icon
 /// - Tap gesture support for navigation
-/// - Pagination dots indicator
+/// - Dynamic dots indicator based on banner count
+/// - Cached network image loading
+/// - Default banner image when no banners provided
 ///
 /// **Example:**
 /// ```dart
 /// PromotionalBanner(
-///   imageUrl: 'assets/images/summer_sale_banner.png',
-///   onTap: () => navigateToSalePage(),
+///   banners: [
+///     BannerEntity(
+///       id: '1',
+///       title: 'Summer Sale',
+///       imageUrl: 'https://example.com/banner1.jpg',
+///       actionUrl: '/sale',
+///     ),
+///   ],
+///   onBannerTap: (banner) => navigateToAction(banner.actionUrl),
 /// )
-/// ```
-///
-/// **Example (Default Banner):**
-/// ```dart
-/// PromotionalBanner()  // Uses default banner image
 /// ```
 ///
 /// **Example (Loading State):**
@@ -47,23 +55,19 @@ import 'package:happyco/core/ui/widgets/shimmer/happy_shimmer.dart';
 /// PromotionalBanner(isLoading: true)
 /// ```
 ///
-/// **Future Enhancements:**
-/// - Support for carousel/swipe functionality
-/// - Network image loading
-/// - Auto-play timer
-/// - Dynamic dots indicator based on banner count
-class PromotionalBanner extends StatelessWidget {
-  /// The image URL or asset path to display.
-  ///
-  /// Defaults to [UIImages.bannerImage] if not provided.
-  /// Can be extended to support network URLs.
-  final String imageUrl;
+/// **Example (Default Banner - Empty List):**
+/// ```dart
+/// PromotionalBanner(banners: [])  // Shows default banner image
+/// ```
+class PromotionalBanner extends StatefulWidget {
+  /// List of banner entities to display in carousel.
+  final List<BannerEntity> banners;
 
-  /// Callback when the banner is tapped.
+  /// Callback when a banner is tapped.
   ///
-  /// Typically used to navigate to a promotional page or product.
+  /// Provides the tapped [BannerEntity] with its actionUrl for navigation.
   /// Disabled when [isLoading] is true.
-  final VoidCallback? onTap;
+  final void Function(BannerEntity)? onBannerTap;
 
   /// Whether to show skeleton loading state.
   ///
@@ -75,10 +79,36 @@ class PromotionalBanner extends StatelessWidget {
 
   const PromotionalBanner({
     super.key,
-    this.imageUrl = UIImages.bannerImage,
-    this.onTap,
+    this.banners = const [],
+    this.onBannerTap,
     this.isLoading = false,
   });
+
+  @override
+  State<PromotionalBanner> createState() => _PromotionalBannerState();
+}
+
+class _PromotionalBannerState extends State<PromotionalBanner> {
+  late PageController _pageController;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +117,16 @@ class PromotionalBanner extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (isLoading) _buildLoadingState() else _buildBannerImage(),
-          if (!isLoading) ...[
+          if (widget.isLoading)
+            _buildLoadingState()
+          else
+            _buildBannerCarousel(),
+          if (!widget.isLoading && widget.banners.isNotEmpty) ...[
             SizedBox(height: UISizes.height.h8),
-            const BannerDotsIndicator(),
+            _BannerDotsIndicator(
+              currentIndex: _currentIndex,
+              totalCount: widget.banners.length,
+            ),
           ],
         ],
       ),
@@ -106,38 +142,95 @@ class PromotionalBanner extends StatelessWidget {
     );
   }
 
-  /// Builds the actual banner image with tap gesture and error handling.
-  Widget _buildBannerImage() {
+  /// Builds the banner carousel or default banner.
+  Widget _buildBannerCarousel() {
+    // Show default banner if no banners provided
+    if (widget.banners.isEmpty) {
+      return _buildDefaultBanner();
+    }
+
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        if (widget.onBannerTap != null && widget.banners.isNotEmpty) {
+          widget.onBannerTap!(widget.banners[_currentIndex]);
+        }
+      },
       child: Container(
         height: UISizes.height.h180,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: UIColors.primary,
+          color: UIColors.gray100,
           borderRadius: BorderRadius.circular(UISizes.square.r16),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(UISizes.square.r16),
-          child: Image.asset(
-            imageUrl,
-            width: double.infinity,
-            height: UISizes.height.h180,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                width: double.infinity,
-                height: UISizes.height.h180,
-                color: UIColors.gray100,
-                child: Icon(
-                  Icons.image_outlined,
-                  size: UISizes.width.w40,
-                  color: UIColors.gray400,
-                ),
-              );
+          child: PageView.builder(
+            controller: _pageController,
+            onPageChanged: _onPageChanged,
+            itemCount: widget.banners.length,
+            itemBuilder: (context, index) {
+              final banner = widget.banners[index];
+              return _buildBannerImage(banner);
             },
           ),
         ),
+      ),
+    );
+  }
+
+  /// Builds a single banner image with cached network image.
+  Widget _buildBannerImage(BannerEntity banner) {
+    return CachedNetworkImage(
+      imageUrl: banner.imageUrl,
+      width: double.infinity,
+      height: UISizes.height.h180,
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Container(
+        width: double.infinity,
+        height: UISizes.height.h180,
+        color: UIColors.gray100,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+      errorWidget: (context, url, error) => _buildErrorPlaceholder(),
+    );
+  }
+
+  /// Builds the default banner with asset image.
+  Widget _buildDefaultBanner() {
+    return Container(
+      height: UISizes.height.h180,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: UIColors.primary,
+        borderRadius: BorderRadius.circular(UISizes.square.r16),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(UISizes.square.r16),
+        child: Image.asset(
+          UIImages.bannerImage,
+          width: double.infinity,
+          height: UISizes.height.h180,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return _buildErrorPlaceholder();
+          },
+        ),
+      ),
+    );
+  }
+
+  /// Builds error placeholder with icon.
+  Widget _buildErrorPlaceholder() {
+    return Container(
+      width: double.infinity,
+      height: UISizes.height.h180,
+      color: UIColors.gray100,
+      child: Icon(
+        Icons.image_outlined,
+        size: UISizes.width.w40,
+        color: UIColors.gray400,
       ),
     );
   }
@@ -146,29 +239,47 @@ class PromotionalBanner extends StatelessWidget {
 /// Banner pagination dots indicator widget.
 ///
 /// Displays horizontal dots to indicate the current banner position
-/// in a carousel. Currently shows a static SVG, but can be extended
-/// to support dynamic active/inactive states.
+/// in a carousel. Shows dynamic active/inactive states.
 ///
 /// **Design Specs:**
-/// - Width: 44px
-/// - Height: 6px
+/// - Active dot: 20x6px, primary color, rounded (borderRadius.r4)
+/// - Inactive dot: 6x6px circle, gray300
 /// - Centered below banner
-///
-/// **Future Enhancements:**
-/// - [currentIndex] parameter for active dot
-/// - [totalCount] parameter for number of dots
-/// - Custom dot colors and sizes
-/// - Animated dot transitions
-class BannerDotsIndicator extends StatelessWidget {
-  const BannerDotsIndicator({super.key});
+/// - Automatically hides when [totalCount] is 0
+class _BannerDotsIndicator extends StatelessWidget {
+  final int currentIndex;
+  final int totalCount;
+
+  const _BannerDotsIndicator({
+    required this.currentIndex,
+    required this.totalCount,
+  });
 
   @override
   Widget build(BuildContext context) {
+    if (totalCount <= 1) return const SizedBox.shrink();
+
     return Center(
-      child: SvgPicture.asset(
-        UISvgs.dotsIcon,
-        width: UISizes.width.w44,
-        height: UISizes.height.h6,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(totalCount, (index) {
+          final isActive = index == currentIndex;
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: UISizes.width.w4),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+              width: isActive ? UISizes.width.w20 : UISizes.width.w6,
+              height: UISizes.height.h6,
+              decoration: BoxDecoration(
+                color: isActive ? UIColors.primary : UIColors.gray300,
+                borderRadius: isActive
+                    ? BorderRadius.circular(UISizes.square.r4)
+                    : BorderRadius.circular(UISizes.width.w3),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }
