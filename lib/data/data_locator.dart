@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:happyco/core/services/dialog_service.dart';
+import 'package:happyco/core/services/html_rendering_service.dart';
+import 'package:happyco/core/services/html_rendering_service_impl.dart';
 import 'package:happyco/data/datasources/remote/api_interceptor.dart';
 import 'package:happyco/data/datasources/remote/auth_remote_datasource.dart';
 import 'package:happyco/data/datasources/remote/auth_remote_datasource_impl.dart';
@@ -53,6 +55,9 @@ Future<void> setupDataLocator() async {
   dataLocator.registerSingleton<SharedPreferences>(prefs);
   dataLocator.registerSingleton<GlobalKey<NavigatorState>>(appNavigatorKey);
   dataLocator.registerSingleton<DialogService>(DialogService(appNavigatorKey));
+  dataLocator.registerLazySingleton<HtmlRenderingService>(
+    () => HtmlRenderingServiceImpl(),
+  );
   dataLocator.registerLazySingleton<RemoteConfig>(() => RemoteConfig());
   dataLocator.registerLazySingleton<StorageRepository>(
     () => StorageRepositoryImpl(dataLocator<SharedPreferences>()),

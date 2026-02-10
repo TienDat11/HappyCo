@@ -1,29 +1,34 @@
+import 'package:flutter/foundation.dart';
+
 /// Product Variant Entity
 ///
-/// Domain layer entity representing a variant of a product (color, size, price).
+/// Represents a purchasable variant of a product.
+/// Each variant has dynamic attributes (color, size, brand, etc.),
+/// its own price, stock quantity, and image.
+///
+/// The [attributes] map keys come from the product's [configProductColors]
+/// (e.g. "mau_sac" → "Bạc Trắng", "phan_loai" → "A - Thẳng").
 class ProductVariantEntity {
   final String id;
-  final String? colorName;
-  final String? typeName;
   final int price;
   final int priceListed;
   final int priceSelling;
   final int quantity;
-  final String sku;
   final String imageUrl;
-  final String? barcode;
+  final bool status;
+  final String barcode;
+  final Map<String, String> attributes;
 
   const ProductVariantEntity({
     required this.id,
-    this.colorName,
-    this.typeName,
     required this.price,
     required this.priceListed,
     required this.priceSelling,
     required this.quantity,
-    required this.sku,
     required this.imageUrl,
-    this.barcode,
+    required this.status,
+    required this.barcode,
+    required this.attributes,
   });
 
   factory ProductVariantEntity.empty() => const ProductVariantEntity(
@@ -32,14 +37,33 @@ class ProductVariantEntity {
         priceListed: 0,
         priceSelling: 0,
         quantity: 0,
-        sku: '',
         imageUrl: '',
+        status: true,
+        barcode: '',
+        attributes: {},
       );
+
+  /// The effective selling price
+  int get effectivePrice => priceSelling > 0 ? priceSelling : price;
+
+  /// Whether this variant has a discount
+  bool get hasDiscount => priceListed > effectivePrice;
+
+  /// Discount percentage
+  int? get discountPercent {
+    if (!hasDiscount) return null;
+    return (((priceListed - effectivePrice) / priceListed) * 100).round();
+  }
+
+  /// Whether this variant is in stock
+  bool get isInStock => quantity > 0 && status;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProductVariantEntity && other.id == id;
+    return other is ProductVariantEntity &&
+        other.id == id &&
+        mapEquals(other.attributes, attributes);
   }
 
   @override

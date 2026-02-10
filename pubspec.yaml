@@ -12,11 +12,11 @@ dependencies:
 
   cupertino_icons: ^1.0.6
 
-   # Dependency Injection
+  # Dependency Injection
   get_it: ^8.0.0
   injectable: ^2.4.4
 
-   # State Management
+  # State Management
   flutter_bloc: ^8.1.6
   auto_route: ^9.0.0+1
 
@@ -26,7 +26,7 @@ dependencies:
 
   # Networking
   dio: ^5.5.0+1
-  dio_smart_retry: ^7.0.0
+  dio_smart_retry: ^6.0.0
 
   # Utilities
   flutter_screenutil: ^5.9.3
@@ -37,6 +37,7 @@ dependencies:
   url_launcher: ^6.3.0
   video_player: ^2.9.1
   chewie: ^1.8.5
+  flutter_widget_from_html_core: ^0.15.2
 
   # Logging
   talker_flutter: ^4.4.1

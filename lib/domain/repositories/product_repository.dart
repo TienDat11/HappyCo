@@ -1,3 +1,4 @@
+import 'package:happyco/domain/entities/product_detail_entity.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 
 /// Product Repository Interface
@@ -14,8 +15,11 @@ abstract class ProductRepository {
   /// Get products by category
   Future<List<ProductEntity>> getProductsByCategory(String categoryId);
 
-  /// Get product by ID
+  /// Get product by ID (list-level entity)
   Future<ProductEntity?> getProductById(String id);
+
+  /// Get full product detail by ID
+  Future<ProductDetailEntity> getProductDetail(String id);
 
   /// Search products by name
   Future<List<ProductEntity>> searchProducts(String query);

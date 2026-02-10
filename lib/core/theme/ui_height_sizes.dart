@@ -102,6 +102,7 @@ class UIHeightSizes {
   double get h98 => 98.h;
   double get h99 => 99.h;
   double get h100 => 100.h;
+  double get h104 => 104.h;
   double get h112 => 112.h;
   double get h120 => 120.h;
   double get h128 => 128.h;

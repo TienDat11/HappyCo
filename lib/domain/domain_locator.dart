@@ -15,6 +15,7 @@ import 'package:happyco/domain/usecases/get_banners_usecase.dart';
 import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_latest_news_usecase.dart';
+import 'package:happyco/domain/usecases/get_product_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_news_by_category_usecase.dart';
 import 'package:happyco/domain/usecases/get_promotions_usecase.dart';
@@ -58,6 +59,11 @@ void setupDomainLocator() {
   );
   domainLocator.registerFactory<GetProductsUseCase>(
     () => GetProductsUseCase(
+      repository: domainLocator<ProductRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<GetProductDetailUseCase>(
+    () => GetProductDetailUseCase(
       repository: domainLocator<ProductRepository>(),
     ),
   );

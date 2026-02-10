@@ -4,13 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:happyco/core/config/app_constants.dart';
 import 'package:happyco/core/theme/ui_theme.dart';
+import 'package:happyco/core/ui/widgets/banners/promotional_banner.dart';
 import 'package:happyco/core/ui/widgets/labels/ui_text.dart';
 import 'package:happyco/domain/entities/category_entity.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
-import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
-import 'package:happyco/core/ui/widgets/banners/promotional_banner.dart';
-import 'package:happyco/features/home/widgets/home_header.dart';
+import 'package:happyco/features/app_router.gr.dart';
 import 'package:happyco/features/home/widgets/home_categories.dart';
+import 'package:happyco/features/home/widgets/home_header.dart';
+import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
 import 'package:happyco/features/pages/category/widgets/category_section.dart';
 import 'package:happyco/features/products/widgets/product_grid.dart';
 
@@ -85,7 +86,6 @@ class _CategoryPageContent extends StatelessWidget {
           SizedBox(height: UISizes.height.h16),
           const HomeCategories(isLoading: true),
           SizedBox(height: UISizes.height.h8),
-          // Loading skeleton sections
           for (int i = 0; i < 3; i++)
             CategorySection(
               category: CategoryEntity.empty(),
@@ -143,12 +143,10 @@ class _CategoryPageContent extends StatelessWidget {
       return _buildEmptyState();
     }
 
-    // Show filtered products when searching or category filter is active
     if (state.isSearching || state.selectedCategoryId != null) {
       return _buildFilteredProducts(context, state);
     }
 
-    // Show all categories with their products
     return RefreshIndicator(
       onRefresh: () async {
         context.read<CategoryBloc>().add(OnCategoryRefresh());
@@ -184,7 +182,10 @@ class _CategoryPageContent extends StatelessWidget {
                 onToggle: () => context
                     .read<CategoryBloc>()
                     .add(OnCategoryToggleExpansion(category.id)),
-                onProductTap: _onProductTap,
+                onProductTap: (product) {
+                  context.router
+                      .push(ProductDetailRoute(productId: product.id));
+                },
                 onAddToCart: _onAddToCart,
               );
             }),
@@ -230,7 +231,9 @@ class _CategoryPageContent extends StatelessWidget {
                           .firstOrNull ??
                       'Sản phẩm',
               products: state.filteredProducts,
-              onProductTap: _onProductTap,
+              onProductTap: (product) {
+                context.router.push(ProductDetailRoute(productId: product.id));
+              },
               onAddToCart: _onAddToCart,
             ),
             SizedBox(height: UISizes.height.h32),
@@ -259,10 +262,6 @@ class _CategoryPageContent extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void _onProductTap(ProductEntity product) {
-    // TODO: Navigate to product detail
   }
 
   void _onAddToCart(ProductEntity product) {
