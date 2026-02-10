@@ -1,4 +1,6 @@
 import 'package:happyco/domain/repositories/auth_repository.dart';
+import 'package:happyco/domain/repositories/banner_repository.dart';
+import 'package:happyco/domain/repositories/category_repository.dart';
 import 'package:happyco/domain/repositories/notification_repository.dart';
 import 'package:happyco/domain/usecases/auth/check_auth_status_usecase.dart';
 import 'package:happyco/domain/usecases/auth/forgot_password_usecase.dart';
@@ -8,13 +10,17 @@ import 'package:happyco/domain/usecases/auth/refresh_otp_usecase.dart';
 import 'package:happyco/domain/usecases/auth/register_usecase.dart';
 import 'package:happyco/domain/usecases/auth/reset_password_usecase.dart';
 import 'package:happyco/domain/usecases/auth/verify_otp_usecase.dart';
+import 'package:happyco/domain/usecases/get_categories_usecase.dart';
+import 'package:happyco/domain/usecases/get_banners_usecase.dart';
 import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_latest_news_usecase.dart';
+import 'package:happyco/domain/usecases/get_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_news_by_category_usecase.dart';
 import 'package:happyco/domain/usecases/get_promotions_usecase.dart';
 import 'package:happyco/domain/usecases/get_qa_usecase.dart';
 import 'package:happyco/domain/usecases/get_recommended_products_usecase.dart';
+import 'package:happyco/domain/usecases/search_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_related_videos_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:happyco/domain/usecases/get_notification_detail_usecase.dart';
@@ -48,6 +54,26 @@ void setupDomainLocator() {
   domainLocator.registerFactory<GetCategoryProductsUseCase>(
     () => GetCategoryProductsUseCase(
       repository: domainLocator<ProductRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<GetProductsUseCase>(
+    () => GetProductsUseCase(
+      repository: domainLocator<ProductRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<GetCategoriesUseCase>(
+    () => GetCategoriesUseCase(
+      repository: domainLocator<CategoryRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<SearchProductsUseCase>(
+    () => SearchProductsUseCase(
+      repository: domainLocator<ProductRepository>(),
+    ),
+  );
+  domainLocator.registerFactory<GetBannersUseCase>(
+    () => GetBannersUseCase(
+      repository: domainLocator<BannerRepository>(),
     ),
   );
   domainLocator.registerFactory<GetNottificationItemsUsecase>(

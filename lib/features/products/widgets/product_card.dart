@@ -97,7 +97,9 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: isLoading ? _buildLoadingState() : _buildProductContent(),
+          children: [
+            ...(isLoading ? _buildLoadingState() : _buildProductContent()),
+          ],
         ),
       ),
     );
@@ -143,28 +145,54 @@ class ProductCard extends StatelessWidget {
     ];
   }
 
-  /// Builds the product image with rounded corners and error handling.
+  /// Builds the product image with rounded corners, error handling,
+  /// and optional discount badge at top-left corner.
   Widget _buildProductImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(UISizes.square.r12),
-      child: Image.network(
-        product.imageUrl,
-        width: double.infinity,
-        height: UISizes.width.w140,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return Container(
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(UISizes.square.r12),
+          child: Image.network(
+            product.imageUrl,
             width: double.infinity,
             height: UISizes.width.w140,
-            color: UIColors.gray100,
-            child: Icon(
-              Icons.image_outlined,
-              size: UISizes.width.w40,
-              color: UIColors.gray300,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                width: double.infinity,
+                height: UISizes.width.w140,
+                color: UIColors.gray100,
+                child: Icon(
+                  Icons.image_outlined,
+                  size: UISizes.width.w40,
+                  color: UIColors.gray300,
+                ),
+              );
+            },
+          ),
+        ),
+        if (product.hasDiscount && product.discountPercent != null)
+          Positioned(
+            top: UISizes.width.w4,
+            left: UISizes.width.w4,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: UISizes.width.w8,
+                vertical: UISizes.height.h4,
+              ),
+              decoration: BoxDecoration(
+                color: UIColors.primary,
+                borderRadius: BorderRadius.circular(UISizes.square.r4),
+              ),
+              child: UIText(
+                title: '-${product.discountPercent}%',
+                titleSize: UISizes.font.sp10,
+                titleColor: UIColors.textOnPrimary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          );
-        },
-      ),
+          ),
+      ],
     );
   }
 

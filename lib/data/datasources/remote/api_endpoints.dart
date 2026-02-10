@@ -38,13 +38,13 @@ class ApiEndpoints {
   // ============================================
   // CATEGORY ENDPOINTS
   // ============================================
-  static const String categories = "/categories";
-  static String categoryProducts(String id) => "/categories/$id/products";
+  static const String categories = "/product-ctgs";
+  static String categoryProducts(String id) => "/products?category=$id";
 
   // ============================================
   // BANNER ENDPOINTS
   // ============================================
-  static const String banners = "/banners";
+  static const String banners = "/news-banner";
 
   // ============================================
   // CART ENDPOINTS

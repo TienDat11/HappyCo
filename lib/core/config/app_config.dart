@@ -35,6 +35,9 @@ class AppConfig {
   /// API base URL
   late final String apiBaseUrl;
 
+  /// URL S3
+  late final String imageBaseUrl;
+
   /// API timeout in milliseconds
   late final int apiTimeout;
 
@@ -69,6 +72,8 @@ class AppConfig {
     environment = Environment.fromString(envString);
 
     apiBaseUrl = dotenv.env['API_BASE_URL'] ?? _getDefaultApiUrl(environment);
+    imageBaseUrl =
+        dotenv.env['IMAGE_BASE_URL'] ?? 'https://s3.sunteco.app/happyco/';
     apiTimeout = int.tryParse(dotenv.env['API_TIMEOUT'] ?? '') ?? 30000;
 
     previewEnabled = dotenv.env['PREVIEW_ENABLED']?.toLowerCase() == 'true' ||

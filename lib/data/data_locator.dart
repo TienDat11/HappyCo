@@ -5,9 +5,17 @@ import 'package:happyco/core/services/dialog_service.dart';
 import 'package:happyco/data/datasources/remote/api_interceptor.dart';
 import 'package:happyco/data/datasources/remote/auth_remote_datasource.dart';
 import 'package:happyco/data/datasources/remote/auth_remote_datasource_impl.dart';
+import 'package:happyco/data/datasources/remote/banner_remote_datasource.dart';
+import 'package:happyco/data/datasources/remote/banner_remote_datasource_impl.dart';
+import 'package:happyco/data/datasources/remote/category_remote_datasource.dart';
+import 'package:happyco/data/datasources/remote/category_remote_datasource_impl.dart';
 import 'package:happyco/data/repositories/auth_repository_impl.dart';
+import 'package:happyco/data/repositories/banner_repository_impl.dart';
+import 'package:happyco/data/repositories/category_repository_impl.dart';
 import 'package:happyco/data/repositories/notification_repository_mock.dart';
 import 'package:happyco/domain/repositories/auth_repository.dart';
+import 'package:happyco/domain/repositories/banner_repository.dart';
+import 'package:happyco/domain/repositories/category_repository.dart';
 import 'package:happyco/domain/repositories/notification_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:happyco/data/datasources/remote/remote_config.dart';
@@ -70,8 +78,32 @@ Future<void> setupDataLocator() async {
   dataLocator.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
       dataSource: productRemoteDataSource,
+      remoteConfig: dataLocator<RemoteConfig>(),
     ),
   );
+
+  // Category dependencies
+  final CategoryRemoteDataSource categoryRemoteDataSource =
+      CategoryRemoteDataSourceImpl(dioClient: dataLocator<DioClient>());
+
+  dataLocator.registerLazySingleton<CategoryRepository>(
+    () => CategoryRepositoryImpl(
+      dataSource: categoryRemoteDataSource,
+      remoteConfig: dataLocator<RemoteConfig>(),
+    ),
+  );
+
+  // Banner dependencies
+  final BannerRemoteDataSource bannerRemoteDataSource =
+      BannerRemoteDataSourceImpl(dioClient: dataLocator<DioClient>());
+
+  dataLocator.registerLazySingleton<BannerRepository>(
+    () => BannerRepositoryImpl(
+      dataSource: bannerRemoteDataSource,
+      remoteConfig: dataLocator<RemoteConfig>(),
+    ),
+  );
+
   dataLocator.registerLazySingleton<NewsRepository>(
     () => NewsRepositoryMock(),
   );

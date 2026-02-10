@@ -15,8 +15,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<Map<String, dynamic>>> getFeaturedProducts() async {
-    final response =
-        await _dioClient.get<dynamic>(ApiEndpoints.featuredProducts);
+    final response = await _dioClient.get<dynamic>(
+      ApiEndpoints.products,
+      queryParameters: {'limit': 6, 'offset': 0},
+    );
     return _handleListResponse(response.data);
   }
 
@@ -32,7 +34,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       String categoryId) async {
     final response = await _dioClient.get<dynamic>(
       ApiEndpoints.products,
-      queryParameters: {'category_id': categoryId},
+      queryParameters: {'category': categoryId},
     );
     return _handleListResponse(response.data);
   }
@@ -81,6 +83,11 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     if (data is List<Map<String, dynamic>>) {
       return data;
     } else if (data is Map<String, dynamic>) {
+      // Handle paginated API response: { data: [...], total: ... }
+      if (data.containsKey('data') && data['data'] is List) {
+        return List<Map<String, dynamic>>.from(data['data']);
+      }
+      // Single object response - wrap in list
       return [data];
     }
 
