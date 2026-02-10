@@ -1,7 +1,10 @@
 import 'package:happyco/data/datasources/remote/product_remote_datasource.dart';
 import 'package:happyco/data/datasources/remote/remote_config.dart';
+import 'package:happyco/data/mappers/product_detail_mapper.dart';
 import 'package:happyco/data/mappers/product_mapper.dart';
+import 'package:happyco/data/models/product_detail_dto.dart';
 import 'package:happyco/data/models/product_dto.dart';
+import 'package:happyco/domain/entities/product_detail_entity.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/domain/repositories/product_repository.dart';
 
@@ -45,6 +48,17 @@ class ProductRepositoryImpl implements ProductRepository {
 
     final dto = ProductDto.fromJson(json);
     return dto.toEntity();
+  }
+
+  @override
+  Future<ProductDetailEntity> getProductDetail(String id) async {
+    final json = await _dataSource.getProductById(id);
+    if (json == null) {
+      throw Exception('Product not found: $id');
+    }
+
+    final dto = ProductDetailDto.fromJson(json);
+    return dto.toDetailEntity();
   }
 
   @override

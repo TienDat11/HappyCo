@@ -1,3 +1,4 @@
+import 'package:happyco/domain/entities/product_detail_entity.dart';
 import 'package:happyco/domain/entities/product_entity.dart';
 import 'package:happyco/domain/repositories/product_repository.dart';
 
@@ -242,6 +243,12 @@ class ProductRepositoryMock implements ProductRepository {
     } catch (_) {
       return null;
     }
+  }
+
+  @override
+  Future<ProductDetailEntity> getProductDetail(String id) async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    return ProductDetailEntity.empty();
   }
 
   @override

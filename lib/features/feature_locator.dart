@@ -6,6 +6,7 @@ import 'package:happyco/domain/usecases/get_banners_usecase.dart';
 import 'package:happyco/domain/usecases/search_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_latest_news_usecase.dart';
 import 'package:happyco/domain/usecases/get_news_by_category_usecase.dart';
+import 'package:happyco/domain/usecases/get_product_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_notification_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_nottification_items_usecase.dart';
@@ -18,6 +19,7 @@ import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
 import 'package:happyco/features/pages/news/bloc/news_bloc.dart';
 import 'package:happyco/features/pages/notification-detail/bloc/notification_detail_bloc.dart';
 import 'package:happyco/features/pages/notification/bloc/notification_page_bloc.dart';
+import 'package:happyco/features/pages/product_detail/bloc/product_detail_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 final featureLocator = GetIt.instance;
@@ -69,6 +71,11 @@ void setupFeatureLocator() {
     () => NotificationDetailBloc(
       getNotificationDetailUsecase:
           featureLocator<GetNotificationDetailUsecase>(),
+    ),
+  );
+  featureLocator.registerFactory<ProductDetailBloc>(
+    () => ProductDetailBloc(
+      getProductDetailUseCase: featureLocator<GetProductDetailUseCase>(),
     ),
   );
 

@@ -58,6 +58,10 @@ class AppRouter extends RootStackRouter {
           page: NotificationDetailRoute.page,
           path: '/notifications_detail',
         ),
+        AutoRoute(
+          page: ProductDetailRoute.page,
+          path: '/product_detail',
+        ),
       ];
 
   @override

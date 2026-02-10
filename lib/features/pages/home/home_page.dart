@@ -216,7 +216,9 @@ class _HomePageContent extends StatelessWidget {
                 context.read<HomeBloc>().add(OnHomeToggleShowAll());
               },
               products: productsToShow,
-              onProductTap: _onProductTap,
+              onProductTap: (product) {
+                context.router.push(ProductDetailRoute(productId: product.id));
+              },
               onAddToCart: _onAddToCart,
             ),
             // Show empty state for search/filter with no results
@@ -248,8 +250,6 @@ class _HomePageContent extends StatelessWidget {
       ),
     );
   }
-
-  void _onProductTap(ProductEntity product) {}
 
   void _onAddToCart(ProductEntity product) {}
 }
