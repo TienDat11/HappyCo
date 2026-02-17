@@ -32,8 +32,8 @@ class AppDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final dialogContent = _buildDialogContent();
 
-    return BlocProvider(
-      create: (_) => GetIt.I<AuthBloc>(),
+    return BlocProvider.value(
+      value: GetIt.I<AuthBloc>(),
       child: Dialog(
         backgroundColor: Colors.transparent,
         elevation: 0,

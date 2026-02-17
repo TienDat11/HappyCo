@@ -150,9 +150,9 @@ void setupDomainLocator() {
     ),
   );
 
-  // Auth Bloc
-  domainLocator.registerFactory<AuthBloc>(
-    () => AuthBloc(
+  // Auth Bloc - Singleton to persist auth state across app
+  domainLocator.registerSingleton<AuthBloc>(
+    AuthBloc(
       loginUseCase: domainLocator<LoginUseCase>(),
       registerUseCase: domainLocator<RegisterUseCase>(),
       forgotPasswordUseCase: domainLocator<ForgotPasswordUseCase>(),
