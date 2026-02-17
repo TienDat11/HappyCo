@@ -76,7 +76,8 @@ class _LoginDialogState extends State<LoginDialog> {
       listener: (context, state) {
         if (state is AuthAuthenticated) {
           widget.onLoginSuccess?.call();
-          Navigator.of(context).pop();
+          // Dialog is closed via onDismiss callback in AppDialog
+          // No need for additional Navigator.pop() here
         } else if (state is AuthFieldError) {
           final usernameError =
               state.fieldErrors['username'] ?? state.fieldErrors['phone'];

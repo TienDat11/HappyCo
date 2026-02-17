@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:happyco/domain/repositories/storage_repository.dart';
 import 'package:happyco/domain/usecases/get_categories_usecase.dart';
 import 'package:happyco/domain/usecases/get_category_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_featured_products_usecase.dart';
@@ -12,6 +13,7 @@ import 'package:happyco/domain/usecases/get_products_usecase.dart';
 import 'package:happyco/domain/usecases/get_notification_detail_usecase.dart';
 import 'package:happyco/domain/usecases/get_nottification_items_usecase.dart';
 import 'package:happyco/features/feature_locator.config.dart';
+import 'package:happyco/features/pages/account/bloc/account_bloc.dart';
 import 'package:happyco/features/pages/category/bloc/category_bloc.dart';
 import 'package:happyco/features/pages/home/bloc/home_bloc.dart';
 import 'package:happyco/features/pages/news/bloc/news_bloc.dart';
@@ -71,6 +73,11 @@ void setupFeatureLocator() {
   featureLocator.registerFactory<ProductDetailBloc>(
     () => ProductDetailBloc(
       getProductDetailUseCase: featureLocator<GetProductDetailUseCase>(),
+    ),
+  );
+  featureLocator.registerFactory<AccountBloc>(
+    () => AccountBloc(
+      storageRepository: featureLocator<StorageRepository>(),
     ),
   );
 

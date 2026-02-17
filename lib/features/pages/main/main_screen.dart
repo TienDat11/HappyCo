@@ -6,8 +6,7 @@ import 'package:happyco/features/pages/main/widgets/bottom_menubar.dart';
 /// Main Screen - Bottom Navigation Container
 ///
 /// Uses AutoTabsScaffold for tab navigation
-/// Currently has 1 tab: Home
-/// Future tabs will be added here
+/// Has 4 tabs: Home, Category, News, Account
 @RoutePage()
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -19,6 +18,7 @@ class MainScreen extends StatelessWidget {
         HomeRoute(),
         CategoryRoute(),
         NewsRoute(),
+        AccountRoute(),
       ],
       bottomNavigationBuilder: (_, tabRouter) {
         return BottomMenubar(

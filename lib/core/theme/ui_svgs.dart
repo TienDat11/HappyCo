@@ -91,4 +91,32 @@ class UISvgs {
 
   /// Account tab icon (Tài khoản)
   static const String navAccount = 'assets/svgs/profile.svg';
+
+  // ============================================
+  // ACCOUNT MENU ICONS
+  // ============================================
+
+  /// Profile info menu icon (Thông tin cá nhân)
+  static const String menuProfile = 'assets/svgs/profile.svg';
+
+  /// Orders menu icon (Đơn hàng của tôi)
+  static const String menuOrders = 'assets/svgs/paper.svg';
+
+  /// Address menu icon (Địa chỉ đặt hàng)
+  static const String menuAddress = 'assets/svgs/location.svg';
+
+  /// Voucher menu icon (Voucher của tôi)
+  static const String menuVoucher = 'assets/svgs/voucher.svg';
+
+  /// Policy menu icon (Chính sách & Điều khoản)
+  static const String menuPolicy = 'assets/svgs/document.svg';
+
+  /// FAQ menu icon (Câu hỏi thường gặp)
+  static const String menuFaq = 'assets/svgs/chat.svg';
+
+  /// Language menu icon (Ngôn ngữ)
+  static const String menuLanguage = 'assets/svgs/language.svg';
+
+  /// Logout menu icon (Đăng xuất)
+  static const String menuLogout = 'assets/svgs/logout.svg';
 }

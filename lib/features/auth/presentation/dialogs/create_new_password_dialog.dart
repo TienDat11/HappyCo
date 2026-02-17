@@ -77,7 +77,8 @@ class _CreateNewPasswordDialogState extends State<CreateNewPasswordDialog> {
       listener: (context, state) {
         if (state is PasswordResetSuccess) {
           widget.onSuccess?.call();
-          Navigator.of(context).pop();
+          // Dialog is closed via _closeAllAndShowLogin() in AppDialog
+          // No need for additional Navigator.pop() here
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error)),
